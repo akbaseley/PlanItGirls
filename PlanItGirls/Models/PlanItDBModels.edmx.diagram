@@ -6,14 +6,8 @@
     <edmx:Diagrams>
       <Diagram DiagramId="943a3ea3519e47d195fd2af7f6488db4" Name="Diagram1">
         <EntityTypeShape EntityType="PlanItDBModels.AspNetUser" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="PlanItDBModels.Entertainment" Width="1.5" PointX="5.25" PointY="1.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="PlanItDBModels.Food" Width="1.5" PointX="5.25" PointY="5.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="PlanItDBModels.Lodge" Width="1.5" PointX="5.25" PointY="9.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="PlanItDBModels.Trip" Width="1.5" PointX="3" PointY="5.125" IsExpanded="true" />
-        <AssociationConnector Association="PlanItDBModels.FK_Trip_AspNetUsers" ManuallyRouted="false" />
-        <AssociationConnector Association="PlanItDBModels.FK_Entertainment_Trip" ManuallyRouted="false" />
-        <AssociationConnector Association="PlanItDBModels.FK_Food_Trip" ManuallyRouted="false" />
-        <AssociationConnector Association="PlanItDBModels.FK_Lodge_Trip" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="PlanItDBModels.Trip" Width="1.5" PointX="3" PointY="5.375" />
+        <AssociationConnector Association="PlanItDBModels.FK_Trip_AspNetUsers" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

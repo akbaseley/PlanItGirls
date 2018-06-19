@@ -7,16 +7,22 @@
 
 
 <h2>Trip Creation</h2>
-<form action="/Home/TripCreation" method="post">
-    Start Date: <input type="datetime" name="StartDate" />
-    End Date: <input type="datetime" name="EndDate" />
-
+<form action="/Database/CreateNewTrip" method="post">
+    Trip Name: <input type="text" name="TripID" />
+    <br /><br />
+    Start Date: <input type="date" name="StartDate" />
+    End Date: <input type="date" name="EndDate" />
+    <br /><br />
     Start City: <input type="text" name="StartCity" />
     @Html.DropDownList("StartState", new SelectList(Enum.GetValues(typeof(States))), "Start State")
-
+    <br /><br />
     End City: <input type="text" name="EndCity" />
     @Html.DropDownList("EndState", new SelectList(Enum.GetValues(typeof(States))), "End State")
+    <br /><br />
+    Budget: <input type="number" name="Price" />
+    <input type="submit" value="New Trip" />
+</form>
 
-    Budget: <input type="number" name="Price"/>
-    <input type="submit" value="New Trip"/>
+<form action="/Database/TripList" method="get">
+    <input type="submit" value="See your trips" />
 </form>

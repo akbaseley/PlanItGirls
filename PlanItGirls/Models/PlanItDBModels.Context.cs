@@ -26,9 +26,6 @@ namespace PlanItGirls.Models
         }
     
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
-        public virtual DbSet<Entertainment> Entertainments { get; set; }
-        public virtual DbSet<Food> Foods { get; set; }
-        public virtual DbSet<Lodge> Lodges { get; set; }
         public virtual DbSet<Trip> Trips { get; set; }
     }
 }

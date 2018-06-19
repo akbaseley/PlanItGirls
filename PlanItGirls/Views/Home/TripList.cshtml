@@ -1,0 +1,32 @@
+﻿
+@{
+    ViewBag.Title = "TripList";
+}
+
+<h2>Your Trip List</h2>
+
+<table class="table">
+    <tr>
+        <th>Trip Name</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Start City & State</th>
+        <th>End City & State</th>
+        <th>Budget</th>
+    </tr>
+
+    @foreach (var trip in ViewBag.userTrips)
+    {
+        <tr>
+            <td>@trip.TripID</td>
+            <td>@trip.StartDate</td>
+            <td>@trip.EndDate</td>
+            <td>@trip.StartCity, @trip.StartState</td>
+            <td>@trip.EndCity, @trip.EndState</td>
+            <th>@trip.Price</th>
+            <th><a href="/Home/TripBudgetCalculator?TripID=@trip.TripID">Find Trip Options</a></th>
+            <th><a href="/Database/DeleteTrip?TripID=@trip.TripID">Delete this trip</a></th>
+            <th><a href="/Database/EditTripDetails?TripID=@trip.TripID">Edit this trip</a>"</th>
+        </tr>
+    }
+</table>

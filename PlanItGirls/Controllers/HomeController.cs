@@ -32,14 +32,14 @@ namespace PlanItGirls.Controllers
             return View();
         }
 
-        public ActionResult TripCreation(Trip newTrip)
+        public ActionResult TripCreation()
         {
-            PlanItDBEntities ORM = new PlanItDBEntities();
-
-            ORM.Trips.Add(newTrip);
-            ORM.SaveChanges();
             return View();
-           
+        }
+
+        public ActionResult TripBudgetCalculator()
+        {
+            return View();
         }
     }
 

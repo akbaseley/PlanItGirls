@@ -203,16 +203,7 @@
     <Compile Include="Models\AspNetUser.cs">
       <DependentUpon>PlanItDBModels.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Entertainment.cs">
-      <DependentUpon>PlanItDBModels.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Food.cs">
-      <DependentUpon>PlanItDBModels.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\Lodge.cs">
-      <DependentUpon>PlanItDBModels.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PlanItDBModels.Context.cs">
       <AutoGen>True</AutoGen>
@@ -351,6 +342,8 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Home\TripCreation.cshtml" />
     <Content Include="Views\Web.config" />
+    <Content Include="Views\Home\TripBudgetCalculator.cshtml" />
+    <Content Include="Views\Home\TripList.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
