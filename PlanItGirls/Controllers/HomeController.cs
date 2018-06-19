@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using PlanItGirls.Models;
 
 namespace PlanItGirls.Controllers
 {
@@ -29,6 +30,11 @@ namespace PlanItGirls.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+
+        public ActionResult StartDate (DateTime start)
+        {
+            planitdbEntities1
         }
     }
 }

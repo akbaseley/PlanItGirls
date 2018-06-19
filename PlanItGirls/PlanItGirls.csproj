@@ -203,6 +203,7 @@
     <Compile Include="Models\AspNetUser.cs">
       <DependentUpon>PlanItModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Class1.cs" />
     <Compile Include="Models\Entertainment.cs">
       <DependentUpon>PlanItModel.tt</DependentUpon>
     </Compile>
