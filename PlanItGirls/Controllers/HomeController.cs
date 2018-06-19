@@ -34,10 +34,7 @@ namespace PlanItGirls.Controllers
 
         public ActionResult TripCreation(Trip newTrip)
         {
-            PlanItDBEntities ORM = new PlanItDBEntities();
 
-            ORM.Trips.Add(newTrip);
-            ORM.SaveChanges();
             return View();
            
         }

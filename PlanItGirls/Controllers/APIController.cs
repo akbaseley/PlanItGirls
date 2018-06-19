@@ -62,5 +62,7 @@ namespace PlanItGirls.Controllers
             ViewBag.Fact = YelpData;
             return View("SearchResultsPage");
         }
+
+       
     }
 }
