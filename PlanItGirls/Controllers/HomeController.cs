@@ -32,11 +32,14 @@ namespace PlanItGirls.Controllers
             return View();
         }
 
-        public ActionResult TripCreation(Trip newTrip)
+        public ActionResult TripCreation()
         {
-
             return View();
-           
+        }
+
+        public ActionResult TripBudgetCalculator()
+        {
+            return View();
         }
     }
 

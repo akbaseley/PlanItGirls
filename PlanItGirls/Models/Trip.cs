@@ -28,8 +28,5 @@ namespace PlanItGirls.Models
         public string Lodging { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
-        public virtual Entertainment Entertainment1 { get; set; }
-        public virtual Food Food1 { get; set; }
-        public virtual Lodge Lodge { get; set; }
     }
 }

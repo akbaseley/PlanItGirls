@@ -7,21 +7,24 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using PlanItGirls.Models;
 
 namespace PlanItGirls.Controllers
 {
     public class APIController : Controller
     {
-        public ActionResult CalculateDistance(string originCity, string originState, string destinationCity, string destinationState)
+        public ActionResult CalculateDistance(Trip newTrip)
         {
-            HttpWebRequest WR = WebRequest.CreateHttp($"https://maps.googleapis.com/maps/api/directions/json?origin={originCity},{originState}&destination={destinationCity},{destinationState}&key=" + ConfigurationManager.AppSettings["GoogleAPIKey"]);
+            PlanItDBEntities ORM = new PlanItDBEntities();
+            Trip currentTrip = (Trip)TempData["currentTrip"];          
+            HttpWebRequest WR = WebRequest.CreateHttp($"https://maps.googleapis.com/maps/api/directions/json?origin={currentTrip.StartCity},{currentTrip.StartState}&destination={currentTrip.EndCity},{currentTrip.EndState}&key=" + ConfigurationManager.AppSettings["GoogleAPIKey"]);
             WR.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
             HttpWebResponse Response = (HttpWebResponse)WR.GetResponse();
             StreamReader data = new StreamReader(Response.GetResponseStream());
             string JsonData = data.ReadToEnd();
             JObject YelpData = JObject.Parse(JsonData);
-            ViewBag.Fact = YelpData["routes"][0]["legs"][0]["distance"]["text"];
-            return View("SearchResultsPage");
+            ViewBag.DistanceBetweenCities = YelpData["routes"][0]["legs"][0]["distance"]["text"];
+            return View("TripBudgetCalculator");
         }
 
         public ActionResult GetPricePointHotels(string pricePoint, string latitude, string longitude)

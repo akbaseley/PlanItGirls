@@ -1,11 +1,10 @@
-﻿using System;
+﻿using PlanItGirls.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using PlanItGirls.Models;
 using Microsoft.AspNet.Identity;
-
 
 namespace PlanItGirls.Controllers
 {
@@ -13,6 +12,7 @@ namespace PlanItGirls.Controllers
     {
         // Use this controller when using CRUD methods to Database
         // Primarily used when Logging trip information and when 
+
         public ActionResult CreateNewTrip(Trip newTrip)
         {
             PlanItDBEntities ORM = new PlanItDBEntities();
@@ -26,18 +26,26 @@ namespace PlanItGirls.Controllers
             return View("../Home/TripCreation");
         }
 
+        public ActionResult TripList()
+        {
+            PlanItDBEntities ORM = new PlanItDBEntities();
 
-        public ActionResult NumOfDays (Trip trip )
+            string userID = User.Identity.GetUserId();
+
+            ViewBag.userTrips = ORM.AspNetUsers.Find(userID).Trips.ToList();
+
+            return View("../Home/TripList");
+        }
+
+        public ActionResult NumOfDays(Trip trip)
         {
             PlanItDBEntities ORM = new PlanItDBEntities();
 
             TimeSpan days = trip.EndDate.Subtract(trip.StartDate).Duration();
 
             ViewBag.DayDiff = days;
-             
-            return View("../Database/TripBudgetCalculator");
 
-        }
-        
+            return View("../Database/TripBudgetCalculator");
+        }       
     }
 }
