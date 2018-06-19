@@ -13,10 +13,10 @@ namespace PlanItGirls.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class planitdbEntities1 : DbContext
+    public partial class PlanItDBEntities : DbContext
     {
-        public planitdbEntities1()
-            : base("name=planitdbEntities1")
+        public PlanItDBEntities()
+            : base("name=PlanItDBEntities")
         {
         }
     
@@ -25,10 +25,10 @@ namespace PlanItGirls.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<Entertainment> Entertainments { get; set; }
         public virtual DbSet<Food> Foods { get; set; }
         public virtual DbSet<Lodge> Lodges { get; set; }
         public virtual DbSet<Trip> Trips { get; set; }
-        public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
     }
 }
