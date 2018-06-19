@@ -203,7 +203,6 @@
     <Compile Include="Models\AspNetUser.cs">
       <DependentUpon>PlanItModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Class1.cs" />
     <Compile Include="Models\Entertainment.cs">
       <DependentUpon>PlanItModel.tt</DependentUpon>
     </Compile>
@@ -230,6 +229,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PlanItModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\States.cs" />
     <Compile Include="Models\Trip.cs">
       <DependentUpon>PlanItModel.tt</DependentUpon>
     </Compile>
@@ -311,12 +311,8 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
-    <Content Include="Web.config" />
-    <Content Include="Web.Debug.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
-    <Content Include="Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
@@ -354,6 +350,19 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Home\TripCreation.cshtml" />
+    <Content Include="Views\Web.config" />
+    <None Include="Views\Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Views\Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -3,11 +3,21 @@
     ViewBag.Title = "TripCreation";
 }
 
+@using PlanItGirls.Models
+
+
+
 <h2>Trip Creation</h2>
 <form action="/Home/TripCreation" method="post">
     Start Date: <input type="datetime" name="StartDate" />
     End Date: <input type="datetime" name="EndDate" />
-    Start City: <input type="text" name="StartCity" />
-    @Html.DropDownList("StartState", new SelectList(Enum.GetValues(typeof(States))"Start State")
 
+    Start City: <input type="text" name="StartCity" />
+    @Html.DropDownList("StartState", new SelectList(Enum.GetValues(typeof(States))), "Start State")
+
+    End City: <input type="text" name="EndCity" />
+    @Html.DropDownList("EndState", new SelectList(Enum.GetValues(typeof(States))), "End State")
+
+    Budget: <input type="number" name="Price"/>
+    <input type="submit" value="New Trip"/>
 </form>
