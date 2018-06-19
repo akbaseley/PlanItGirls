@@ -32,9 +32,31 @@ namespace PlanItGirls.Controllers
             return View();
         }
 
+<<<<<<< HEAD
         public ActionResult StartDate (DateTime start)
         {
             planitdbEntities1
         }
     }
 }
+=======
+
+        public ActionResult TripCreation(DateTime start)
+        {
+            planitdbEntities1 ORM = new planitdbEntities1();
+
+            ORM.Trips.Add(start);
+            ORM.SaveChanges();
+            return View();
+           
+        }
+
+ 
+    }
+
+
+
+
+
+}
+>>>>>>> TripCreation View added

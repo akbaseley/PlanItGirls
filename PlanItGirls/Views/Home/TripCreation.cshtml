@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewBag.Title = "TripCreation";
+}
+
+<h2>Trip Creation</h2>
+<form action="/Home/TripCreation" method="post">
+    Start Date: <input type="datetime" name="StartDate" />
+    End Date: <input type="datetime" name="EndDate" />
+    Start City: <input type="text" name="StartCity" />
+    @Html.DropDownList("StartState", new SelectList(Enum.GetValues(typeof(States))"Start State")
+
+</form>
