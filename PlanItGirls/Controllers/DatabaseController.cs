@@ -46,6 +46,9 @@ namespace PlanItGirls.Controllers
             ViewBag.DayDiff = days;
 
             return View("../Database/TripBudgetCalculator");
-        }       
+        }
+
+
+
     }
 }
