@@ -37,7 +37,7 @@ namespace PlanItGirls.Controllers
             return View();
         }
 
-        public ViewResult TripBudgetCalculator(string TripID, string hotelPricePoint)
+        public ViewResult TripBudgetCalculator(string TripID, string hotelPricePoint, string restaurantPricePoint)
         {
             PlanItDBEntities ORM = new PlanItDBEntities();
             if (TempData["currentTrip"] is null)
@@ -77,11 +77,47 @@ namespace PlanItGirls.Controllers
                 ViewBag.hotelBudget = Math.Round(travelBudget - hotelPrice, 2);
             }
 
+            if (restaurantPricePoint is null)
+            {
+                ViewBag.Restaurants = null;
+                ViewBag.RestaurantBudget = null;
+                ViewBag.RestFact = "Select Price Point to get Restaurant Options";
+            }
+            else
+            {
+                ViewBag.Restaurants = RestaurantsbyPricePoint(currentTrip.TripID, restaurantPricePoint);
+                double restaurantPrice = CalculateRestaurantBudget(restaurantPricePoint);
+                ViewBag.restaurantPrice = restaurantPrice;
+                ViewBag.restaurantBudget = Math.Round(travelBudget - restaurantPrice, 2);
+            }
+
+            ViewBag.Events = EventsbyPricePoint(currentTrip.TripID);
+
             TempData["currentTrip"] = TempData["currentTrip"];
             return View();
-
         }
 
+        public static double CalculateRestaurantBudget(string pricePoint)
+        {
+            double Price = 0;
+            if (pricePoint == "1")
+            {
+                Price = 10;
+            }
+            else if (pricePoint == "2")
+            {
+                Price = 35;
+            }
+            else if (pricePoint == "3")
+            {
+                Price = 60;
+            }
+            else if (pricePoint == "4")
+            {
+                Price = 100;
+            }
+            return Price;
+        }
         public static double CalculateHotelBudget(string pricePoint)
         {
             double hotelPrice = 0;
@@ -115,6 +151,7 @@ namespace PlanItGirls.Controllers
 
             return GoogleData;
         }
+
         public JObject HotelsbyPricePoint(string TripID, string pricePoint)
         {
             PlanItDBEntities ORM = new PlanItDBEntities();
@@ -128,7 +165,6 @@ namespace PlanItGirls.Controllers
             JObject YelpData = JObject.Parse(JsonData);
             return YelpData;
         }
-
         public JObject RestaurantsbyPricePoint(string TripID, string pricePoint)
         {
             PlanItDBEntities ORM = new PlanItDBEntities();
@@ -142,8 +178,7 @@ namespace PlanItGirls.Controllers
             JObject YelpData = JObject.Parse(JsonData);
             return YelpData;
         }
-
-        public JObject GetYelpEventsByLocationandTime(string TripID)
+        public JObject EventsbyPricePoint(string TripID)
         {
             PlanItDBEntities ORM = new PlanItDBEntities();
             Trip currentTrip = ORM.Trips.Find(TripID);
@@ -158,7 +193,7 @@ namespace PlanItGirls.Controllers
             JObject YelpData = JObject.Parse(JsonData);
             return YelpData;
         }
-   
+
         public static string ConvertToUnixTime(DateTime currentTime)
         {
             DateTime sTime = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
