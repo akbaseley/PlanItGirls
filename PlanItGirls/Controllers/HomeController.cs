@@ -103,6 +103,43 @@ namespace PlanItGirls.Controllers
             JObject YelpData = JObject.Parse(JsonData);
             return YelpData;
         }
+
+        public JObject RestaurantsbyPricePoint(string TripID, string pricePoint)
+        {
+            PlanItDBEntities ORM = new PlanItDBEntities();
+            Trip currentTrip = ORM.Trips.Find(TripID);
+            HttpWebRequest WR = WebRequest.CreateHttp($"https://api.yelp.com/v3/businesses/search?location={currentTrip.EndCity},+{currentTrip.EndState}&price={pricePoint}&term=restaurants");
+            WR.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
+            WR.Headers.Add("Authorization", $"Bearer {ConfigurationManager.AppSettings["YelpAPIKey"]}");
+            HttpWebResponse Response = (HttpWebResponse)WR.GetResponse();
+            StreamReader data = new StreamReader(Response.GetResponseStream());
+            string JsonData = data.ReadToEnd();
+            JObject YelpData = JObject.Parse(JsonData);
+            return YelpData;
+        }
+
+        public JObject GetYelpEventsByLocationandTime(string TripID)
+        {
+            PlanItDBEntities ORM = new PlanItDBEntities();
+            Trip currentTrip = ORM.Trips.Find(TripID);
+            string StartDate = ConvertToUnixTime(currentTrip.StartDate);
+            string EndDate = ConvertToUnixTime(currentTrip.EndDate);
+            HttpWebRequest WR = WebRequest.CreateHttp($"https://api.yelp.com/v3/events?location={currentTrip.EndCity},+{currentTrip.EndState}&start_date={StartDate}&end_date={EndDate}&term=events");
+            WR.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
+            WR.Headers.Add("Authorization", $"Bearer {ConfigurationManager.AppSettings["YelpAPIKey"]}");
+            HttpWebResponse Response = (HttpWebResponse)WR.GetResponse();
+            StreamReader data = new StreamReader(Response.GetResponseStream());
+            string JsonData = data.ReadToEnd();
+            JObject YelpData = JObject.Parse(JsonData);
+            return YelpData;
+        }
+   
+        public static string ConvertToUnixTime(DateTime currentTime)
+        {
+            DateTime sTime = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+            return ((currentTime - sTime).TotalSeconds).ToString();
+        }
     }
+
 }
 
