@@ -26,7 +26,7 @@ Distance: @ViewBag.DistanceBetweenCities
         <th>$@ViewBag.drivePrice</th>
         <th>$@ViewBag.oneWay</th>
         <th>$@ViewBag.roundTrip</th>
-        <th>$@ViewBag.newBudget</th>
+        <th>$@ViewBag.travelBudget</th>
     </tr>
 </table>
 
@@ -37,40 +37,60 @@ Distance: @ViewBag.DistanceBetweenCities
         <th>Price Point</th>
         <td>
             <form action="../Home/TripBudgetCalculator" method="get">
-                <select name="pricePoint">
+                <select name="hotelPricePoint">
                     <option value="0">---</option>
                     <option value="1">$</option>
                     <option value="2">$$</option>
                     <option value="3">$$$</option>
                     <option value="4">$$$$</option>
                 </select>
-                <input type="submit" value="Price" />
+                <input type="submit" value="Price Range" />
             </form>
         </td>
     </tr>
-    <tr>
-        <th>Hotel Selection</th>
-        <td>
-            <form action="../Home/TripBudgetCalculator" method="get">
-                <select name="Hotel">
-                    @if (ViewBag.Hotels is null)
-                    {
-                        @ViewBag.Fact
-                    }
-                    else
-                    {
-                        for (int i = 0; i < ViewBag.Hotels["businesses"].Count; i++)
+    @if (ViewBag.Hotels is null)
+    {
+        <tr>
+            <th>Hotel Selection</th>
+            <td>@ViewBag.Fact</td>
+        </tr>
+        <tr>
+            <td>$: approximately $80</td>
+        </tr>
+        <tr>
+            <td>$$: approximately $150</td>
+        </tr>
+        <tr>
+            <td>$$$: approximately $225</td>
+        </tr>
+        <tr>
+            <td>$$$$: approximately $350</td>
+        </tr>
+    }
+    else
+    {
+        <tr>
+            <td>
+                <form action="../Home/TripBudgetCalculator" method="get">
+                    <select name="Hotel">
+                        @for (int i = 0; i < ViewBag.Hotels["businesses"].Count; i++)
                         {
                             <option value="@ViewBag.Hotels["businesses"][i]["name"]">@ViewBag.Hotels["businesses"][i]["name"]</option>
                         }
-                    }
-                </select>
+                    </select>
+                    <input type="submit" value="Select Hotel" />
                 </form>
-        </td>
-        <td>
-            @ViewBag.newBudget
-        </td>
-    </tr>
+            </td>
+        </tr>
+        <tr>
+            <th>Price per Day</th>
+            <td>$@ViewBag.hotelPrice</td>
+        </tr>
+        <tr>
+            <th>Price off of Budget</th>
+            <td>$@ViewBag.hotelBudget</td>
+        </tr>
+    }
 </table>
 
 

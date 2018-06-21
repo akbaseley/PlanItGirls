@@ -53,8 +53,7 @@ namespace PlanItGirls.Controllers
             JObject YelpData = JObject.Parse(JsonData);
             ViewBag.Fact = YelpData;
             return View("SearchResultsPage");
-        }
 
-       
+        }      
     }
 }

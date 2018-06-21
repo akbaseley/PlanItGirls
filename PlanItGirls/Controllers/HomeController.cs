@@ -37,7 +37,7 @@ namespace PlanItGirls.Controllers
             return View();
         }
 
-        public ViewResult TripBudgetCalculator(string TripID, string pricePoint)
+        public ViewResult TripBudgetCalculator(string TripID, string hotelPricePoint)
         {
             PlanItDBEntities ORM = new PlanItDBEntities();
             if (TempData["currentTrip"] is null)
@@ -50,33 +50,58 @@ namespace PlanItGirls.Controllers
             ViewBag.currentTrip = currentTrip;
 
             JObject GoogleData = TripDistance(currentTrip);
-
             double DistanceinKM = (double.Parse(GoogleData["routes"][0]["legs"][0]["distance"]["value"].ToString())) / 1000;
             double Distance = Math.Round(DistanceinKM * 0.621371, 0);
             double drivePrice = 0.608;
             double oneWay = drivePrice * Distance;
             double roundTrip = oneWay * 2;
+            double travelBudget = Math.Round(currentTrip.Price - oneWay, 2);
 
             ViewBag.DistanceBetweenCities = Distance;
             ViewBag.drivePrice = drivePrice;
             ViewBag.oneWay = Math.Round(oneWay, 2);
             ViewBag.roundTrip = Math.Round(roundTrip, 2);
-            ViewBag.newBudget = Math.Round(currentTrip.Price - oneWay, 2);
+            ViewBag.travelBudget = travelBudget;
 
-            if (pricePoint is null)
+            if (hotelPricePoint is null)
             {
                 ViewBag.Hotels = null;
+                ViewBag.hotelBudget = null;
                 ViewBag.Fact = "Select Price Point to get Hotel Options";
-
             }
             else
             {
-                ViewBag.Hotels = HotelsbyPricePoint(currentTrip.TripID, pricePoint);
+                ViewBag.Hotels = HotelsbyPricePoint(currentTrip.TripID, hotelPricePoint);
+                double hotelPrice = CalculateHotelBudget(hotelPricePoint);
+                ViewBag.hotelPrice = hotelPrice;
+                ViewBag.hotelBudget = Math.Round(travelBudget - hotelPrice, 2);
             }
 
             TempData["currentTrip"] = TempData["currentTrip"];
             return View();
 
+        }
+
+        public static double CalculateHotelBudget(string pricePoint)
+        {
+            double hotelPrice = 0;
+            if (pricePoint == "1")
+            {
+                hotelPrice = 80;
+            }
+            else if (pricePoint == "2")
+            {
+                hotelPrice = 150;
+            }
+            else if (pricePoint == "3")
+            {
+                hotelPrice = 225;
+            }
+            else if (pricePoint == "4")
+            {
+                hotelPrice = 350;
+            }
+            return hotelPrice;
         }
 
         public JObject TripDistance(Trip currentTrip)
