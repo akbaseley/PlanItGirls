@@ -8,23 +8,25 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using PlanItGirls.Models;
+using System.Web.Services;
+using System.Collections;
 
 namespace PlanItGirls.Controllers
 {
     public class APIController : Controller
     {
 
-        public ActionResult GetPricePointHotels(string pricePoint, string latitude, string longitude)
+
+        [WebMethod]
+        public static ArrayList GetPricePoint()
         {
-            HttpWebRequest WR = WebRequest.CreateHttp($"https://api.yelp.com/v3/businesses/search?latitude={latitude}&longitude={longitude}&price={pricePoint}&term=hotel");
-            WR.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
-            WR.Headers.Add("Authorization", $"Bearer {ConfigurationManager.AppSettings["YelpAPIKey"]}");
-            HttpWebResponse Response = (HttpWebResponse)WR.GetResponse();
-            StreamReader data = new StreamReader(Response.GetResponseStream());
-            string JsonData = data.ReadToEnd();
-            JObject YelpData = JObject.Parse(JsonData);
-            ViewBag.Fact = YelpData;
-            return View("SearchResultsPage");
+            return new ArrayList()
+            {
+                new {Value = 1, Display = "$"},
+                new {Value = 2, Display = "$$"},
+                new {Value = 3, Display = "$$$"},
+                new {Value = 4, Display = "$$$$"},
+            };
         }
 
         public ActionResult GetPricePointRestaurants(string pricePoint)

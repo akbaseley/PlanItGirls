@@ -33,15 +33,42 @@ Distance: @ViewBag.DistanceBetweenCities
 <h2>Select your Options</h2>
 <table class="table">
     <tr>
-        <th></th>
+        <th>Price Point</th>
+        <td>
+            <form action="../Home/TripBudgetCalculator" method="get">
+                <select name="pricePoint">
+                    <option value="0">---</option>
+                    <option value="1">$</option>
+                    <option value="2">$$</option>
+                    <option value="3">$$$</option>
+                    <option value="4">$$$$</option>
+                </select>
+                <input type="submit" value="Price" />
+            </form>
+        </td>
     </tr>
-    @for (int i = 0; i < ViewBag.DayDiff; i++)
-    {
-        <tr>
-            <td> @Html.DropDownList("Lodging", new SelectList("1", "2", "3", "4"), "Price Selection")
-            <input type="submit" value="Lodging" />
-            </td>
-        </tr>
-    }
+    <tr>
+        <th>Hotel Selection</th>
+        <td>
+            <form action="../Home/TripBudgetCalculator" method="get">
+                <select name="Hotel">
+                    @if (ViewBag.Hotels is null)
+                    {
+                        @ViewBag.Fact
+                    }
+                    else
+                    {
+                        for (int i = 0; i < ViewBag.Hotels["businesses"].Count; i++)
+                        {
+                            <option value="@ViewBag.Hotels["businesses"][i]["name"]">@ViewBag.Hotels["businesses"][i]["name"]</option>
+                        }
+                    }
+                </select>
+                </form>
+        </td>
+        <td>
+            @ViewBag.newBudget
+        </td>
+    </tr>
 </table>
 
