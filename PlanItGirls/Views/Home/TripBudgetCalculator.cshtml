@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "TripBudgetCalculator";
 }
+@using PlanItGirls.Models;
 
 <h2>Budget Calculator</h2>
 
@@ -11,4 +12,36 @@ Distance: @ViewBag.DistanceBetweenCities
 
 
 
+
+<table class="table">
+    <tr>
+        <th>Distance</th>
+        <th>Avg price per mile</th>
+        <th>Cost: One-Way</th>
+        <th>Cost: Round Trip</th>
+        <th>New balance</th>
+    </tr>
+    <tr>
+        <th>@ViewBag.DistanceBetweenCities miles</th>
+        <th>$@ViewBag.drivePrice</th>
+        <th>$@ViewBag.oneWay</th>
+        <th>$@ViewBag.roundTrip</th>
+        <th>$@ViewBag.newBudget</th>
+    </tr>
+</table>
+
+<h2>Select your Options</h2>
+<table class="table">
+    <tr>
+        <th></th>
+    </tr>
+    @for (int i = 0; i < ViewBag.DayDiff; i++)
+    {
+        <tr>
+            <td> @Html.DropDownList("Lodging", new SelectList("1", "2", "3", "4"), "Price Selection")
+            <input type="submit" value="Lodging" />
+            </td>
+        </tr>
+    }
+</table>
 

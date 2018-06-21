@@ -16,7 +16,7 @@ namespace PlanItGirls.Models
     public partial class PlanItDBEntities : DbContext
     {
         public PlanItDBEntities()
-            : base("name=PlanItDBEntities")
+            : base("name=PlanitdbEntities")
         {
         }
     
