@@ -47,5 +47,34 @@ namespace PlanItGirls.Controllers
 
             return RedirectToAction("../API/CalculateDistance");
         }
+<<<<<<< HEAD
+=======
+
+        public ActionResult DeleteTrip(string TripID)
+        {
+
+            PlanItDBEntities ORM = new PlanItDBEntities();
+
+            Trip Found = ORM.Trips.Find(TripID);
+
+            if (Found != null)
+            {
+                ORM.Trips.Remove(Found);
+                ORM.SaveChanges();
+                return RedirectToAction("TripList");
+            }
+
+            else
+            {
+                ViewBag.Message = "Trip Not Found";
+                return View("Error");
+            }
+            
+           
+
+        }
+
+
+>>>>>>> Delete Trip Controller Added
     }
 }
