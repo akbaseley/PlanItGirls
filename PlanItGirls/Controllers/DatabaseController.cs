@@ -48,6 +48,7 @@ namespace PlanItGirls.Controllers
             return RedirectToAction("../API/CalculateDistance");
         }
 
+
         public ActionResult DeleteTrip(string TripID)
         {
 
