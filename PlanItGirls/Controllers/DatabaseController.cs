@@ -47,8 +47,6 @@ namespace PlanItGirls.Controllers
 
             return RedirectToAction("../API/CalculateDistance");
         }
-<<<<<<< HEAD
-=======
 
         public ActionResult DeleteTrip(string TripID)
         {
@@ -69,12 +67,57 @@ namespace PlanItGirls.Controllers
                 ViewBag.Message = "Trip Not Found";
                 return View("Error");
             }
-            
-           
+
+
+        }
+        public ActionResult EditTripDetails(string TripID)
+        {
+            PlanItDBEntities ORM = new PlanItDBEntities();
+            //string userID = User.Identity.GetUserId();
+            Trip Found = ORM.Trips.Find(TripID);
+            //ViewBag.userTrips = ORM.AspNetUsers.Find(userID).Trips.ToList();
+
+            if (Found != null)
+            {
+                return View ("../Home/UpdateUserTrip", Found);
+            }
+            else
+            {
+                ViewBag.ErrorMessage = "Tasks Not Found";
+                return View("Error");
+            }
+        }
+
+        public ActionResult SaveUpdateUserTrip (Trip EditTripDetails)
+        {
+            PlanItDBEntities ORM = new PlanItDBEntities();
+         //   string userID = User.Identity.GetUserId();
+         //ORM.AspNetUsers.Find(userID).Trips.ToList();
+            Trip OldTripRecord = ORM.Trips.Find(EditTripDetails.TripID);
+
+            if (OldTripRecord != null && ModelState.IsValid)
+            {
+                OldTripRecord.TripID = EditTripDetails.TripID;
+                OldTripRecord.StartDate = EditTripDetails.StartDate;
+                OldTripRecord.EndDate = EditTripDetails.EndDate;
+                OldTripRecord.StartCity = EditTripDetails.StartCity;
+                OldTripRecord.EndCity = EditTripDetails.EndCity;
+                OldTripRecord.Price = EditTripDetails.Price;
+
+                ORM.Entry(OldTripRecord).State = System.Data.Entity.EntityState.Modified;
+                
+                ORM.SaveChanges();
+                return RedirectToAction("TripList");
+            }
+            else
+            {
+                ViewBag.ErrorMessage = "Task not Found";
+                return View("you suck!!!");
+            }
 
         }
 
 
->>>>>>> Delete Trip Controller Added
+
     }
 }
