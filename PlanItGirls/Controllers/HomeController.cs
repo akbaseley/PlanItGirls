@@ -63,8 +63,8 @@ namespace PlanItGirls.Controllers
             ViewBag.oneWay = Math.Round(oneWay, 2);
             ViewBag.roundTrip = Math.Round(roundTrip, 2);
             ViewBag.travelBudget = travelBudget;
-
-            if (hotelPricePoint is null)
+           
+            if (TempData["hotelPricePoint"] is null)
             {
                 ViewBag.Hotels = null;
                 ViewBag.hotelBudget = null;
@@ -79,10 +79,6 @@ namespace PlanItGirls.Controllers
                 ViewBag.hotelPrice = hotelPrice;
                 ViewBag.hotelBudget = Math.Round(travelBudget - hotelPrice, 2);
 
-                if (TempData["hotelPricePoint"] is null)
-                {
-                    TempData["hotelPricePoint"] = hotelPricePoint;
-                }
             }
 
             if (HotelSelection is null)
@@ -97,6 +93,7 @@ namespace PlanItGirls.Controllers
                 {
                     TempData["HotelSelection"] = HotelSelection;
                 }
+                
             }
 
             if (restaurantPricePoint is null)
