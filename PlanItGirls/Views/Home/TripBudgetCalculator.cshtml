@@ -114,8 +114,10 @@ Distance: @ViewBag.DistanceBetweenCities
             <td>$@ViewBag.AdjustedTotalBudget</td>
         </tr>
     }
+    </table>
+<table class="table">
     <tr>
-        <th>Restaurant Price Point</th>
+        <th>Meal Selections</th>
         <td>
             <form action="../Home/TripBudgetCalculator" method="get">
                 <select name="restaurantPricePoint">
@@ -136,16 +138,16 @@ Distance: @ViewBag.DistanceBetweenCities
             <td>@ViewBag.Fact</td>
         </tr>
         <tr>
-            <td>$ approximately $10</td>
+            <td>$: approximately $10 per meal</td>
         </tr>
         <tr>
-            <td>$$ approximately $35</td>
+            <td>$$: approximately $35 per meal</td>
         </tr>
         <tr>
-            <td>$$$ approximately $60</td>
+            <td>$$$: approximately $60 per meal</td>
         </tr>
         <tr>
-            <td>$$$$ approximately $100</td>
+            <td>$$$$: approximately $100 per meal</td>
         </tr>
     }
     else
@@ -153,49 +155,49 @@ Distance: @ViewBag.DistanceBetweenCities
         <tr>
             <td>
                 <form action="../Home/TripBudgetCalculator" method="get">
-                    <select name="Restaurant">
+                    <select name="RestaurantSelection">
                         @for (int i = 0; i < ViewBag.Restaurants["businesses"].Count; i++)
                         {
-                            <option value="@ViewBag.Restaurants["businesses"][i]["name"]">@ViewBag.Restaurants["businesses"][i]["name"]</option>
+                            <option value="@ViewBag.Restaurants["businesses"][i]">@ViewBag.Restaurants["businesses"][i]["name"]</option>
                         }
                     </select>
                     <input type="submit" value="Select Restaurant" />
                 </form>
             </td>
+            @if (ViewBag.RestaurantSelection != null)
+            {
+                <td>
+                    <img src="@ViewBag.RestaurantSelection["image_url"]" alt="Restaurant Image" height="75" />
+                </td>
+                <td>
+                    <form action="../Home/TripBudgetCalculator" method="get">
+                        <select name="NumberOfMeals">
+                            @for (int i = 1; i <= @ViewBag.DayDiff*2; i++)
+                            {
+                                <option value="@i">@i</option>
+                            }
+                        </select>
+                        <input type="submit" value="Number of Meals" />
+                    </form>
+                </td>
+            }
         </tr>
         <tr>
             <th>Price per Day</th>
-            <td>$@ViewBag.restaurantPrice</td>
+            <td>$@ViewBag.PricePerMeal</td>
+        </tr>
+        <tr>
+            <th>Length of Stay</th>
+            <td>@ViewBag.NumberOfMeals</td>
+        </tr>
+        <tr>
+            <th>Total Price of Stay</th>
+            <td>$@ViewBag.TotalRestaurantBudget</td>
         </tr>
         <tr>
             <th>Adjusted Budget</th>
-            <td>$@ViewBag.restaurantBudget</td>
+            <td>$@ViewBag.AdjustedRestaurantTotalBudget</td>
         </tr>
-    }
-    <tr>
-        <th>Event Options</th>
-    </tr>
-    @if (ViewBag.Events is null)
-    {
-        <tr>
-            <th>Restaurant Selection</th>
-            <td>@ViewBag.Fact</td>
-        </tr>
-    }
-    else
-    {
-        for (int i = 0; i < ViewBag.Events["events"].Count; i++)
-        {
-            <tr>
-                <td>
-                    @ViewBag.Events["events"][i]["description"]
-                </td>
-                <td>
-                    <a href="@ViewBag.Events["events"][i]["event_site_url"]">See more about this event here</a>
-                </td>
-            </tr>
-
-        }
     }
 </table>
 

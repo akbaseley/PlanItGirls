@@ -37,7 +37,7 @@ namespace PlanItGirls.Controllers
             return View();
         }
 
-        public ActionResult TripBudgetCalculator(string TripID, string hotelPricePoint, string HotelSelection, string NumberOfNights, string restaurantPricePoint)
+        public ActionResult TripBudgetCalculator(string TripID, string hotelPricePoint, string HotelSelection, string NumberOfNights, string restaurantPricePoint, string RestaurantSelection, string NumberOfMeals)
         {
             PlanItDBEntities ORM = new PlanItDBEntities();
             if (TempData["currentTrip"] is null)
@@ -61,8 +61,9 @@ namespace PlanItGirls.Controllers
             ViewBag.drivePrice = drivePrice;
             ViewBag.oneWay = Math.Round(oneWay, 2);
             ViewBag.travelBudget = travelBudget;
+            TempData["travelBudget"] = travelBudget;
 
-
+            #region Hotels
             if (TempData["hotelPricePoint"] is null && hotelPricePoint is null)
             {
                 ViewBag.Hotels = null;
@@ -131,31 +132,105 @@ namespace PlanItGirls.Controllers
                 ViewBag.NumberOfNights = int.Parse(NumberOfNights);
                 double TotalHotelBudget = findHotelBudget(hotelPricePoint) * double.Parse(NumberOfNights);
                 ViewBag.TotalHotelBudget = TotalHotelBudget;
-                ViewBag.AdjustedTotalBudget = travelBudget - TotalHotelBudget;
+                double AdjustedTotalBudget = travelBudget - TotalHotelBudget;
+                ViewBag.AdjustedTotalBudget = AdjustedTotalBudget;
+                TempData["AdjustedTotalBudget"] = AdjustedTotalBudget;
             }
+            #endregion
 
-            if (restaurantPricePoint is null)
+            #region Restaurants
+            if (TempData["restaurantPricePoint"] is null && restaurantPricePoint is null)
             {
                 ViewBag.Restaurants = null;
-                ViewBag.RestaurantBudget = null;
-                ViewBag.RestFact = "Select Price Point to get Restaurant Options";
+                ViewBag.Fact = "Select Price Point to get Hotel Options";
             }
             else
             {
+                if (TempData["restaurantPricePoint"] is null)
+                {
+                    TempData["restaurantPricePoint"] = restaurantPricePoint;
+                }
+                else if (restaurantPricePoint is null)
+                {
+                    restaurantPricePoint = (string)TempData["restaurantPricePoint"];
+                }
+                else if ((string)TempData["restaurantPricePoint"] != restaurantPricePoint)
+                {
+                    TempData["restaurantPricePoint"] = restaurantPricePoint;
+                    restaurantPricePoint = (string)TempData["restaurantPricePoint"];
+                }
+
                 ViewBag.Restaurants = RestaurantsbyPricePoint(currentTrip.TripID, restaurantPricePoint);
-                double restaurantPrice = CalculateRestaurantBudget(restaurantPricePoint);
-                ViewBag.restaurantPrice = restaurantPrice;
-                ViewBag.restaurantBudget = Math.Round(travelBudget - restaurantPrice, 2);
+                ViewBag.PricePerMeal = findRestaurantBudget(restaurantPricePoint);
             }
 
-            TempData["HotelSelection"] = TempData["HotelSelection"];
+            if (TempData["RestaurantSelection"] is null && RestaurantSelection is null)
+            {
+                ViewBag.RestaurantSelection = null;
+            }
+            else
+            {
+                if (TempData["RestaurantSelection"] is null)
+                {
+                    TempData["RestaurantSelection"] = RestaurantSelection;
+                }
+                else if (RestaurantSelection is null)
+                {
+                    RestaurantSelection = (string)TempData["RestaurantSelection"];
+                }
+                else if ((string)TempData["RestaurantSelection"] != RestaurantSelection)
+                {
+                    TempData["RestaurantSelection"] = RestaurantSelection;
+                    RestaurantSelection = (string)TempData["RestaurantSelection"];
+                }
+
+                ViewBag.RestaurantSelection = JObject.Parse(RestaurantSelection);
+                ViewBag.DayDiff = NumOfDays(currentTrip);
+                TempData["RestaurantSelection"] = RestaurantSelection;
+            }
+
+            if (TempData["NumberOfMeals"] is null && NumberOfMeals is null)
+            {
+                ViewBag.NumberOfMeals = null;
+            }
+            else
+            {
+                if (TempData["NumberOfMeals"] is null)
+                {
+                    TempData["NumberOfMeals"] = NumberOfMeals;
+                }
+                else
+                {
+                    NumberOfMeals = (string)TempData["NumberOfMeals"];
+                }
+
+                ViewBag.NumberOfMeals = int.Parse(NumberOfMeals);
+                double TotalRestaurantBudget = findRestaurantBudget(hotelPricePoint) * double.Parse(NumberOfMeals);
+                ViewBag.TotalRestaurantBudget = TotalRestaurantBudget;
+                double AdjustedRestaurantTotalBudget = travelBudget - TotalRestaurantBudget;
+                ViewBag.AdjustedRestaurantTotalBudget = AdjustedRestaurantTotalBudget;
+                TempData["AdjustedRestaurantTotalBudget"] = AdjustedRestaurantTotalBudget;
+            }
+            #endregion
+
+            #region TempData
             TempData["currentTrip"] = TempData["currentTrip"];
+
             TempData["hotelPricePoint"] = TempData["hotelPricePoint"];
-            TempData["NumberOfNigths"] = TempData["NumberOfNigths"];
+            TempData["HotelSelection"] = TempData["HotelSelection"];
+            TempData["NumberOfNights"] = TempData["NumberOfNights"];
+            TempData["AdjustedTotalBudget"] = TempData["AdjustedTotalBudget"];
+
+            TempData["restaurantPricePoint"] = TempData["restaurantPricePoint"];
+            TempData["RestaurantSelection"] = TempData["RestaurantSelection"];
+            TempData["NumberOfMeals"] = TempData["NumberOfMeals"];
+            TempData["AdjustedRestaurantTotalBudget"] = TempData["AdjustedRestaurantTotalBudget"];
+            #endregion
+
             return View();
         }
 
-        public static double CalculateRestaurantBudget(string pricePoint)
+        public static double findRestaurantBudget(string pricePoint)
         {
             double Price = 0;
             if (pricePoint == "1")
@@ -260,7 +335,6 @@ namespace PlanItGirls.Controllers
             JObject YelpData = JObject.Parse(JsonData);
             return YelpData;
         }
-
         public static string ConvertToUnixTime(DateTime currentTime)
         {
             DateTime sTime = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
