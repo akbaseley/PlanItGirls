@@ -8,24 +8,41 @@
 
 
 Distance: @ViewBag.DistanceBetweenCities
-
-
-
-
-<table class="table">
+<table>
     <tr>
-        <th>Distance</th>
-        <th>Avg price per mile</th>
-        <th>Cost: One-Way</th>
-        <th>Cost: Round Trip</th>
-        <th>New balance</th>
+        <td>
+            <form action="/Home/TripBudgetCalculator" method="get">
+                Select Vehicle Type: <select name="VehicleSelection">
+                    <option value="0">---</option>
+                    <option value="1">Car</option>
+                    <option value="2">Crossover</option>
+                    <option value="3">Minivan</option>
+                    <option value="4">Suv/Truck</option>
+                </select>
+                <input type="submit" value="MPG" />
+            </form>
+        </td>
+        @if(!(ViewBag.travelBudget is null))
+        {
+            <td>
+
+            </td>
+        }
     </tr>
-    <tr>
-        <th>@ViewBag.DistanceBetweenCities miles</th>
-        <th>$@ViewBag.drivePrice</th>
-        <th>$@ViewBag.oneWay</th>
-        <th>$@ViewBag.travelBudget</th>
-    </tr>
+
+    @if (ViewBag.travelBudget is null)
+    {
+        <tr>
+            <th>Aprox. gas mileage</th>
+            <td>@ViewBag.Vehicle</td>
+
+        </tr>
+        <tr><td>Car: 29MPG ($.46 per mile)</td></tr>
+        <tr><td>Crossover: 23MPG ($.59 per mile)</td></tr>
+        <tr><td>Minivan: 19MPG ($.65 per mile)</td></tr>
+        <tr><td>Suv/Truck: 16MPG ($.72 per mile)</td></tr>
+
+    }
 </table>
 
 

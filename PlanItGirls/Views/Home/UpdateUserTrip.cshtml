@@ -11,7 +11,7 @@
     <br /><br />
     Start Date: <input type="date" value="@Model.StartDate" name="StartDate" />
     Current Start Date = @Model.StartDate
-                <br /><br />
+    <br /><br />
     End Date: <input type="date" value="@Model.EndDate" name="EndDate" />
     Current End Date = @Model.EndDate
     <br /><br />
@@ -21,11 +21,26 @@
     End City: <input type="text" value="@Model.EndCity" name="EndCity" />
     @Html.DropDownList("EndState", new SelectList(Enum.GetValues(typeof(States))), Model.EndState)
     <br /><br />
-    Budget: <input type="number" value="@Model.Price" name="Price" />
+
+
+
+    Select Vehicle Type:<select name="VehicleSelection">
+                            <option value="0">---</option>
+                            <option value="1">Car</option>
+                            <option value="2">Crossover</option>
+                            <option value="3">Minivan</option>
+                            <option value="4">Suv/Truck</option>
+                        </select>
+    <input type="submit" value="MPG" />
+
+    Budget:
+    <input type="number" value="@Model.Price" name="Price" />
     <input type="submit" value="New Trip" />
 </form>
 
 <form action="/Database/TripList" method="get">
     <input type="submit" value="See your trips" />
 </form>
+
+
 
