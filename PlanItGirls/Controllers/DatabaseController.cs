@@ -35,16 +35,7 @@ namespace PlanItGirls.Controllers
 
             return View("../Home/TripList");
         }
-        public ActionResult NumOfDays(string TripID)
-        {
-            PlanItDBEntities ORM = new PlanItDBEntities();
-            
-            Trip thisTrip = ORM.Trips.Find(TripID);
-            TimeSpan days = thisTrip.EndDate.Subtract(thisTrip.StartDate).Duration();
-            ViewBag.DayDiff = days;
 
-            return RedirectToAction("../API/CalculateDistance");
-        }
         public ActionResult DeleteTrip(string TripID)
         {
 

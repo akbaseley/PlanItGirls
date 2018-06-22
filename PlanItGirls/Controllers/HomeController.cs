@@ -37,7 +37,7 @@ namespace PlanItGirls.Controllers
             return View();
         }
 
-        public ActionResult TripBudgetCalculator(string TripID, string hotelPricePoint, string HotelSelection, string restaurantPricePoint)
+        public ActionResult TripBudgetCalculator(string TripID, string hotelPricePoint, string HotelSelection, string NumberOfNights, string restaurantPricePoint)
         {
             PlanItDBEntities ORM = new PlanItDBEntities();
             if (TempData["currentTrip"] is null)
@@ -54,46 +54,84 @@ namespace PlanItGirls.Controllers
             double Distance = Math.Round(DistanceinKM * 0.621371, 0);
             double drivePrice = 0.608;
             double oneWay = drivePrice * Distance;
-            double roundTrip = oneWay * 2;
             double travelBudget = Math.Round(currentTrip.Price - oneWay, 2);
 
 
             ViewBag.DistanceBetweenCities = Distance;
             ViewBag.drivePrice = drivePrice;
             ViewBag.oneWay = Math.Round(oneWay, 2);
-            ViewBag.roundTrip = Math.Round(roundTrip, 2);
             ViewBag.travelBudget = travelBudget;
-           
-            if (TempData["hotelPricePoint"] is null)
+
+
+            if (TempData["hotelPricePoint"] is null && hotelPricePoint is null)
             {
                 ViewBag.Hotels = null;
-                ViewBag.hotelBudget = null;
                 ViewBag.Fact = "Select Price Point to get Hotel Options";
-
             }
             else
             {
+                if (TempData["hotelPricePoint"] is null)
+                {
+                    TempData["hotelPricePoint"] = hotelPricePoint;
+                }
+                else if (hotelPricePoint is null)
+                {
+                    hotelPricePoint = (string)TempData["hotelPricePoint"];
+                }
+                else if ((string)TempData["hotelPricePoint"] != hotelPricePoint)
+                {
+                    TempData["hotelPricePoint"] = hotelPricePoint;
+                    hotelPricePoint = (string)TempData["hotelPricePoint"];
+                }
+
                 ViewBag.Hotels = HotelsbyPricePoint(currentTrip.TripID, hotelPricePoint);
-
-                double hotelPrice = CalculateHotelBudget(hotelPricePoint);
-                ViewBag.hotelPrice = hotelPrice;
-                ViewBag.hotelBudget = Math.Round(travelBudget - hotelPrice, 2);
-
+                ViewBag.PricePerDay = findHotelBudget(hotelPricePoint);
             }
 
-            if (HotelSelection is null)
+            if (TempData["HotelSelection"] is null && HotelSelection is null)
             {
                 ViewBag.HotelSelection = null;
             }
             else
             {
-                ViewBag.HotelSelection = JObject.Parse(HotelSelection);
-
                 if (TempData["HotelSelection"] is null)
                 {
                     TempData["HotelSelection"] = HotelSelection;
                 }
-                
+                else if (HotelSelection is null)
+                {
+                    HotelSelection = (string)TempData["HotelSelection"];
+                }
+                else if ((string)TempData["HotelSelection"] != HotelSelection)
+                {
+                    TempData["HotelSelection"] = HotelSelection;
+                    HotelSelection = (string)TempData["HotelSelection"];
+                }
+
+                ViewBag.HotelSelection = JObject.Parse(HotelSelection);
+                ViewBag.DayDiff = NumOfDays(currentTrip);
+                TempData["HotelSelection"] = HotelSelection;
+            }
+
+            if (TempData["NumberOfNights"] is null && NumberOfNights is null)
+            {
+                ViewBag.NumberOfNights = null;
+            }
+            else
+            {
+                if(TempData["NumberOfNights"] is null)
+                {
+                    TempData["NumberOfNigths"] = NumberOfNights;
+                }
+                else
+                {
+                    NumberOfNights = (string)TempData["NumberOfNights"];
+                }
+
+                ViewBag.NumberOfNights = int.Parse(NumberOfNights);
+                double TotalHotelBudget = findHotelBudget(hotelPricePoint) * double.Parse(NumberOfNights);
+                ViewBag.TotalHotelBudget = TotalHotelBudget;
+                ViewBag.AdjustedTotalBudget = travelBudget - TotalHotelBudget;
             }
 
             if (restaurantPricePoint is null)
@@ -113,7 +151,7 @@ namespace PlanItGirls.Controllers
             TempData["HotelSelection"] = TempData["HotelSelection"];
             TempData["currentTrip"] = TempData["currentTrip"];
             TempData["hotelPricePoint"] = TempData["hotelPricePoint"];
-
+            TempData["NumberOfNigths"] = TempData["NumberOfNigths"];
             return View();
         }
 
@@ -138,7 +176,7 @@ namespace PlanItGirls.Controllers
             }
             return Price;
         }
-        public static double CalculateHotelBudget(string pricePoint)
+        public static double findHotelBudget(string pricePoint)
         {
             double hotelPrice = 0;
             if (pricePoint == "1")
@@ -158,6 +196,15 @@ namespace PlanItGirls.Controllers
                 hotelPrice = 350;
             }
             return hotelPrice;
+        }
+
+        public static int NumOfDays(Trip thisTrip)
+        {
+
+            TimeSpan days = thisTrip.EndDate.Subtract(thisTrip.StartDate).Duration();
+            int DayDiff = (int)days.TotalDays;
+
+            return DayDiff;
         }
 
         public JObject TripDistance(Trip currentTrip)

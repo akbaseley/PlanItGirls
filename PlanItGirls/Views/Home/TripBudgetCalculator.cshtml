@@ -6,7 +6,6 @@
 
 <h2>Budget Calculator</h2>
 
-<h1>@ViewBag.DayDiff</h1>
 
 Distance: @ViewBag.DistanceBetweenCities
 
@@ -25,7 +24,6 @@ Distance: @ViewBag.DistanceBetweenCities
         <th>@ViewBag.DistanceBetweenCities miles</th>
         <th>$@ViewBag.drivePrice</th>
         <th>$@ViewBag.oneWay</th>
-        <th>$@ViewBag.roundTrip</th>
         <th>$@ViewBag.travelBudget</th>
     </tr>
 </table>
@@ -81,18 +79,39 @@ Distance: @ViewBag.DistanceBetweenCities
                     <input type="submit" value="Select Hotel" />
                 </form>
             </td>
-            @if(ViewBag.HotelSelection != null)
+            @if (ViewBag.HotelSelection != null)
             {
-                <td>@ViewBag.HotelSelection["description"]</td>
+                <td>
+                    <img src="@ViewBag.HotelSelection["image_url"]" alt="Hotel Image" height="75" />
+                </td>
+                <td>
+                    <form action="../Home/TripBudgetCalculator" method="get">
+                        <select name="NumberOfNights">
+                            @for (int i = 1; i <= @ViewBag.DayDiff; i++)
+                            {
+                                <option value="@i">@i</option>
+                            }
+                        </select>
+                        <input type="submit" value="Number of Nights" />
+                    </form>
+                </td>
             }
         </tr>
         <tr>
             <th>Price per Day</th>
-            <td>$@ViewBag.hotelPrice</td>
+            <td>$@ViewBag.PricePerDay</td>
+        </tr>
+        <tr>
+            <th>Length of Stay</th>
+            <td>@ViewBag.NumberOfNights</td>
+        </tr>
+        <tr>
+            <th>Total Price of Stay</th>
+            <td>$@ViewBag.TotalHotelBudget</td>
         </tr>
         <tr>
             <th>Adjusted Budget</th>
-            <td>$@ViewBag.hotelBudget</td>
+            <td>$@ViewBag.AdjustedTotalBudget</td>
         </tr>
     }
     <tr>
@@ -167,15 +186,15 @@ Distance: @ViewBag.DistanceBetweenCities
     {
         for (int i = 0; i < ViewBag.Events["events"].Count; i++)
         {
-        <tr>
-            <td>
-                @ViewBag.Events["events"][i]["description"]
-            </td>
-            <td>
-                <a href="@ViewBag.Events["events"][i]["event_site_url"]">See more about this event here</a>
-            </td>
-        </tr>
-            
+            <tr>
+                <td>
+                    @ViewBag.Events["events"][i]["description"]
+                </td>
+                <td>
+                    <a href="@ViewBag.Events["events"][i]["event_site_url"]">See more about this event here</a>
+                </td>
+            </tr>
+
         }
     }
 </table>
