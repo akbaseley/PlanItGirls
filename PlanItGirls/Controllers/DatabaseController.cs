@@ -25,7 +25,6 @@ namespace PlanItGirls.Controllers
 
             return View("../Home/TripCreation");
         }
-
         public ActionResult TripList()
         {
             PlanItDBEntities ORM = new PlanItDBEntities();
@@ -36,7 +35,6 @@ namespace PlanItGirls.Controllers
 
             return View("../Home/TripList");
         }
-
         public ActionResult NumOfDays(string TripID)
         {
             PlanItDBEntities ORM = new PlanItDBEntities();
@@ -47,8 +45,6 @@ namespace PlanItGirls.Controllers
 
             return RedirectToAction("../API/CalculateDistance");
         }
-
-
         public ActionResult DeleteTrip(string TripID)
         {
 
@@ -88,7 +84,6 @@ namespace PlanItGirls.Controllers
                 return View("Error");
             }
         }
-
         public ActionResult SaveUpdateUserTrip (Trip EditTripDetails)
         {
             PlanItDBEntities ORM = new PlanItDBEntities();
@@ -117,6 +112,16 @@ namespace PlanItGirls.Controllers
             }
 
         }
+
+        //public ActionResult SaveHotelOption(string TripID)
+        //{
+
+        //}
+
+        //public ActionResult SaveRestaurantOption(string TripID)
+        //{
+
+        //}
 
 
 

@@ -72,15 +72,19 @@ Distance: @ViewBag.DistanceBetweenCities
         <tr>
             <td>
                 <form action="../Home/TripBudgetCalculator" method="get">
-                    <select name="Hotel">
+                    <select name="HotelSelection">
                         @for (int i = 0; i < ViewBag.Hotels["businesses"].Count; i++)
                         {
-                            <option value="@ViewBag.Hotels["businesses"][i]["name"]">@ViewBag.Hotels["businesses"][i]["name"]</option>
+                            <option value="@ViewBag.Hotels["businesses"][i]">@ViewBag.Hotels["businesses"][i]["name"]</option>
                         }
                     </select>
                     <input type="submit" value="Select Hotel" />
                 </form>
             </td>
+            @if(ViewBag.HotelSelection != null)
+            {
+                <td>@ViewBag.HotelSelection["description"]</td>
+            }
         </tr>
         <tr>
             <th>Price per Day</th>

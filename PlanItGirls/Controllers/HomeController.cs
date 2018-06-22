@@ -37,7 +37,7 @@ namespace PlanItGirls.Controllers
             return View();
         }
 
-        public ViewResult TripBudgetCalculator(string TripID, string hotelPricePoint, string restaurantPricePoint)
+        public ActionResult TripBudgetCalculator(string TripID, string hotelPricePoint, string HotelSelection, string restaurantPricePoint)
         {
             PlanItDBEntities ORM = new PlanItDBEntities();
             if (TempData["currentTrip"] is null)
@@ -57,6 +57,7 @@ namespace PlanItGirls.Controllers
             double roundTrip = oneWay * 2;
             double travelBudget = Math.Round(currentTrip.Price - oneWay, 2);
 
+
             ViewBag.DistanceBetweenCities = Distance;
             ViewBag.drivePrice = drivePrice;
             ViewBag.oneWay = Math.Round(oneWay, 2);
@@ -68,13 +69,34 @@ namespace PlanItGirls.Controllers
                 ViewBag.Hotels = null;
                 ViewBag.hotelBudget = null;
                 ViewBag.Fact = "Select Price Point to get Hotel Options";
+
             }
             else
             {
                 ViewBag.Hotels = HotelsbyPricePoint(currentTrip.TripID, hotelPricePoint);
+
                 double hotelPrice = CalculateHotelBudget(hotelPricePoint);
                 ViewBag.hotelPrice = hotelPrice;
                 ViewBag.hotelBudget = Math.Round(travelBudget - hotelPrice, 2);
+
+                if (TempData["hotelPricePoint"] is null)
+                {
+                    TempData["hotelPricePoint"] = hotelPricePoint;
+                }
+            }
+
+            if (HotelSelection is null)
+            {
+                ViewBag.HotelSelection = null;
+            }
+            else
+            {
+                ViewBag.HotelSelection = JObject.Parse(HotelSelection);
+
+                if (TempData["HotelSelection"] is null)
+                {
+                    TempData["HotelSelection"] = HotelSelection;
+                }
             }
 
             if (restaurantPricePoint is null)
@@ -91,9 +113,10 @@ namespace PlanItGirls.Controllers
                 ViewBag.restaurantBudget = Math.Round(travelBudget - restaurantPrice, 2);
             }
 
-            ViewBag.Events = EventsbyPricePoint(currentTrip.TripID);
-
+            TempData["HotelSelection"] = TempData["HotelSelection"];
             TempData["currentTrip"] = TempData["currentTrip"];
+            TempData["hotelPricePoint"] = TempData["hotelPricePoint"];
+
             return View();
         }
 
@@ -199,6 +222,8 @@ namespace PlanItGirls.Controllers
             DateTime sTime = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
             return ((currentTime - sTime).TotalSeconds).ToString();
         }
+
+
     }
 
 }
