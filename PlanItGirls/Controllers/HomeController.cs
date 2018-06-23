@@ -30,8 +30,11 @@ namespace PlanItGirls.Controllers
         {
             return View();
         }
+
+        
         public ActionResult TripBudgetCalculator(string VehicleSelection, string TripID, string hotelPricePoint, string HotelSelection, string NumberOfNights, string restaurantPricePoint, string RestaurantSelection, string NumberOfMeals)
         {
+            #region Budget Calculator
             double travelBudget = 0;
             PlanItDBEntities ORM = new PlanItDBEntities();
             if (TempData["currentTrip"] is null)
@@ -59,7 +62,6 @@ namespace PlanItGirls.Controllers
                 else if ((string)TempData["VehicleSelection"] != VehicleSelection)
                 {
                     TempData["VehicleSelection"] = VehicleSelection;
-                    VehicleSelection = (string)TempData["VehicleSelection"];
                 }
                 JObject GoogleData = TripDistance(currentTrip);
                 double DistanceinKM = (double.Parse(GoogleData["routes"][0]["legs"][0]["distance"]["value"].ToString())) / 1000;
@@ -73,6 +75,7 @@ namespace PlanItGirls.Controllers
                 ViewBag.travelBudget = travelBudget;
                 TempData["travelBudget"] = travelBudget;
             }
+            #endregion
             #region Hotels
             if (TempData["hotelPricePoint"] is null && hotelPricePoint is null)
             {
@@ -92,7 +95,6 @@ namespace PlanItGirls.Controllers
                 else if ((string)TempData["hotelPricePoint"] != hotelPricePoint)
                 {
                     TempData["hotelPricePoint"] = hotelPricePoint;
-                    hotelPricePoint = (string)TempData["hotelPricePoint"];
                 }
                 ViewBag.Hotels = HotelsbyPricePoint(currentTrip.TripID, hotelPricePoint);
                 ViewBag.PricePerDay = findHotelBudget(hotelPricePoint);
@@ -114,7 +116,6 @@ namespace PlanItGirls.Controllers
                 else if ((string)TempData["HotelSelection"] != HotelSelection)
                 {
                     TempData["HotelSelection"] = HotelSelection;
-                    HotelSelection = (string)TempData["HotelSelection"];
                 }
                 ViewBag.HotelSelection = JObject.Parse(HotelSelection);
                 ViewBag.DayDiff = NumOfDays(currentTrip);
