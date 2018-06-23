@@ -1,9 +1,11 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    color: #49C6D0;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
-/* Set padding to keep content from hitting the edges */
+/* Set padding to keep content from hitting the edges*/
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
@@ -22,3 +24,35 @@ select,
 textarea {
     max-width: 280px;
 }
+
+ul {
+    font-family: Arial, Helvetica, sans-serif;
+    list-style-type: none;
+}
+
+
+h2 {
+    color: #F7A55D;
+}
+
+/*td {
+    background-color: #49C6D0;
+    color: white;
+}*/
+
+
+.navbar-nav > li {
+    margin-left: 200px;
+    margin-right: 200px;
+}
+
+ul p {
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.button {
+    background-color: #49C6D0;
+    border: none;
+    color: white;
+    padding: 20px;
