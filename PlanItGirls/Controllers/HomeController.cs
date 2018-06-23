@@ -8,7 +8,6 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using PlanItGirls.Models;
-
 namespace PlanItGirls.Controllers
 {
     public class HomeController : Controller
@@ -17,28 +16,21 @@ namespace PlanItGirls.Controllers
         {
             return View();
         }
-
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
-
             return View();
         }
-
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
-
             return View();
         }
-
         public ActionResult TripCreation()
         {
             return View();
         }
-
         public ActionResult TripBudgetCalculator(string VehicleSelection, string TripID, string hotelPricePoint, string HotelSelection, string NumberOfNights, string restaurantPricePoint, string RestaurantSelection, string NumberOfMeals)
-
         {
             double travelBudget = 0;
             PlanItDBEntities ORM = new PlanItDBEntities();
@@ -46,13 +38,10 @@ namespace PlanItGirls.Controllers
             {
                 TempData["currentTrip"] = ORM.Trips.Find(TripID);
             }
-
             Trip currentTrip = (Trip)TempData["currentTrip"];
-
             ViewBag.currentTrip = currentTrip;
-
             //ViewBag.drivePrice = drivePrice;
-                       
+
             if (TempData["VehicleSelection"] is null && VehicleSelection is null)
             {
                 ViewBag.Vehicle = "Please select your vehicle";
@@ -72,7 +61,6 @@ namespace PlanItGirls.Controllers
                     TempData["VehicleSelection"] = VehicleSelection;
                     VehicleSelection = (string)TempData["VehicleSelection"];
                 }
-
                 JObject GoogleData = TripDistance(currentTrip);
                 double DistanceinKM = (double.Parse(GoogleData["routes"][0]["legs"][0]["distance"]["value"].ToString())) / 1000;
                 double Distance = Math.Round(DistanceinKM * 0.621371, 0);
@@ -80,14 +68,12 @@ namespace PlanItGirls.Controllers
                 //double drivePrice = 0.608;  
                 double oneWay = double.Parse(VehicleSelection) * Distance;
                 travelBudget = Math.Round(currentTrip.Price - oneWay, 2);
-
                 ViewBag.DistanceBetweenCities = Distance;
                 ViewBag.oneWay = Math.Round(oneWay, 2);
                 ViewBag.travelBudget = travelBudget;
                 TempData["travelBudget"] = travelBudget;
             }
-
-        #region Hotels
+            #region Hotels
             if (TempData["hotelPricePoint"] is null && hotelPricePoint is null)
             {
                 ViewBag.Hotels = null;
@@ -108,11 +94,9 @@ namespace PlanItGirls.Controllers
                     TempData["hotelPricePoint"] = hotelPricePoint;
                     hotelPricePoint = (string)TempData["hotelPricePoint"];
                 }
-
                 ViewBag.Hotels = HotelsbyPricePoint(currentTrip.TripID, hotelPricePoint);
                 ViewBag.PricePerDay = findHotelBudget(hotelPricePoint);
             }
-
             if (TempData["HotelSelection"] is null && HotelSelection is null)
             {
                 ViewBag.HotelSelection = null;
@@ -132,19 +116,17 @@ namespace PlanItGirls.Controllers
                     TempData["HotelSelection"] = HotelSelection;
                     HotelSelection = (string)TempData["HotelSelection"];
                 }
-
                 ViewBag.HotelSelection = JObject.Parse(HotelSelection);
                 ViewBag.DayDiff = NumOfDays(currentTrip);
                 TempData["HotelSelection"] = HotelSelection;
             }
-
             if (TempData["NumberOfNights"] is null && NumberOfNights is null)
             {
                 ViewBag.NumberOfNights = null;
             }
             else
             {
-                if(TempData["NumberOfNights"] is null)
+                if (TempData["NumberOfNights"] is null)
                 {
                     TempData["NumberOfNigths"] = NumberOfNights;
                 }
@@ -152,7 +134,6 @@ namespace PlanItGirls.Controllers
                 {
                     NumberOfNights = (string)TempData["NumberOfNights"];
                 }
-
                 ViewBag.NumberOfNights = int.Parse(NumberOfNights);
                 double TotalHotelBudget = findHotelBudget(hotelPricePoint) * double.Parse(NumberOfNights);
                 ViewBag.TotalHotelBudget = TotalHotelBudget;
@@ -161,8 +142,7 @@ namespace PlanItGirls.Controllers
                 TempData["AdjustedTotalBudget"] = AdjustedTotalBudget;
             }
             #endregion
-
-        #region Restaurants
+            #region Restaurants
             if (TempData["restaurantPricePoint"] is null && restaurantPricePoint is null)
             {
                 ViewBag.Restaurants = null;
@@ -183,12 +163,10 @@ namespace PlanItGirls.Controllers
                     TempData["restaurantPricePoint"] = restaurantPricePoint;
                     restaurantPricePoint = (string)TempData["restaurantPricePoint"];
                 }
-
                 ViewBag.Restaurants = RestaurantsbyPricePoint(currentTrip.TripID, restaurantPricePoint);
                 ViewBag.PricePerMeal = findRestaurantBudget(restaurantPricePoint);
             }
-
-    if (TempData["RestaurantSelection"] is null && RestaurantSelection is null)
+            if (TempData["RestaurantSelection"] is null && RestaurantSelection is null)
             {
                 ViewBag.RestaurantSelection = null;
             }
@@ -207,12 +185,10 @@ namespace PlanItGirls.Controllers
                     TempData["RestaurantSelection"] = RestaurantSelection;
                     RestaurantSelection = (string)TempData["RestaurantSelection"];
                 }
-
                 ViewBag.RestaurantSelection = JObject.Parse(RestaurantSelection);
                 ViewBag.DayDiff = NumOfDays(currentTrip);
                 TempData["RestaurantSelection"] = RestaurantSelection;
             }
-
             if (TempData["NumberOfMeals"] is null && NumberOfMeals is null)
             {
                 ViewBag.NumberOfMeals = null;
@@ -227,7 +203,6 @@ namespace PlanItGirls.Controllers
                 {
                     NumberOfMeals = (string)TempData["NumberOfMeals"];
                 }
-
                 ViewBag.NumberOfMeals = int.Parse(NumberOfMeals);
                 double TotalRestaurantBudget = findRestaurantBudget(hotelPricePoint) * double.Parse(NumberOfMeals);
                 ViewBag.TotalRestaurantBudget = TotalRestaurantBudget;
@@ -236,27 +211,20 @@ namespace PlanItGirls.Controllers
                 TempData["AdjustedRestaurantTotalBudget"] = AdjustedRestaurantTotalBudget;
             }
             #endregion
-
-        #region TempData
-
+            #region TempData
             TempData["VehicleSelection"] = TempData["VehicleSelection"];
             TempData["currentTrip"] = TempData["currentTrip"];
-
             TempData["hotelPricePoint"] = TempData["hotelPricePoint"];
             TempData["HotelSelection"] = TempData["HotelSelection"];
             TempData["NumberOfNights"] = TempData["NumberOfNights"];
             TempData["AdjustedTotalBudget"] = TempData["AdjustedTotalBudget"];
-
             TempData["restaurantPricePoint"] = TempData["restaurantPricePoint"];
             TempData["RestaurantSelection"] = TempData["RestaurantSelection"];
             TempData["NumberOfMeals"] = TempData["NumberOfMeals"];
             TempData["AdjustedRestaurantTotalBudget"] = TempData["AdjustedRestaurantTotalBudget"];
             #endregion
-
             return View();
         }
-
-
         public static double CalculateGasBudget(string VehicleSelection)
         {
             double GasPrice = 0;
@@ -278,8 +246,6 @@ namespace PlanItGirls.Controllers
             }
             return GasPrice;
         }
-
-
         public static double findRestaurantBudget(string pricePoint)
         {
             double Price = 0;
@@ -322,16 +288,12 @@ namespace PlanItGirls.Controllers
             }
             return hotelPrice;
         }
-
         public static int NumOfDays(Trip thisTrip)
         {
-
             TimeSpan days = thisTrip.EndDate.Subtract(thisTrip.StartDate).Duration();
             int DayDiff = (int)days.TotalDays;
-
             return DayDiff;
         }
-
         public JObject TripDistance(Trip currentTrip)
         {
             HttpWebRequest WR = WebRequest.CreateHttp($"https://maps.googleapis.com/maps/api/directions/json?origin=" + currentTrip.StartCity + "+" + currentTrip.StartState + "&destination=" + currentTrip.EndCity + "," + currentTrip.EndState + "&key=" + ConfigurationManager.AppSettings["GoogleAPIKey"]);
@@ -340,10 +302,8 @@ namespace PlanItGirls.Controllers
             StreamReader data = new StreamReader(Response.GetResponseStream());
             string JsonData = data.ReadToEnd();
             JObject GoogleData = JObject.Parse(JsonData);
-
             return GoogleData;
         }
-
         public JObject HotelsbyPricePoint(string TripID, string pricePoint)
         {
             PlanItDBEntities ORM = new PlanItDBEntities();
@@ -390,9 +350,5 @@ namespace PlanItGirls.Controllers
             DateTime sTime = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
             return ((currentTime - sTime).TotalSeconds).ToString();
         }
-
-
     }
-
 }
-

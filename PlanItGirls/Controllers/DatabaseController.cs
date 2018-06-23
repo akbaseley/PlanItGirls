@@ -99,7 +99,7 @@ namespace PlanItGirls.Controllers
             else
             {
                 ViewBag.ErrorMessage = "Task not Found";
-                return View("you suck!!!");
+                return View("Error");
             }
 
         }
