@@ -8,7 +8,7 @@
 
 
 Distance: @ViewBag.DistanceBetweenCities
-<table>
+<table class="table">
     <tr>
         <td>
             <form action="/Home/TripBudgetCalculator" method="get">
@@ -22,20 +22,34 @@ Distance: @ViewBag.DistanceBetweenCities
                 <input type="submit" value="MPG" />
             </form>
         </td>
-        @if(!(ViewBag.travelBudget is null))
-        {
-            <td>
-
-            </td>
-        }
     </tr>
+</table>
+<table>
+    @if (ViewBag.GasPrice != null)
+    {
+        <tr>
+            <th>Price Per Mile:</th>
+            <td>$@ViewBag.GasPrice</td>
+        </tr>
+        <tr>
+            <th>Miles between Cities:</th>
+            <td>@ViewBag.DistanceBetweenCities</td>
+        </tr>
+        <tr>
+            <th>Cost each way:</th>
+            <td>@ViewBag.oneWayCost</td>
+        </tr>
+        <tr>
+            <th>AdjustedBudget:</th>
+            <td>@ViewBag.travelBudget</td>
+        </tr>
+    }
 
-    @if (ViewBag.travelBudget is null)
+    else if (ViewBag.GasPrice is null)
     {
         <tr>
             <th>Aprox. gas mileage</th>
-            <td>@ViewBag.Vehicle</td>
-
+            <td>@ViewBag.SelectVehicle</td>
         </tr>
         <tr><td>Car: 29MPG ($.46 per mile)</td></tr>
         <tr><td>Crossover: 23MPG ($.59 per mile)</td></tr>
@@ -45,8 +59,6 @@ Distance: @ViewBag.DistanceBetweenCities
     }
 </table>
 
-
-<h2>Select your Options</h2>
 <table class="table">
     <tr>
         <th>Hotel Price Point</th>
@@ -62,6 +74,9 @@ Distance: @ViewBag.DistanceBetweenCities
                 <input type="submit" value="Price Range" />
             </form>
         </td>
+        <td></td>
+        <th>Remaining Budget:</th>
+        <td>@ViewBag.travelBudget</td>
     </tr>
     @if (ViewBag.Hotels is null)
     {
@@ -70,17 +85,15 @@ Distance: @ViewBag.DistanceBetweenCities
             <td>@ViewBag.Fact</td>
         </tr>
         <tr>
-            <td>$: approximately $80</td>
+            <th>Approx. Hotel Costs</th>
+            <td></td>
+            <th>Remaining Budget:</th>
+            <td>@ViewBag.travelBudget</td>
         </tr>
-        <tr>
-            <td>$$: approximately $150</td>
-        </tr>
-        <tr>
-            <td>$$$: approximately $225</td>
-        </tr>
-        <tr>
-            <td>$$$$: approximately $350</td>
-        </tr>
+        <tr><td>$: $80 per night</td></tr>
+        <tr><td>$$: $150 per night</td></tr>
+        <tr><td>$$$: $225 per night</td></tr>
+        <tr><td>$$$$: $350 per night</td></tr>
     }
     else
     {
@@ -112,6 +125,9 @@ Distance: @ViewBag.DistanceBetweenCities
                         <input type="submit" value="Number of Nights" />
                     </form>
                 </td>
+                <td></td>
+                <th>Remaining Budget:</th>
+                <td>@ViewBag.travelBudget</td>
             }
         </tr>
         <tr>
@@ -131,7 +147,10 @@ Distance: @ViewBag.DistanceBetweenCities
             <td>$@ViewBag.AdjustedTotalBudget</td>
         </tr>
     }
-    </table>
+</table>
+<form action="../Database/SaveHotelOption">
+    @*<input type="submit" value="Save This Hotel" />*@
+</form>
 <table class="table">
     <tr>
         <th>Meal Selections</th>
@@ -151,21 +170,20 @@ Distance: @ViewBag.DistanceBetweenCities
     @if (ViewBag.Restaurants is null)
     {
         <tr>
-            <th>Restaurant Selection</th>
+            <th>Meal Selection</th>
             <td>@ViewBag.Fact</td>
         </tr>
         <tr>
-            <td>$: approximately $10 per meal</td>
+            <th>Approx. Meal Costs</th>
+            <td></td>
+            <th>Remaining Budget:</th>
+            <td>@ViewBag.AdjustedTotalBudget</td>
         </tr>
-        <tr>
-            <td>$$: approximately $35 per meal</td>
-        </tr>
-        <tr>
-            <td>$$$: approximately $60 per meal</td>
-        </tr>
-        <tr>
-            <td>$$$$: approximately $100 per meal</td>
-        </tr>
+        <tr><td>$: $10 per meal</td></tr>
+        <tr><td>$$: $35 per meal</td></tr>
+        <tr><td>$$$: $60 per meal</td></tr>
+        <tr><td>$$$$: $100 per meal</td></tr>
+
     }
     else
     {
@@ -189,7 +207,7 @@ Distance: @ViewBag.DistanceBetweenCities
                 <td>
                     <form action="../Home/TripBudgetCalculator" method="get">
                         <select name="NumberOfMeals">
-                            @for (int i = 1; i <= @ViewBag.DayDiff*2; i++)
+                            @for (int i = 1; i <= @ViewBag.DayDiff * 2; i++)
                             {
                                 <option value="@i">@i</option>
                             }
@@ -197,6 +215,9 @@ Distance: @ViewBag.DistanceBetweenCities
                         <input type="submit" value="Number of Meals" />
                     </form>
                 </td>
+                <td></td>
+                <th>Remaining Budget:</th>
+                <td>@ViewBag.AdjustedTotalBudget</td>
             }
         </tr>
         <tr>
@@ -217,5 +238,12 @@ Distance: @ViewBag.DistanceBetweenCities
         </tr>
     }
 </table>
+<form action="../Database/SaveRestaurantOption">
+    <input type="submit" value="Save This Restaurant" />
+</form>
+
+<form action="../TripSummary">
+    <input type="submit" value="Trip Summary" />
+</form>
 
 

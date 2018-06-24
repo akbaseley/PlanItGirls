@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using Newtonsoft.Json.Linq;
 
 namespace PlanItGirls.Controllers
 {
@@ -104,15 +105,68 @@ namespace PlanItGirls.Controllers
 
         }
 
-        //public ActionResult SaveHotelOption(string TripID)
-        //{
+        public ActionResult SaveHotelOption()
+        {
+            PlanItDBEntities ORM = new PlanItDBEntities();
 
-        //}
+            Trip currentTrip = (Trip)TempData["currentTrip"];
+            string thisHotel = (string)TempData["HotelSelection"];
+            JObject currentHotel = (JObject)thisHotel;
+            Lodge newHotel = new Lodge();
+            newHotel.TripID = currentTrip.TripID;
+            newHotel.Price = (decimal)TempData["hotelPricePoint"];
+            newHotel.Address = (string)currentHotel["location"]["adddress1"];
+            newHotel.City = (string)currentHotel["location"]["city"];
+            newHotel.State = (string)currentHotel["location"]["state"];
+            newHotel.PostalCode = (string)currentHotel["location"]["zip_code"];
+            newHotel.PhoneNumber = (string)currentHotel["display_phone"];
+            ORM.Lodges.Add(newHotel);
+            ORM.SaveChanges();
 
-        //public ActionResult SaveRestaurantOption(string TripID)
-        //{
+            TempData["VehicleSelection"] = TempData["VehicleSelection"];
+            TempData["currentTrip"] = TempData["currentTrip"];
+            TempData["hotelPricePoint"] = TempData["hotelPricePoint"];
+            TempData["HotelSelection"] = TempData["HotelSelection"];
+            TempData["NumberOfNights"] = TempData["NumberOfNights"];
+            TempData["AdjustedTotalBudget"] = TempData["AdjustedTotalBudget"];
+            TempData["restaurantPricePoint"] = TempData["restaurantPricePoint"];
+            TempData["RestaurantSelection"] = TempData["RestaurantSelection"];
+            TempData["NumberOfMeals"] = TempData["NumberOfMeals"];
+            TempData["AdjustedRestaurantTotalBudget"] = TempData["AdjustedRestaurantTotalBudget"];
+            return RedirectToAction("../Home/TripBudgetCalculator");
+        }
 
-        //}
+        public ActionResult SaveRestaurantOption(string TripID)
+        {
+            PlanItDBEntities ORM = new PlanItDBEntities();
+
+            Trip currentTrip = (Trip)TempData["currentTrip"];
+            string thisRestaurant = (string)TempData["RestaurantSelection"];
+            JObject currentRestaurant = (JObject)thisRestaurant;
+            Food newRestaurant = new Food();
+            newRestaurant.TripID = currentTrip.TripID;
+            newRestaurant.Price = (int)TempData["restaurantPricePoint"];
+            newRestaurant.Address = (string)currentRestaurant["location"]["adddress1"];
+            newRestaurant.City = (string)currentRestaurant["location"]["city"];
+            newRestaurant.State = (string)currentRestaurant["location"]["state"];
+            newRestaurant.PostalCode = (string)currentRestaurant["location"]["zip_code"];
+            newRestaurant.PhoneNumber = (string)currentRestaurant["display_phone"];
+            newRestaurant.URL = (string)currentRestaurant["url"];
+            ORM.Foods.Add(newRestaurant);
+            ORM.SaveChanges();
+
+            TempData["VehicleSelection"] = TempData["VehicleSelection"];
+            TempData["currentTrip"] = TempData["currentTrip"];
+            TempData["hotelPricePoint"] = TempData["hotelPricePoint"];
+            TempData["HotelSelection"] = TempData["HotelSelection"];
+            TempData["NumberOfNights"] = TempData["NumberOfNights"];
+            TempData["AdjustedTotalBudget"] = TempData["AdjustedTotalBudget"];
+            TempData["restaurantPricePoint"] = TempData["restaurantPricePoint"];
+            TempData["RestaurantSelection"] = TempData["RestaurantSelection"];
+            TempData["NumberOfMeals"] = TempData["NumberOfMeals"];
+            TempData["AdjustedRestaurantTotalBudget"] = TempData["AdjustedRestaurantTotalBudget"];
+            return RedirectToAction("../Home/TripBudgetCalculator");
+        }
 
 
 

@@ -34,7 +34,6 @@ namespace PlanItGirls.Controllers
         
         public ActionResult TripBudgetCalculator(string VehicleSelection, string TripID, string hotelPricePoint, string HotelSelection, string NumberOfNights, string restaurantPricePoint, string RestaurantSelection, string NumberOfMeals)
         {
-            #region Budget Calculator
             double travelBudget = 0;
             PlanItDBEntities ORM = new PlanItDBEntities();
             if (TempData["currentTrip"] is null)
@@ -43,11 +42,13 @@ namespace PlanItGirls.Controllers
             }
             Trip currentTrip = (Trip)TempData["currentTrip"];
             ViewBag.currentTrip = currentTrip;
+
+            #region Budget Calculator
             //ViewBag.drivePrice = drivePrice;
 
             if (TempData["VehicleSelection"] is null && VehicleSelection is null)
             {
-                ViewBag.Vehicle = "Please select your vehicle";
+                ViewBag.SelectVehicle = "Please select your vehicle";
             }
             else
             {
@@ -68,10 +69,11 @@ namespace PlanItGirls.Controllers
                 double Distance = Math.Round(DistanceinKM * 0.621371, 0);
                 double travelCost = Distance / CalculateGasBudget(VehicleSelection);
                 //double drivePrice = 0.608;  
-                double oneWay = double.Parse(VehicleSelection) * Distance;
-                travelBudget = Math.Round(currentTrip.Price - oneWay, 2);
+                double oneWayCost = double.Parse(VehicleSelection) * Distance;
+                travelBudget = Math.Round(currentTrip.Price - oneWayCost, 2);
+                ViewBag.GasPrice = CalculateGasBudget(VehicleSelection);
                 ViewBag.DistanceBetweenCities = Distance;
-                ViewBag.oneWay = Math.Round(oneWay, 2);
+                ViewBag.oneWayCost = Math.Round((oneWayCost * CalculateGasBudget(VehicleSelection)), 2);
                 ViewBag.travelBudget = travelBudget;
                 TempData["travelBudget"] = travelBudget;
             }
@@ -162,7 +164,6 @@ namespace PlanItGirls.Controllers
                 else if ((string)TempData["restaurantPricePoint"] != restaurantPricePoint)
                 {
                     TempData["restaurantPricePoint"] = restaurantPricePoint;
-                    restaurantPricePoint = (string)TempData["restaurantPricePoint"];
                 }
                 ViewBag.Restaurants = RestaurantsbyPricePoint(currentTrip.TripID, restaurantPricePoint);
                 ViewBag.PricePerMeal = findRestaurantBudget(restaurantPricePoint);
@@ -231,19 +232,19 @@ namespace PlanItGirls.Controllers
             double GasPrice = 0;
             if (VehicleSelection == "1")
             {
-                GasPrice = .46;
+                GasPrice = 0.46;
             }
             else if (VehicleSelection == "2")
             {
-                GasPrice = .59;
+                GasPrice = 0.59;
             }
             else if (VehicleSelection == "3")
             {
-                GasPrice = 65;
+                GasPrice = 0.65;
             }
             else if (VehicleSelection == "4")
             {
-                GasPrice = .72;
+                GasPrice = 0.72;
             }
             return GasPrice;
         }
