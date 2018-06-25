@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewBag.Title = "TripSummary";
+}
+<h2>Trip Summary</h2>
+
+<div class="container">
+    <div class="row">
+        @foreach (var Lodge in ViewBag.currentTrip.Lodge)
+        {
+            <div class="col-sm-4">
+                <h5>
+                    @Lodge.Lodging
+                </h5>
+                <h6>
+                    @Lodge.Price per Night
+                </h6>
+                <h6>
+                @Lodge.NumberOfNights
+                </h6>
+                <h6>
+                @Lodge.Address
+                </h6>
+                <h6>
+                @Lodge.City, @Lodge.State @Lodge.PostalCode
+                </h6>
+                <h6>
+                @Lodge.PhoneNumber
+                </h6>
+                <h6>
+                @Lodge.URL
+                </h6>
+
+            </div>
+        }
+    </div>
+</div>

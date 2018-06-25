@@ -16,7 +16,7 @@ namespace PlanItGirls.Models
     public partial class PlanItDBEntities : DbContext
     {
 
-        public PlanItDBEntities() 
+        public PlanItDBEntities()
             : base("name=PlanItDBEntities")
         { 
         }
@@ -27,8 +27,8 @@ namespace PlanItGirls.Models
         }
     
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
+        public virtual DbSet<Trip> Trips { get; set; }
         public virtual DbSet<Food> Foods { get; set; }
         public virtual DbSet<Lodge> Lodges { get; set; }
-        public virtual DbSet<Trip> Trips { get; set; }
     }
 }

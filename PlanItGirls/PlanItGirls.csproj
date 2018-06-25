@@ -354,6 +354,7 @@
     <Content Include="Views\Home\UpdateUserTrip.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Views\Web.config" />
+    <Content Include="Views\Home\TripSummary.cshtml" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

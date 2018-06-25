@@ -150,16 +150,22 @@ namespace PlanItGirls.Controllers
 
             Trip currentTrip = (Trip)TempData["currentTrip"];
             string thisRestaurant = (string)TempData["RestaurantSelection"];
-            JObject currentRestaurant = (JObject)thisRestaurant;
+            string NumberOfMeals = (string)TempData["NumberOfMeals"];
+            string restaurantPricePoint = (string)TempData["restaurantPricePoint"];
+            JObject currentRestaurant = JObject.Parse(thisRestaurant);
             Food newRestaurant = new Food();
-            newRestaurant.TripID = currentTrip.TripID;
-            newRestaurant.Price = (int)TempData["restaurantPricePoint"];
-            newRestaurant.Address = (string)currentRestaurant["location"]["adddress1"];
+
+            newRestaurant.Restaurant = (string)currentRestaurant["name"];
+            newRestaurant.Price = int.Parse(restaurantPricePoint);
+            newRestaurant.NumberOfMeals = int.Parse(NumberOfMeals);
+            newRestaurant.Address = (string)currentRestaurant["location"]["address1"];
             newRestaurant.City = (string)currentRestaurant["location"]["city"];
             newRestaurant.State = (string)currentRestaurant["location"]["state"];
             newRestaurant.PostalCode = (string)currentRestaurant["location"]["zip_code"];
             newRestaurant.PhoneNumber = (string)currentRestaurant["display_phone"];
             newRestaurant.URL = (string)currentRestaurant["url"];
+            newRestaurant.TripID = currentTrip.TripID;
+
             ORM.Foods.Add(newRestaurant);
             ORM.SaveChanges();
 

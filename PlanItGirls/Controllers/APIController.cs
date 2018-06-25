@@ -55,5 +55,6 @@ namespace PlanItGirls.Controllers
             return View("SearchResultsPage");
 
         }      
+
     }
 }

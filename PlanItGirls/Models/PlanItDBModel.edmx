@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="planitdbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="planitdbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AspNetUsers">
           <Key>
             <PropertyRef Name="Id" />
@@ -24,7 +24,7 @@
         </EntityType>
         <EntityType Name="Food">
           <Key>
-            <PropertyRef Name="TripID" />
+            <PropertyRef Name="Restaurant" />
           </Key>
           <Property Name="Restaurant" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Price" Type="int" Nullable="false" />
@@ -39,7 +39,7 @@
         </EntityType>
         <EntityType Name="Lodge">
           <Key>
-            <PropertyRef Name="TripID" />
+            <PropertyRef Name="Lodging" />
           </Key>
           <Property Name="Lodging" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Price" Type="int" Nullable="false" />
@@ -71,7 +71,7 @@
         </EntityType>
         <Association Name="FK_Food_Trip">
           <End Role="Trips" Type="Self.Trips" Multiplicity="1" />
-          <End Role="Food" Type="Self.Food" Multiplicity="0..1" />
+          <End Role="Food" Type="Self.Food" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Trips">
               <PropertyRef Name="TripID" />
@@ -83,7 +83,7 @@
         </Association>
         <Association Name="FK_Lodge_Trip">
           <End Role="Trips" Type="Self.Trips" Multiplicity="1" />
-          <End Role="Lodge" Type="Self.Lodge" Multiplicity="0..1" />
+          <End Role="Lodge" Type="Self.Lodge" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Trips">
               <PropertyRef Name="TripID" />
@@ -123,8 +123,7 @@
             <End Role="Trips" EntitySet="Trips" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="planitdbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -146,38 +145,6 @@
           <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Trips" Relationship="Self.FK_Trip_AspNetUsers" FromRole="AspNetUsers" ToRole="Trips" />
         </EntityType>
-        <EntityType Name="Food">
-          <Key>
-            <PropertyRef Name="TripID" />
-          </Key>
-          <Property Name="Restaurant" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Price" Type="Int32" Nullable="false" />
-          <Property Name="NumberOfMeals" Type="Int32" Nullable="false" />
-          <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="PostalCode" Type="String" MaxLength="5" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="PhoneNumber" Type="String" MaxLength="14" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="URL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="TripID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Trip" Relationship="Self.FK_Food_Trip" FromRole="Food" ToRole="Trips" />
-        </EntityType>
-        <EntityType Name="Lodge">
-          <Key>
-            <PropertyRef Name="TripID" />
-          </Key>
-          <Property Name="Lodging" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Price" Type="Int32" Nullable="false" />
-          <Property Name="NumberOfNights" Type="Int32" Nullable="false" />
-          <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="PostalCode" Type="String" MaxLength="5" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="PhoneNumber" Type="String" MaxLength="14" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="URL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="TripID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Trip" Relationship="Self.FK_Lodge_Trip" FromRole="Lodge" ToRole="Trips" />
-        </EntityType>
         <EntityType Name="Trip">
           <Key>
             <PropertyRef Name="TripID" />
@@ -195,8 +162,8 @@
           <Property Name="Food" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Lodging" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetUser" Relationship="Self.FK_Trip_AspNetUsers" FromRole="Trips" ToRole="AspNetUsers" />
-          <NavigationProperty Name="Food1" Relationship="Self.FK_Food_Trip" FromRole="Trips" ToRole="Food" />
-          <NavigationProperty Name="Lodge" Relationship="Self.FK_Lodge_Trip" FromRole="Trips" ToRole="Lodge" />
+          <NavigationProperty Name="Foods" Relationship="planitdbModel.FK_Food_Trip" FromRole="Trip" ToRole="Food" />
+          <NavigationProperty Name="Lodges" Relationship="planitdbModel.FK_Lodge_Trip" FromRole="Trip" ToRole="Lodge" />
         </EntityType>
         <Association Name="FK_Trip_AspNetUsers">
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1" />
@@ -210,11 +177,45 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityContainer Name="PlanItDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
+          <EntitySet Name="Trips" EntityType="Self.Trip" />
+          <AssociationSet Name="FK_Trip_AspNetUsers" Association="Self.FK_Trip_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Trips" EntitySet="Trips" />
+          </AssociationSet>
+          <EntitySet Name="Foods" EntityType="planitdbModel.Food" />
+          <AssociationSet Name="FK_Food_Trip" Association="planitdbModel.FK_Food_Trip">
+            <End Role="Trip" EntitySet="Trips" />
+            <End Role="Food" EntitySet="Foods" />
+          </AssociationSet>
+          <EntitySet Name="Lodges" EntityType="planitdbModel.Lodge" />
+          <AssociationSet Name="FK_Lodge_Trip" Association="planitdbModel.FK_Lodge_Trip">
+            <End Role="Trip" EntitySet="Trips" />
+            <End Role="Lodge" EntitySet="Lodges" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Food">
+          <Key>
+            <PropertyRef Name="Restaurant" />
+          </Key>
+          <Property Name="Restaurant" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Int32" Nullable="false" />
+          <Property Name="NumberOfMeals" Type="Int32" Nullable="false" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PostalCode" Type="String" Nullable="false" MaxLength="5" FixedLength="true" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" Nullable="false" MaxLength="14" FixedLength="true" Unicode="true" />
+          <Property Name="URL" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TripID" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Trip" Relationship="planitdbModel.FK_Food_Trip" FromRole="Food" ToRole="Trip" />
+        </EntityType>
         <Association Name="FK_Food_Trip">
-          <End Role="Trips" Type="Self.Trip" Multiplicity="1" />
-          <End Role="Food" Type="Self.Food" Multiplicity="0..1" />
+          <End Type="planitdbModel.Trip" Role="Trip" Multiplicity="1" />
+          <End Type="planitdbModel.Food" Role="Food" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Trips">
+            <Principal Role="Trip">
               <PropertyRef Name="TripID" />
             </Principal>
             <Dependent Role="Food">
@@ -222,11 +223,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Lodge">
+          <Key>
+            <PropertyRef Name="Lodging" />
+          </Key>
+          <Property Name="Lodging" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Int32" Nullable="false" />
+          <Property Name="NumberOfNights" Type="Int32" Nullable="false" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PostalCode" Type="String" Nullable="false" MaxLength="5" FixedLength="true" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" Nullable="false" MaxLength="14" FixedLength="true" Unicode="true" />
+          <Property Name="URL" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TripID" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Trip" Relationship="planitdbModel.FK_Lodge_Trip" FromRole="Lodge" ToRole="Trip" />
+        </EntityType>
         <Association Name="FK_Lodge_Trip">
-          <End Role="Trips" Type="Self.Trip" Multiplicity="1" />
-          <End Role="Lodge" Type="Self.Lodge" Multiplicity="0..1" />
+          <End Type="planitdbModel.Trip" Role="Trip" Multiplicity="1" />
+          <End Type="planitdbModel.Lodge" Role="Lodge" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Trips">
+            <Principal Role="Trip">
               <PropertyRef Name="TripID" />
             </Principal>
             <Dependent Role="Lodge">
@@ -234,24 +251,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="PlanItDBEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
-          <EntitySet Name="Foods" EntityType="Self.Food" />
-          <EntitySet Name="Lodges" EntityType="Self.Lodge" />
-          <EntitySet Name="Trips" EntityType="Self.Trip" />
-          <AssociationSet Name="FK_Trip_AspNetUsers" Association="Self.FK_Trip_AspNetUsers">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="Trips" EntitySet="Trips" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Food_Trip" Association="Self.FK_Food_Trip">
-            <End Role="Trips" EntitySet="Trips" />
-            <End Role="Food" EntitySet="Foods" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Lodge_Trip" Association="Self.FK_Lodge_Trip">
-            <End Role="Trips" EntitySet="Trips" />
-            <End Role="Lodge" EntitySet="Lodges" />
-          </AssociationSet>
-        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -276,38 +275,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Foods">
-            <EntityTypeMapping TypeName="planitdbModel.Food">
-              <MappingFragment StoreEntitySet="Food">
-                <ScalarProperty Name="Restaurant" ColumnName="Restaurant" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="NumberOfMeals" ColumnName="NumberOfMeals" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
-                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-                <ScalarProperty Name="URL" ColumnName="URL" />
-                <ScalarProperty Name="TripID" ColumnName="TripID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Lodges">
-            <EntityTypeMapping TypeName="planitdbModel.Lodge">
-              <MappingFragment StoreEntitySet="Lodge">
-                <ScalarProperty Name="Lodging" ColumnName="Lodging" />
-                <ScalarProperty Name="Price" ColumnName="Price" />
-                <ScalarProperty Name="NumberOfNights" ColumnName="NumberOfNights" />
-                <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
-                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-                <ScalarProperty Name="URL" ColumnName="URL" />
-                <ScalarProperty Name="TripID" ColumnName="TripID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Trips">
             <EntityTypeMapping TypeName="planitdbModel.Trip">
               <MappingFragment StoreEntitySet="Trips">
@@ -322,6 +289,38 @@
                 <ScalarProperty Name="EndDate" ColumnName="EndDate" />
                 <ScalarProperty Name="Car" ColumnName="Car" />
                 <ScalarProperty Name="Food" ColumnName="Food" />
+                <ScalarProperty Name="Lodging" ColumnName="Lodging" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Foods">
+            <EntityTypeMapping TypeName="planitdbModel.Food">
+              <MappingFragment StoreEntitySet="Food">
+                <ScalarProperty Name="TripID" ColumnName="TripID" />
+                <ScalarProperty Name="URL" ColumnName="URL" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="NumberOfMeals" ColumnName="NumberOfMeals" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Restaurant" ColumnName="Restaurant" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Lodges">
+            <EntityTypeMapping TypeName="planitdbModel.Lodge">
+              <MappingFragment StoreEntitySet="Lodge">
+                <ScalarProperty Name="TripID" ColumnName="TripID" />
+                <ScalarProperty Name="URL" ColumnName="URL" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="NumberOfNights" ColumnName="NumberOfNights" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="Lodging" ColumnName="Lodging" />
               </MappingFragment>
             </EntityTypeMapping>

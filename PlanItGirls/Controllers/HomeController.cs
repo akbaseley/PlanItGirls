@@ -27,10 +27,8 @@ namespace PlanItGirls.Controllers
             return View();
         }
 
-<<<<<<< HEAD
-=======
+
         [Authorize]
->>>>>>> updated about page and validation
         public ActionResult TripCreation()
         {
             return View();
@@ -346,6 +344,14 @@ namespace PlanItGirls.Controllers
             return ((currentTime - sTime).TotalSeconds).ToString();
         }
 
+
+        public ActionResult TripSummary()
+        {
+            PlanItDBEntities ORM = new PlanItDBEntities();
+            ViewBag.currentTrip = (Trip)TempData["currentTrip"];
+
+            return View();
+        }
     }
 
 }

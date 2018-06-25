@@ -15,6 +15,13 @@ namespace PlanItGirls.Models
 
     public partial class Trip
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Trip()
+        {
+            this.Foods = new HashSet<Food>();
+            this.Lodges = new HashSet<Lodge>();
+        }
+    
         public string TripID { get; set; }
         public string UserID { get; set; }
         public int Price { get; set; }
@@ -30,7 +37,9 @@ namespace PlanItGirls.Models
         public string Lodging { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
-        public virtual Food Food1 { get; set; }
-        public virtual Lodge Lodge { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Food> Foods { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Lodge> Lodges { get; set; }
     }
 }
