@@ -8,18 +8,18 @@
 
 <h2>Trip Creation</h2>
 <form action="/Database/CreateNewTrip" method="post">
-    Trip Name: <input type="text" name="TripID" />
+    Trip Name: <input type="text" name="TripID" required/>
     <br /><br />
-    Start Date: <input type="date" name="StartDate" />
-    End Date: <input type="date" name="EndDate" />
+    Start Date: <input type="date" name="StartDate" id="StartDate" required/>
+    End Date: <input type="date" name="EndDate" required id="EndDate"/>
     <br /><br />
-    Start City: <input type="text" name="StartCity" />
+    Start City: <input type="text" name="StartCity" required/>
     @Html.DropDownList("StartState", new SelectList(Enum.GetValues(typeof(States))), "Start State")
     <br /><br />
-    End City: <input type="text" name="EndCity" />
+    End City: <input type="text" name="EndCity"  required/>
     @Html.DropDownList("EndState", new SelectList(Enum.GetValues(typeof(States))), "End State")
     <br /><br />
-    Budget: <input type="number" name="Price" />
+    Budget: <input type="number" min ="1" name="Price" required />
     <input type="submit" value="New Trip" />
 </form>
 
@@ -27,3 +27,5 @@
 <form action="/Database/TripList" method="get">
     <input type="submit" value="See your trips" />
 </form>
+
+<script src="~/Scripts/validation.js"></script>

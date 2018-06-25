@@ -9,6 +9,7 @@ using Newtonsoft.Json.Linq;
 
 namespace PlanItGirls.Controllers
 {
+    
     public class DatabaseController : Controller
     {
         // Use this controller when using CRUD methods to Database
@@ -107,7 +108,7 @@ namespace PlanItGirls.Controllers
 
         public ActionResult SaveHotelOption()
         {
-            PlanItDBEntities ORM = new PlanItDBEntities();
+            planitdbEntities ORM = new planitdbEntities();
 
             Trip currentTrip = (Trip)TempData["currentTrip"];
             string thisHotel = (string)TempData["HotelSelection"];
@@ -145,7 +146,7 @@ namespace PlanItGirls.Controllers
 
         public ActionResult SaveRestaurantOption(string TripID)
         {
-            PlanItDBEntities ORM = new PlanItDBEntities();
+            planitdbEntities ORM = new planitdbEntities();
 
             Trip currentTrip = (Trip)TempData["currentTrip"];
             string thisRestaurant = (string)TempData["RestaurantSelection"];

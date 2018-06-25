@@ -16,9 +16,9 @@ namespace PlanItGirls.Models
     public partial class PlanItDBEntities : DbContext
     {
 
-        public PlanItDBEntities()
+        public PlanItDBEntities() 
             : base("name=PlanItDBEntities")
-        {
+        { 
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

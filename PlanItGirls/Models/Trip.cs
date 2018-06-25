@@ -11,12 +11,14 @@ namespace PlanItGirls.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Trip
     {
         public string TripID { get; set; }
         public string UserID { get; set; }
         public int Price { get; set; }
+
         public string StartCity { get; set; }
         public string StartState { get; set; }
         public string EndCity { get; set; }

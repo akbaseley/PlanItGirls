@@ -27,11 +27,16 @@ namespace PlanItGirls.Controllers
             return View();
         }
 
+<<<<<<< HEAD
+=======
+        [Authorize]
+>>>>>>> updated about page and validation
         public ActionResult TripCreation()
         {
             return View();
         }
 
+        [Authorize]
         public ActionResult TripBudgetCalculator(string VehicleSelection, string TripID, string hotelPricePoint, string HotelSelection, string NumberOfNights, string restaurantPricePoint, string RestaurantSelection, string NumberOfMeals)
         {
             double travelBudget = 0;
