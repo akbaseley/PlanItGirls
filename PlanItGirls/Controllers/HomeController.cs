@@ -43,12 +43,12 @@ namespace PlanItGirls.Controllers
             Trip currentTrip = (Trip)TempData["currentTrip"];
             ViewBag.currentTrip = currentTrip;
 
-            #region Budget Calculator
+            #region Travel Costs
             //ViewBag.drivePrice = drivePrice;
 
             if (TempData["VehicleSelection"] is null && VehicleSelection is null)
             {
-                ViewBag.SelectVehicle = "Please select your vehicle";
+                ViewBag.SelectVehicle = "Select which type of vehicle you plan to drive";
             }
             else
             {
@@ -149,7 +149,7 @@ namespace PlanItGirls.Controllers
             if (TempData["restaurantPricePoint"] is null && restaurantPricePoint is null)
             {
                 ViewBag.Restaurants = null;
-                ViewBag.Fact = "Select Price Point to get Hotel Options";
+                ViewBag.MealFact = "Select Price Point to get Restaurant Options";
             }
             else
             {
