@@ -31,7 +31,7 @@ namespace PlanItGirls.Controllers
         {
             return View();
         }
-       
+
         public ActionResult TripBudgetCalculator(string VehicleSelection, string TripID, string hotelPricePoint, string HotelSelection, string NumberOfNights, string restaurantPricePoint, string RestaurantSelection, string NumberOfMeals)
         {
             double travelBudget = 0;
@@ -340,5 +340,7 @@ namespace PlanItGirls.Controllers
             DateTime sTime = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
             return ((currentTime - sTime).TotalSeconds).ToString();
         }
+
     }
+
 }
