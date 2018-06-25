@@ -13,10 +13,11 @@ namespace PlanItGirls.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class planitdbEntities : DbContext
+    public partial class PlanItDBEntities : DbContext
     {
-        public planitdbEntities()
-            : base("name=planitdbEntities")
+
+        public PlanItDBEntities()
+            : base("name=PlanItDBEntities")
         {
         }
     
@@ -26,7 +27,6 @@ namespace PlanItGirls.Models
         }
     
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
-        public virtual DbSet<Entertainment> Entertainments { get; set; }
         public virtual DbSet<Food> Foods { get; set; }
         public virtual DbSet<Lodge> Lodges { get; set; }
         public virtual DbSet<Trip> Trips { get; set; }

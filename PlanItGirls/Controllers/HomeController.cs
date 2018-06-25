@@ -26,25 +26,27 @@ namespace PlanItGirls.Controllers
             ViewBag.Message = "Your contact page.";
             return View();
         }
+
         public ActionResult TripCreation()
         {
             return View();
         }
-
-        
+       
         public ActionResult TripBudgetCalculator(string VehicleSelection, string TripID, string hotelPricePoint, string HotelSelection, string NumberOfNights, string restaurantPricePoint, string RestaurantSelection, string NumberOfMeals)
         {
             double travelBudget = 0;
-            planitdbEntities ORM = new planitdbEntities();
+
+            #region This Trip
+            PlanItDBEntities ORM = new PlanItDBEntities();
+
             if (TempData["currentTrip"] is null)
             {
                 TempData["currentTrip"] = ORM.Trips.Find(TripID);
             }
             Trip currentTrip = (Trip)TempData["currentTrip"];
             ViewBag.currentTrip = currentTrip;
-
+            #endregion
             #region Travel Costs
-            //ViewBag.drivePrice = drivePrice;
 
             if (TempData["VehicleSelection"] is null && VehicleSelection is null)
             {
@@ -67,17 +69,18 @@ namespace PlanItGirls.Controllers
                 JObject GoogleData = TripDistance(currentTrip);
                 double DistanceinKM = (double.Parse(GoogleData["routes"][0]["legs"][0]["distance"]["value"].ToString())) / 1000;
                 double Distance = Math.Round(DistanceinKM * 0.621371, 0);
-                double travelCost = Distance / CalculateGasBudget(VehicleSelection);
+                double travelCost = Distance / (double.Parse(VehicleSelection));
                 //double drivePrice = 0.608;  
                 double oneWayCost = double.Parse(VehicleSelection) * Distance;
                 travelBudget = Math.Round(currentTrip.Price - oneWayCost, 2);
-                ViewBag.GasPrice = CalculateGasBudget(VehicleSelection);
+                ViewBag.GasPrice = (double.Parse(VehicleSelection));
                 ViewBag.DistanceBetweenCities = Distance;
-                ViewBag.oneWayCost = Math.Round((oneWayCost * CalculateGasBudget(VehicleSelection)), 2);
+                ViewBag.oneWayCost = Math.Round((oneWayCost * (double.Parse(VehicleSelection))), 2);
                 ViewBag.travelBudget = travelBudget;
                 TempData["travelBudget"] = travelBudget;
             }
             #endregion
+
             #region Hotels
             if (TempData["hotelPricePoint"] is null && hotelPricePoint is null)
             {
@@ -99,8 +102,9 @@ namespace PlanItGirls.Controllers
                     TempData["hotelPricePoint"] = hotelPricePoint;
                 }
                 ViewBag.Hotels = HotelsbyPricePoint(currentTrip.TripID, hotelPricePoint);
-                ViewBag.PricePerDay = findHotelBudget(hotelPricePoint);
+                ViewBag.PricePerDay = hotelPricePoint;
             }
+
             if (TempData["HotelSelection"] is null && HotelSelection is null)
             {
                 ViewBag.HotelSelection = null;
@@ -131,20 +135,26 @@ namespace PlanItGirls.Controllers
             {
                 if (TempData["NumberOfNights"] is null)
                 {
-                    TempData["NumberOfNigths"] = NumberOfNights;
+                    TempData["NumberOfNights"] = NumberOfNights;
                 }
-                else
+                else if (NumberOfNights is null)
                 {
                     NumberOfNights = (string)TempData["NumberOfNights"];
                 }
+                else if ((string)TempData["NumberOfNights"] != NumberOfNights)
+                {
+                    TempData["NumberOfNights"] = NumberOfNights;
+                }
                 ViewBag.NumberOfNights = int.Parse(NumberOfNights);
-                double TotalHotelBudget = findHotelBudget(hotelPricePoint) * double.Parse(NumberOfNights);
+                double TotalHotelBudget = double.Parse(hotelPricePoint) * double.Parse(NumberOfNights);
+
                 ViewBag.TotalHotelBudget = TotalHotelBudget;
-                double AdjustedTotalBudget = travelBudget - TotalHotelBudget;
+                double AdjustedTotalBudget = currentTrip.Price - TotalHotelBudget;
                 ViewBag.AdjustedTotalBudget = AdjustedTotalBudget;
                 TempData["AdjustedTotalBudget"] = AdjustedTotalBudget;
             }
             #endregion
+
             #region Restaurants
             if (TempData["restaurantPricePoint"] is null && restaurantPricePoint is null)
             {
@@ -166,8 +176,9 @@ namespace PlanItGirls.Controllers
                     TempData["restaurantPricePoint"] = restaurantPricePoint;
                 }
                 ViewBag.Restaurants = RestaurantsbyPricePoint(currentTrip.TripID, restaurantPricePoint);
-                ViewBag.PricePerMeal = findRestaurantBudget(restaurantPricePoint);
+                ViewBag.PricePerMeal = double.Parse(restaurantPricePoint);
             }
+            
             if (TempData["RestaurantSelection"] is null && RestaurantSelection is null)
             {
                 ViewBag.RestaurantSelection = null;
@@ -206,13 +217,14 @@ namespace PlanItGirls.Controllers
                     NumberOfMeals = (string)TempData["NumberOfMeals"];
                 }
                 ViewBag.NumberOfMeals = int.Parse(NumberOfMeals);
-                double TotalRestaurantBudget = findRestaurantBudget(hotelPricePoint) * double.Parse(NumberOfMeals);
+                double TotalRestaurantBudget = double.Parse(restaurantPricePoint) * double.Parse(NumberOfMeals);
                 ViewBag.TotalRestaurantBudget = TotalRestaurantBudget;
                 double AdjustedRestaurantTotalBudget = travelBudget - TotalRestaurantBudget;
                 ViewBag.AdjustedRestaurantTotalBudget = AdjustedRestaurantTotalBudget;
                 TempData["AdjustedRestaurantTotalBudget"] = AdjustedRestaurantTotalBudget;
             }
             #endregion
+
             #region TempData
             TempData["VehicleSelection"] = TempData["VehicleSelection"];
             TempData["currentTrip"] = TempData["currentTrip"];
@@ -225,71 +237,10 @@ namespace PlanItGirls.Controllers
             TempData["NumberOfMeals"] = TempData["NumberOfMeals"];
             TempData["AdjustedRestaurantTotalBudget"] = TempData["AdjustedRestaurantTotalBudget"];
             #endregion
+
             return View();
         }
-        public static double CalculateGasBudget(string VehicleSelection)
-        {
-            double GasPrice = 0;
-            if (VehicleSelection == "1")
-            {
-                GasPrice = 0.46;
-            }
-            else if (VehicleSelection == "2")
-            {
-                GasPrice = 0.59;
-            }
-            else if (VehicleSelection == "3")
-            {
-                GasPrice = 0.65;
-            }
-            else if (VehicleSelection == "4")
-            {
-                GasPrice = 0.72;
-            }
-            return GasPrice;
-        }
-        public static double findRestaurantBudget(string pricePoint)
-        {
-            double Price = 0;
-            if (pricePoint == "1")
-            {
-                Price = 10;
-            }
-            else if (pricePoint == "2")
-            {
-                Price = 35;
-            }
-            else if (pricePoint == "3")
-            {
-                Price = 60;
-            }
-            else if (pricePoint == "4")
-            {
-                Price = 100;
-            }
-            return Price;
-        }
-        public static double findHotelBudget(string pricePoint)
-        {
-            double hotelPrice = 0;
-            if (pricePoint == "1")
-            {
-                hotelPrice = 80;
-            }
-            else if (pricePoint == "2")
-            {
-                hotelPrice = 150;
-            }
-            else if (pricePoint == "3")
-            {
-                hotelPrice = 225;
-            }
-            else if (pricePoint == "4")
-            {
-                hotelPrice = 350;
-            }
-            return hotelPrice;
-        }
+
         public static int NumOfDays(Trip thisTrip)
         {
             TimeSpan days = thisTrip.EndDate.Subtract(thisTrip.StartDate).Duration();
@@ -308,9 +259,28 @@ namespace PlanItGirls.Controllers
         }
         public JObject HotelsbyPricePoint(string TripID, string pricePoint)
         {
-            planitdbEntities ORM = new planitdbEntities();
+
+            string Cost;
+            if (pricePoint == "80")
+            {
+                Cost = "1";
+            }
+            else if (pricePoint == "150")
+            {
+                Cost = "2";
+            }
+            else if (pricePoint == "225")
+            {
+                Cost = "3";
+            }
+            else
+            {
+                Cost = "4";
+            }
+
+            PlanItDBEntities ORM = new PlanItDBEntities();
             Trip currentTrip = ORM.Trips.Find(TripID);
-            HttpWebRequest WR = WebRequest.CreateHttp($"https://api.yelp.com/v3/businesses/search?location={currentTrip.EndCity},+{currentTrip.EndState}&price={pricePoint}&term=hotel");
+            HttpWebRequest WR = WebRequest.CreateHttp($"https://api.yelp.com/v3/businesses/search?location={currentTrip.EndCity},+{currentTrip.EndState}&price={Cost}&term=hotel");
             WR.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
             WR.Headers.Add("Authorization", $"Bearer {ConfigurationManager.AppSettings["YelpAPIKey"]}");
             HttpWebResponse Response = (HttpWebResponse)WR.GetResponse();
@@ -321,9 +291,27 @@ namespace PlanItGirls.Controllers
         }
         public JObject RestaurantsbyPricePoint(string TripID, string pricePoint)
         {
-            planitdbEntities ORM = new planitdbEntities();
+
+            string Cost;
+            if (pricePoint == "10")
+            {
+                Cost = "1";
+            }
+            else if (pricePoint == "35")
+            {
+                Cost = "2";
+            }
+            else if (pricePoint == "60")
+            {
+                Cost = "3";
+            }
+            else
+            {
+                Cost = "4";
+            }
+            PlanItDBEntities ORM = new PlanItDBEntities();
             Trip currentTrip = ORM.Trips.Find(TripID);
-            HttpWebRequest WR = WebRequest.CreateHttp($"https://api.yelp.com/v3/businesses/search?location={currentTrip.EndCity},+{currentTrip.EndState}&price={pricePoint}&term=restaurants");
+            HttpWebRequest WR = WebRequest.CreateHttp($"https://api.yelp.com/v3/businesses/search?location={currentTrip.EndCity},+{currentTrip.EndState}&price={Cost}&term=restaurants");
             WR.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
             WR.Headers.Add("Authorization", $"Bearer {ConfigurationManager.AppSettings["YelpAPIKey"]}");
             HttpWebResponse Response = (HttpWebResponse)WR.GetResponse();
@@ -332,9 +320,9 @@ namespace PlanItGirls.Controllers
             JObject YelpData = JObject.Parse(JsonData);
             return YelpData;
         }
-        public JObject EventsbyPricePoint(string TripID)
+        public JObject Events(string TripID)
         {
-            planitdbEntities ORM = new planitdbEntities();
+            PlanItDBEntities ORM = new PlanItDBEntities();
             Trip currentTrip = ORM.Trips.Find(TripID);
             string StartDate = ConvertToUnixTime(currentTrip.StartDate);
             string EndDate = ConvertToUnixTime(currentTrip.EndDate);

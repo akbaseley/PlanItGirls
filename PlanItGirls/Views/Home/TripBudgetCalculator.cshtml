@@ -13,10 +13,10 @@
             <form action="/Home/TripBudgetCalculator" method="get">
                 Select Car Type: <select name="VehicleSelection">
                     <option value="0">---</option>
-                    <option value="1">Car</option>
-                    <option value="2">Crossover</option>
-                    <option value="3">Minivan</option>
-                    <option value="4">Suv/Truck</option>
+                    <option value=".46">Car</option>
+                    <option value=".59">Crossover</option>
+                    <option value=".65">Minivan</option>
+                    <option value=".72">Suv/Truck</option>
                 </select>
                 <input type="submit" value="See Cost" />
             </form>
@@ -61,7 +61,7 @@
                     Car: 29MPG($.46 per mile)
                 </h6>
                 <h6>
-                    Crossover: 23MPG($59 per mile)
+                    Crossover: 23MPG($.59 per mile)
                 </h6>
                 <h6>
                     Minivan: 19MPG($.65 per mile)
@@ -83,10 +83,10 @@
             <form action="../Home/TripBudgetCalculator" method="get">
                 Select Hotel Price: <select name="hotelPricePoint">
                     <option value="0">---</option>
-                    <option value="1">$</option>
-                    <option value="2">$$</option>
-                    <option value="3">$$$</option>
-                    <option value="4">$$$$</option>
+                    <option value="80">$</option>
+                    <option value="150">$$</option>
+                    <option value="225">$$$</option>
+                    <option value="350">$$$$</option>
                 </select>
                 <input type="submit" value="See Options" />
             </form>
@@ -179,10 +179,10 @@
             <form action="../Home/TripBudgetCalculator" method="get">
                 Select Meal Price: <select name="RestaurantPricePoint">
                     <option value="0">---</option>
-                    <option value="1">$</option>
-                    <option value="2">$$</option>
-                    <option value="3">$$$</option>
-                    <option value="4">$$$$</option>
+                    <option value="10">$</option>
+                    <option value="35">$$</option>
+                    <option value="60">$$$</option>
+                    <option value="100">$$$$</option>
                 </select>
                 <input type="submit" value="See Options" />
             </form>
@@ -193,16 +193,16 @@
                     Approx. Meal Costs
                 </h5>
                 <h6>
-                    $: $80 per night
+                    $: $10 per meal
                 </h6>
                 <h6>
-                    $$: $150 per night
+                    $$: $35 per night
                 </h6>
                 <h6>
-                    $$$: $225 per night
+                    $$$: $60 per night
                 </h6>
                 <h6>
-                    $$$$: $350 per night
+                    $$$$: $100 per night
                 </h6>
                 <h5>
                     Remaining Budget: $@ViewBag.AdjustedTotalBudget

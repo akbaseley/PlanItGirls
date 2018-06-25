@@ -16,7 +16,7 @@ namespace PlanItGirls.Controllers
 
         public ActionResult CreateNewTrip(Trip newTrip)
         {
-            planitdbEntities ORM = new planitdbEntities();
+            PlanItDBEntities ORM = new PlanItDBEntities();
 
             newTrip.UserID = User.Identity.GetUserId();
 
@@ -28,7 +28,7 @@ namespace PlanItGirls.Controllers
         }
         public ActionResult TripList()
         {
-            planitdbEntities ORM = new planitdbEntities();
+            PlanItDBEntities ORM = new PlanItDBEntities();
 
             string userID = User.Identity.GetUserId();
 
@@ -40,7 +40,7 @@ namespace PlanItGirls.Controllers
         public ActionResult DeleteTrip(string TripID)
         {
 
-            planitdbEntities ORM = new planitdbEntities();
+            PlanItDBEntities ORM = new PlanItDBEntities();
 
             Trip Found = ORM.Trips.Find(TripID);
 
@@ -61,7 +61,7 @@ namespace PlanItGirls.Controllers
         }
         public ActionResult EditTripDetails(string TripID)
         {
-            planitdbEntities ORM = new planitdbEntities();
+            PlanItDBEntities ORM = new PlanItDBEntities();
             //string userID = User.Identity.GetUserId();
             Trip Found = ORM.Trips.Find(TripID);
             //ViewBag.userTrips = ORM.AspNetUsers.Find(userID).Trips.ToList();
@@ -78,7 +78,7 @@ namespace PlanItGirls.Controllers
         }
         public ActionResult SaveUpdateUserTrip (Trip EditTripDetails)
         {
-            planitdbEntities ORM = new planitdbEntities();
+            PlanItDBEntities ORM = new PlanItDBEntities();
          //   string userID = User.Identity.GetUserId();
          //ORM.AspNetUsers.Find(userID).Trips.ToList();
             Trip OldTripRecord = ORM.Trips.Find(EditTripDetails.TripID);
@@ -111,15 +111,22 @@ namespace PlanItGirls.Controllers
 
             Trip currentTrip = (Trip)TempData["currentTrip"];
             string thisHotel = (string)TempData["HotelSelection"];
-            JObject currentHotel = (JObject)thisHotel;
+            string NumberOfNights = (string)TempData["NumberOfNights"];
+            string hotelPricePoint = (string)TempData["hotelPricePoint"];
+            JObject currentHotel = JObject.Parse(thisHotel);
             Lodge newHotel = new Lodge();
-            newHotel.TripID = currentTrip.TripID;
-            newHotel.Price = (decimal)TempData["hotelPricePoint"];
-            newHotel.Address = (string)currentHotel["location"]["adddress1"];
+
+            newHotel.Lodging = (string)currentHotel["name"];
+            newHotel.Price = int.Parse(hotelPricePoint);
+            newHotel.NumberOfNights = int.Parse(NumberOfNights);
+            newHotel.Address = (string)currentHotel["location"]["address1"];
             newHotel.City = (string)currentHotel["location"]["city"];
             newHotel.State = (string)currentHotel["location"]["state"];
             newHotel.PostalCode = (string)currentHotel["location"]["zip_code"];
             newHotel.PhoneNumber = (string)currentHotel["display_phone"];
+            newHotel.URL = (string)currentHotel["url"];
+            newHotel.TripID = currentTrip.TripID;
+
             ORM.Lodges.Add(newHotel);
             ORM.SaveChanges();
 

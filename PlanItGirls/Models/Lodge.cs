@@ -15,7 +15,8 @@ namespace PlanItGirls.Models
     public partial class Lodge
     {
         public string Lodging { get; set; }
-        public decimal Price { get; set; }
+        public int Price { get; set; }
+        public int NumberOfNights { get; set; }
         public string Address { get; set; }
         public string City { get; set; }
         public string State { get; set; }

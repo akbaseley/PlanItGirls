@@ -201,37 +201,34 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AspNetUser.cs">
-      <DependentUpon>PlanItDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Entertainment.cs">
-      <DependentUpon>PlanItDB.tt</DependentUpon>
+      <DependentUpon>PlanItDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Food.cs">
-      <DependentUpon>PlanItDB.tt</DependentUpon>
+      <DependentUpon>PlanItDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Lodge.cs">
-      <DependentUpon>PlanItDB.tt</DependentUpon>
+      <DependentUpon>PlanItDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\PlanItDB.Context.cs">
+    <Compile Include="Models\PlanItDBModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>PlanItDB.Context.tt</DependentUpon>
+      <DependentUpon>PlanItDBModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\PlanItDB.cs">
+    <Compile Include="Models\PlanItDBModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>PlanItDB.tt</DependentUpon>
+      <DependentUpon>PlanItDBModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\PlanItDB.Designer.cs">
+    <Compile Include="Models\PlanItDBModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>PlanItDB.edmx</DependentUpon>
+      <DependentUpon>PlanItDBModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\States.cs" />
     <Compile Include="Models\Trip.cs">
-      <DependentUpon>PlanItDB.tt</DependentUpon>
+      <DependentUpon>PlanItDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
@@ -254,15 +251,15 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="images\PlanIt.png" />
-    <Content Include="Models\PlanItDB.Context.tt">
+    <Content Include="Models\PlanItDBModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>PlanItDB.edmx</DependentUpon>
-      <LastGenOutput>PlanItDB.Context.cs</LastGenOutput>
+      <DependentUpon>PlanItDBModel.edmx</DependentUpon>
+      <LastGenOutput>PlanItDBModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\PlanItDB.tt">
+    <Content Include="Models\PlanItDBModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>PlanItDB.edmx</DependentUpon>
-      <LastGenOutput>PlanItDB.cs</LastGenOutput>
+      <DependentUpon>PlanItDBModel.edmx</DependentUpon>
+      <LastGenOutput>PlanItDBModel.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -286,12 +283,12 @@
     <Content Include="Scripts\esm\popper.js.map" />
     <Content Include="Scripts\esm\popper-utils.min.js.map" />
     <Content Include="Scripts\esm\popper-utils.js.map" />
-    <EntityDeploy Include="Models\PlanItDB.edmx">
+    <EntityDeploy Include="Models\PlanItDBModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>PlanItDB.Designer.cs</LastGenOutput>
+      <LastGenOutput>PlanItDBModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\PlanItDB.edmx.diagram">
-      <DependentUpon>PlanItDB.edmx</DependentUpon>
+    <Content Include="Models\PlanItDBModel.edmx.diagram">
+      <DependentUpon>PlanItDBModel.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />

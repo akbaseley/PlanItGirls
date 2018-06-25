@@ -16,14 +16,12 @@ namespace PlanItGirls.Models
     {
         public string Restaurant { get; set; }
         public int Price { get; set; }
-        public string TimeOfDay { get; set; }
-        public string FoodType { get; set; }
+        public int NumberOfMeals { get; set; }
         public string Address { get; set; }
         public string City { get; set; }
         public string State { get; set; }
         public string PostalCode { get; set; }
         public string PhoneNumber { get; set; }
-        public string HoursOfOperation { get; set; }
         public string URL { get; set; }
         public string TripID { get; set; }
     

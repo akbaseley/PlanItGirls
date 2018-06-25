@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="3031e4a969414f5081ce347dc4cb00b6" Name="Diagram1">
+        <EntityTypeShape EntityType="planitdbModel.AspNetUser" Width="1.5" PointX="0.75" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="planitdbModel.Food" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="planitdbModel.Lodge" Width="1.5" PointX="5.25" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="planitdbModel.Trip" Width="1.5" PointX="3" PointY="2.75" IsExpanded="true" />
+        <AssociationConnector Association="planitdbModel.FK_Trip_AspNetUsers" ManuallyRouted="false" />
+        <AssociationConnector Association="planitdbModel.FK_Food_Trip" ManuallyRouted="false" />
+        <AssociationConnector Association="planitdbModel.FK_Lodge_Trip" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
