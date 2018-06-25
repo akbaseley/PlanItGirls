@@ -355,6 +355,7 @@
     <Content Include="Views\Home\TripBudgetCalculator.cshtml" />
     <Content Include="Views\Home\TripList.cshtml" />
     <Content Include="Views\Home\UpdateUserTrip.cshtml" />
+    <Content Include="Web.config" />
     <Content Include="Views\Web.config" />
     <None Include="Views\Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -362,7 +363,6 @@
     <None Include="Views\Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
-    <Content Include="Web.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

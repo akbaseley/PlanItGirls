@@ -13,10 +13,10 @@ namespace PlanItGirls.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class PlanItDBEntities : DbContext
+    public partial class planitdbEntities : DbContext
     {
-        public PlanItDBEntities()
-            : base("name=PlanitdbEntities")
+        public planitdbEntities()
+            : base("name=planitdbEntities")
         {
         }
     

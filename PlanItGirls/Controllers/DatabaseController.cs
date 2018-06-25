@@ -16,7 +16,7 @@ namespace PlanItGirls.Controllers
 
         public ActionResult CreateNewTrip(Trip newTrip)
         {
-            PlanItDBEntities ORM = new PlanItDBEntities();
+            planitdbEntities ORM = new planitdbEntities();
 
             newTrip.UserID = User.Identity.GetUserId();
 
@@ -28,7 +28,7 @@ namespace PlanItGirls.Controllers
         }
         public ActionResult TripList()
         {
-            PlanItDBEntities ORM = new PlanItDBEntities();
+            planitdbEntities ORM = new planitdbEntities();
 
             string userID = User.Identity.GetUserId();
 
@@ -40,7 +40,7 @@ namespace PlanItGirls.Controllers
         public ActionResult DeleteTrip(string TripID)
         {
 
-            PlanItDBEntities ORM = new PlanItDBEntities();
+            planitdbEntities ORM = new planitdbEntities();
 
             Trip Found = ORM.Trips.Find(TripID);
 
@@ -61,7 +61,7 @@ namespace PlanItGirls.Controllers
         }
         public ActionResult EditTripDetails(string TripID)
         {
-            PlanItDBEntities ORM = new PlanItDBEntities();
+            planitdbEntities ORM = new planitdbEntities();
             //string userID = User.Identity.GetUserId();
             Trip Found = ORM.Trips.Find(TripID);
             //ViewBag.userTrips = ORM.AspNetUsers.Find(userID).Trips.ToList();
@@ -78,7 +78,7 @@ namespace PlanItGirls.Controllers
         }
         public ActionResult SaveUpdateUserTrip (Trip EditTripDetails)
         {
-            PlanItDBEntities ORM = new PlanItDBEntities();
+            planitdbEntities ORM = new planitdbEntities();
          //   string userID = User.Identity.GetUserId();
          //ORM.AspNetUsers.Find(userID).Trips.ToList();
             Trip OldTripRecord = ORM.Trips.Find(EditTripDetails.TripID);

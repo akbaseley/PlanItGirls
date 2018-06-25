@@ -35,7 +35,7 @@ namespace PlanItGirls.Controllers
         public ActionResult TripBudgetCalculator(string VehicleSelection, string TripID, string hotelPricePoint, string HotelSelection, string NumberOfNights, string restaurantPricePoint, string RestaurantSelection, string NumberOfMeals)
         {
             double travelBudget = 0;
-            PlanItDBEntities ORM = new PlanItDBEntities();
+            planitdbEntities ORM = new planitdbEntities();
             if (TempData["currentTrip"] is null)
             {
                 TempData["currentTrip"] = ORM.Trips.Find(TripID);
@@ -308,7 +308,7 @@ namespace PlanItGirls.Controllers
         }
         public JObject HotelsbyPricePoint(string TripID, string pricePoint)
         {
-            PlanItDBEntities ORM = new PlanItDBEntities();
+            planitdbEntities ORM = new planitdbEntities();
             Trip currentTrip = ORM.Trips.Find(TripID);
             HttpWebRequest WR = WebRequest.CreateHttp($"https://api.yelp.com/v3/businesses/search?location={currentTrip.EndCity},+{currentTrip.EndState}&price={pricePoint}&term=hotel");
             WR.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
@@ -321,7 +321,7 @@ namespace PlanItGirls.Controllers
         }
         public JObject RestaurantsbyPricePoint(string TripID, string pricePoint)
         {
-            PlanItDBEntities ORM = new PlanItDBEntities();
+            planitdbEntities ORM = new planitdbEntities();
             Trip currentTrip = ORM.Trips.Find(TripID);
             HttpWebRequest WR = WebRequest.CreateHttp($"https://api.yelp.com/v3/businesses/search?location={currentTrip.EndCity},+{currentTrip.EndState}&price={pricePoint}&term=restaurants");
             WR.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
@@ -334,7 +334,7 @@ namespace PlanItGirls.Controllers
         }
         public JObject EventsbyPricePoint(string TripID)
         {
-            PlanItDBEntities ORM = new PlanItDBEntities();
+            planitdbEntities ORM = new planitdbEntities();
             Trip currentTrip = ORM.Trips.Find(TripID);
             string StartDate = ConvertToUnixTime(currentTrip.StartDate);
             string EndDate = ConvertToUnixTime(currentTrip.EndDate);
