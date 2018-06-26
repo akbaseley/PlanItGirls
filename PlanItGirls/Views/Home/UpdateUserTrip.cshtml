@@ -22,8 +22,6 @@
     @Html.DropDownList("EndState", new SelectList(Enum.GetValues(typeof(States))), Model.EndState)
     <br /><br />
 
-<<<<<<< HEAD
-
 
     Select Vehicle Type:<select name="VehicleSelection">
                             <option value="0">---</option>
@@ -36,16 +34,14 @@
 
     Budget:
     <input type="number" value="@Model.Price" name="Price" />
-=======
     Vehicle Type: <input type="text" value="@Model.EndCity" name="EndCity" />
     @Html.DropDownList("VehicleType", new SelectList(Enum.GetValues(typeof(States))), Model.EndState)
     <br /><br />
 
     Budget: <input type="number" value="@Model.Price" name="Price" />
->>>>>>> vehicle and gas
     <input type="submit" value="New Trip" />
 </form>
-
+<br /><br />
 <form action="/Database/TripList" method="get">
     <input type="submit" value="See your trips" />
 </form>

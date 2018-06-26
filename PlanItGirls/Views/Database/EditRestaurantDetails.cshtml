@@ -1,0 +1,31 @@
+﻿
+@{
+    ViewBag.Title = "EditRestaurantDetails";
+}
+
+@using PlanItGirls.Models
+@model PlanItGirls.Models.Food
+
+
+<h2>Edit Restaurant Details</h2>
+
+<form action="/Database/SaveUpdateRestaurant" method="post">
+    <input type="hidden" value="@Model.Restaurant" name="Restaurant" />
+    <input type="hidden" value="@Model.Price" name="Price" />
+    <input type="hidden" value="@Model.Address" name="Address" />
+    <input type="hidden" value="@Model.City" name="City" />
+    <input type="hidden" value="@Model.State" name="State" />
+    <input type="hidden" value="@Model.PostalCode" name="PostalCode" />
+    <input type="hidden" value="@Model.PhoneNumber" name="PhoneNumber" />
+    <input type="hidden" value="@Model.URL" name="URL" />
+    <input type="hidden" value="@Model.TripID" name="TripID" />
+
+    Current number of meals selected for this restaurant: @Model.NumberOfMeals
+    <select name="NumberOfMeals">
+        @for (int i = 1; i <= @ViewBag.DayDiff; i++)
+        {
+            <option value="@i">@i</option>
+        }
+    </select>
+    <input type="submit" value="Number of Meals" />
+</form>

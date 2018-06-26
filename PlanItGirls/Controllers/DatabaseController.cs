@@ -15,6 +15,17 @@ namespace PlanItGirls.Controllers
         // Use this controller when using CRUD methods to Database
         // Primarily used when Logging trip information and when 
 
+        public ActionResult TripList()
+        {
+            PlanItDBEntities ORM = new PlanItDBEntities();
+
+            string userID = User.Identity.GetUserId();
+
+            ViewBag.userTrips = ORM.AspNetUsers.Find(userID).Trips.ToList();
+
+            return View("../Home/TripList");
+        }
+
         public ActionResult CreateNewTrip(Trip newTrip)
         {
             PlanItDBEntities ORM = new PlanItDBEntities();
@@ -26,16 +37,6 @@ namespace PlanItGirls.Controllers
             ORM.SaveChanges();
 
             return View("../Home/TripCreation");
-        }
-        public ActionResult TripList()
-        {
-            PlanItDBEntities ORM = new PlanItDBEntities();
-
-            string userID = User.Identity.GetUserId();
-
-            ViewBag.userTrips = ORM.AspNetUsers.Find(userID).Trips.ToList();
-
-            return View("../Home/TripList");
         }
 
         public ActionResult DeleteTrip(string TripID)
@@ -108,7 +109,7 @@ namespace PlanItGirls.Controllers
 
         public ActionResult SaveHotelOption()
         {
-            planitdbEntities ORM = new planitdbEntities();
+            PlanItDBEntities ORM = new PlanItDBEntities();
 
             Trip currentTrip = (Trip)TempData["currentTrip"];
             string thisHotel = (string)TempData["HotelSelection"];
@@ -118,7 +119,7 @@ namespace PlanItGirls.Controllers
             Lodge newHotel = new Lodge();
 
             newHotel.Lodging = (string)currentHotel["name"];
-            newHotel.Price = int.Parse(hotelPricePoint);
+            newHotel.Price = int.Parse(hotelPricePoint) * int.Parse(NumberOfNights);
             newHotel.NumberOfNights = int.Parse(NumberOfNights);
             newHotel.Address = (string)currentHotel["location"]["address1"];
             newHotel.City = (string)currentHotel["location"]["city"];
@@ -143,21 +144,103 @@ namespace PlanItGirls.Controllers
             TempData["AdjustedRestaurantTotalBudget"] = TempData["AdjustedRestaurantTotalBudget"];
             return RedirectToAction("../Home/TripBudgetCalculator");
         }
+        public ActionResult DeleteHotel(string Lodging)
+        {
+            PlanItDBEntities ORM = new PlanItDBEntities();
+            Lodge Found = ORM.Lodges.Find(Lodging);
+
+
+            if (Found != null)
+            {
+                ORM.Lodges.Remove(Found);
+                ORM.SaveChanges();
+
+                TempData["currentTrip"] = ORM.Trips.Find(Found.Trip);
+                TempData["currentTrip"] = TempData["currentTrip"];
+
+                return RedirectToAction("../Home/TripSummary");
+            }
+            else
+            {
+                TempData["currentTrip"] = TempData["currentTrip"];
+
+                ViewBag.Message = "Hotel Not Found";
+                return View("Error");
+            }
+
+        }
+        public ActionResult EditHotelDetails(string Lodging)
+        {
+            PlanItDBEntities ORM = new PlanItDBEntities();
+            Lodge Found = ORM.Lodges.Find(Lodging);
+            Trip currentTrip = (Trip)TempData["currentTrip"];
+
+            ViewBag.DayDiff = HomeController.NumOfDays(currentTrip);
+
+            TempData["currentTrip"] = TempData["currentTrip"];
+            if (Found != null)
+            {
+                return View("EditHotelDetails", Found);
+            }
+            else
+            {
+                ViewBag.ErrorMessage = "Hotel Not Found";
+                return View("Error");
+            }
+
+        }
+        public ActionResult SaveUpdateHotel(Lodge EditHotelDetails)
+        {
+            PlanItDBEntities ORM = new PlanItDBEntities();
+            Lodge OldHotelRecord = ORM.Lodges.Find(EditHotelDetails.Lodging);
+
+
+            if (OldHotelRecord != null && ModelState.IsValid)
+            {
+                OldHotelRecord.Lodging = EditHotelDetails.Lodging;
+                OldHotelRecord.Price = EditHotelDetails.Price;
+                OldHotelRecord.NumberOfNights = EditHotelDetails.NumberOfNights;
+                OldHotelRecord.Address = EditHotelDetails.Address;
+                OldHotelRecord.City = EditHotelDetails.City;
+                OldHotelRecord.State = EditHotelDetails.State;
+                OldHotelRecord.PostalCode = EditHotelDetails.PostalCode;
+                OldHotelRecord.PhoneNumber = EditHotelDetails.PhoneNumber;
+                OldHotelRecord.URL = EditHotelDetails.URL;
+                OldHotelRecord.TripID = EditHotelDetails.TripID;
+
+                ORM.Entry(OldHotelRecord).State = System.Data.Entity.EntityState.Modified;
+                ORM.SaveChanges();
+
+                TempData["currentTrip"] = ORM.Trips.Find(OldHotelRecord.TripID);
+                TempData["currentTrip"] = TempData["currentTrip"];
+
+                return RedirectToAction("../Home/TripSummary");
+        }
+            else
+            {
+                TempData["currentTrip"] = TempData["currentTrip"];
+
+                ViewBag.Message = "Hotel Not Found";
+                return View("Error");
+    }
+}
 
         public ActionResult SaveRestaurantOption(string TripID)
         {
-            planitdbEntities ORM = new planitdbEntities();
+            PlanItDBEntities ORM = new PlanItDBEntities();
 
             Trip currentTrip = (Trip)TempData["currentTrip"];
             string thisRestaurant = (string)TempData["RestaurantSelection"];
-            string NumberOfMeals = (string)TempData["NumberOfMeals"];
-            string restaurantPricePoint = (string)TempData["restaurantPricePoint"];
+            string stringNumberOfMeals = (string)TempData["NumberOfMeals"];
+            int NumberOfMeals = int.Parse(stringNumberOfMeals);
+            string stringrestaurantPricePoint = (string)TempData["restaurantPricePoint"];
+            int restaurantPricePoint = int.Parse(stringrestaurantPricePoint);
             JObject currentRestaurant = JObject.Parse(thisRestaurant);
             Food newRestaurant = new Food();
 
             newRestaurant.Restaurant = (string)currentRestaurant["name"];
-            newRestaurant.Price = int.Parse(restaurantPricePoint);
-            newRestaurant.NumberOfMeals = int.Parse(NumberOfMeals);
+            newRestaurant.Price = restaurantPricePoint * NumberOfMeals;
+            newRestaurant.NumberOfMeals = NumberOfMeals;
             newRestaurant.Address = (string)currentRestaurant["location"]["address1"];
             newRestaurant.City = (string)currentRestaurant["location"]["city"];
             newRestaurant.State = (string)currentRestaurant["location"]["state"];
@@ -181,8 +264,81 @@ namespace PlanItGirls.Controllers
             TempData["AdjustedRestaurantTotalBudget"] = TempData["AdjustedRestaurantTotalBudget"];
             return RedirectToAction("../Home/TripBudgetCalculator");
         }
+        public ActionResult DeleteRestaurant(string Restaurant)
+        {
+            PlanItDBEntities ORM = new PlanItDBEntities();
+            Food Found = ORM.Foods.Find(Restaurant);
 
 
+            if (Found != null)
+            {
+                ORM.Foods.Remove(Found);
+                ORM.SaveChanges();
+
+                TempData["currentTrip"] = ORM.Trips.Find(Found.Trip);
+                TempData["currentTrip"] = TempData["currentTrip"];
+
+                return RedirectToAction("../Home/TripSummary");
+            }
+            else
+            {
+                TempData["currentTrip"] = TempData["currentTrip"];
+
+                ViewBag.Message = "Restaurant Not Found";
+                return View("Error");
+            }
+        }
+        public ActionResult EditRestaurantDetails(string Restaurant)
+        {
+            PlanItDBEntities ORM = new PlanItDBEntities();
+            Food Found = ORM.Foods.Find(Restaurant);
+
+            TempData["currentTrip"] = TempData["currentTrip"];
+
+            if (Found != null)
+            {
+                return View("../Home/UpdateRestaurant", Found);
+            }
+            else
+            {
+                ViewBag.ErrorMessage = "Restaurant Not Found";
+                return View("Error");
+            }
+        }
+        public ActionResult SaveUpdateRestaurant(Food EditRestaurantDetails)
+        {
+            PlanItDBEntities ORM = new PlanItDBEntities();
+            Food OldRestaurantRecord = ORM.Foods.Find(EditRestaurantDetails.Restaurant);
+
+            if (OldRestaurantRecord != null && ModelState.IsValid)
+            {
+                OldRestaurantRecord.Restaurant = EditRestaurantDetails.Restaurant;
+                OldRestaurantRecord.Price = EditRestaurantDetails.Price;
+                OldRestaurantRecord.NumberOfMeals = EditRestaurantDetails.NumberOfMeals;
+                OldRestaurantRecord.Address = EditRestaurantDetails.Address;
+                OldRestaurantRecord.City = EditRestaurantDetails.City;
+                OldRestaurantRecord.State = EditRestaurantDetails.State;
+                OldRestaurantRecord.PostalCode = EditRestaurantDetails.PostalCode;
+                OldRestaurantRecord.PhoneNumber = EditRestaurantDetails.PhoneNumber;
+                OldRestaurantRecord.URL = EditRestaurantDetails.URL;
+                OldRestaurantRecord.TripID = EditRestaurantDetails.TripID;
+
+                ORM.Entry(OldRestaurantRecord).State = System.Data.Entity.EntityState.Modified;
+                ORM.SaveChanges();
+
+                TempData["currentTrip"] = ORM.Trips.Find(OldRestaurantRecord.TripID);
+                TempData["currentTrip"] = TempData["currentTrip"];
+                return RedirectToAction("../Home/TripSummary");
+            }
+            else
+            {
+                TempData["currentTrip"] = TempData["currentTrip"];
+
+                ViewBag.Message = "Restaurant Not Found";
+                return View("Error");
+            }
+
+        }
 
     }
 }

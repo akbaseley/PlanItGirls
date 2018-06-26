@@ -19,8 +19,8 @@
     {
         <tr>
             <td>@trip.TripID</td>
-            <td>@trip.StartDate</td>
-            <td>@trip.EndDate</td>
+            <td>@trip.StartDate.ToShortDateString()</td>
+            <td>@trip.EndDate.ToShortDateString()</td>
             <td>@trip.StartCity, @trip.StartState</td>
             <td>@trip.EndCity, @trip.EndState</td>
             <th>@trip.Price</th>

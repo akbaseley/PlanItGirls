@@ -49,6 +49,7 @@ namespace PlanItGirls.Controllers
             Trip currentTrip = (Trip)TempData["currentTrip"];
             ViewBag.currentTrip = currentTrip;
             #endregion
+
             #region Travel Costs
 
             if (TempData["VehicleSelection"] is null && VehicleSelection is null)
@@ -244,12 +245,69 @@ namespace PlanItGirls.Controllers
             return View();
         }
 
+        public ActionResult TripSummary()
+        {
+            PlanItDBEntities ORM = new PlanItDBEntities();
+            Trip currentTrip = (Trip)TempData["currentTrip"];
+            ViewBag.currentTrip = currentTrip;
+            ViewBag.HotelBudget = HotelBudget(currentTrip);
+            ViewBag.RestaurantBudget = RestaurantBudget(currentTrip);
+            ViewBag.totalDeductedBudget = TotalDeductedBudget(currentTrip);
+            ViewBag.remainingBudget = RemainingBudget(currentTrip);
+
+            JObject EventOptions = Events(currentTrip.TripID);
+            ViewBag.EventOptions = EventOptions["events"];
+            TempData["currentTrip"] = TempData["currentTrip"];
+            return View();
+        }
+
+        public double HotelBudget (Trip thisTrip)
+        {
+            double hotelBudget = 0;
+
+            foreach(var hotel in thisTrip.Lodges)
+            {
+                hotelBudget = ((hotelBudget + hotel.Price) * hotel.NumberOfNights);
+            }
+
+            return hotelBudget;
+        }
+
+        public double RestaurantBudget (Trip thisTrip)
+        {
+            double restaurantBudget = 0;
+
+            foreach(var restaurant in thisTrip.Foods)
+            {
+                restaurantBudget = ((restaurantBudget + restaurant.Price)* restaurant.NumberOfMeals);
+            }
+
+            return restaurantBudget;
+        }
+
+        public double TotalDeductedBudget(Trip thisTrip)
+        {
+            double restaurantBudget = RestaurantBudget(thisTrip);
+            double hotelBudget = HotelBudget(thisTrip);
+            double totalDeductedBudget = restaurantBudget + hotelBudget;
+
+            return totalDeductedBudget;
+        }
+
+        public double RemainingBudget(Trip thisTrip)
+        {
+            double remainingBudget = thisTrip.Price - TotalDeductedBudget(thisTrip);
+
+            return remainingBudget;
+        }
+
         public static int NumOfDays(Trip thisTrip)
         {
             TimeSpan days = thisTrip.EndDate.Subtract(thisTrip.StartDate).Duration();
             int DayDiff = (int)days.TotalDays;
             return DayDiff;
         }
+
         public JObject TripDistance(Trip currentTrip)
         {
             HttpWebRequest WR = WebRequest.CreateHttp($"https://maps.googleapis.com/maps/api/directions/json?origin=" + currentTrip.StartCity + "+" + currentTrip.StartState + "&destination=" + currentTrip.EndCity + "," + currentTrip.EndState + "&key=" + ConfigurationManager.AppSettings["GoogleAPIKey"]);
@@ -260,6 +318,7 @@ namespace PlanItGirls.Controllers
             JObject GoogleData = JObject.Parse(JsonData);
             return GoogleData;
         }
+
         public JObject HotelsbyPricePoint(string TripID, string pricePoint)
         {
 
@@ -292,6 +351,7 @@ namespace PlanItGirls.Controllers
             JObject YelpData = JObject.Parse(JsonData);
             return YelpData;
         }
+
         public JObject RestaurantsbyPricePoint(string TripID, string pricePoint)
         {
 
@@ -323,6 +383,7 @@ namespace PlanItGirls.Controllers
             JObject YelpData = JObject.Parse(JsonData);
             return YelpData;
         }
+
         public JObject Events(string TripID)
         {
             PlanItDBEntities ORM = new PlanItDBEntities();
@@ -338,20 +399,11 @@ namespace PlanItGirls.Controllers
             JObject YelpData = JObject.Parse(JsonData);
             return YelpData;
         }
+
         public static string ConvertToUnixTime(DateTime currentTime)
         {
             DateTime sTime = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
             return ((currentTime - sTime).TotalSeconds).ToString();
         }
-
-
-        public ActionResult TripSummary()
-        {
-            PlanItDBEntities ORM = new PlanItDBEntities();
-            ViewBag.currentTrip = (Trip)TempData["currentTrip"];
-
-            return View();
-        }
     }
-
 }
