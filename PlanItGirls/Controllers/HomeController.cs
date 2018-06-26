@@ -85,7 +85,7 @@ namespace PlanItGirls.Controllers
             }
             #endregion
 
-            #region Hotels
+            #region hotelPricePoint
             if (TempData["hotelPricePoint"] is null && hotelPricePoint is null)
             {
                 ViewBag.Hotels = null;
@@ -108,7 +108,8 @@ namespace PlanItGirls.Controllers
                 ViewBag.Hotels = HotelsbyPricePoint(currentTrip.TripID, hotelPricePoint);
                 ViewBag.PricePerDay = hotelPricePoint;
             }
-
+            #endregion
+            #region HotelSelection
             if (TempData["HotelSelection"] is null && HotelSelection is null)
             {
                 ViewBag.HotelSelection = null;
@@ -131,6 +132,8 @@ namespace PlanItGirls.Controllers
                 ViewBag.DayDiff = NumOfDays(currentTrip);
                 TempData["HotelSelection"] = HotelSelection;
             }
+            #endregion
+            #region NumberOfNights
             if (TempData["NumberOfNights"] is null && NumberOfNights is null)
             {
                 ViewBag.NumberOfNights = null;
@@ -155,14 +158,12 @@ namespace PlanItGirls.Controllers
             }
             #endregion
 
-            #region Restaurants
+            #region restaurantPricePoint
             if (TempData["restaurantPricePoint"] is null && restaurantPricePoint is null)
             {
                 ViewBag.Restaurants = null;
                 ViewBag.MealFact = "Select Price Point to get Restaurant Options";
             }
-            #endregion
-            #region restaurantPricePoint
             else
             {
                 if (TempData["restaurantPricePoint"] is null)
@@ -243,6 +244,15 @@ namespace PlanItGirls.Controllers
             #region TempData
             TempData["VehicleSelection"] = TempData["VehicleSelection"];
             TempData["currentTrip"] = TempData["currentTrip"];
+
+
+            TempData["hotelPricePoint"] = TempData["hotelPricePoint"];
+            TempData["HotelSelection"] = TempData["HotelSelection"];
+            TempData["NumberOfNights"] = TempData["NumberOfNights"];
+
+            TempData["restaurantPricePoint"] = TempData["restaurantPricePoint"];
+            TempData["RestaurantSelection"] = TempData["RestaurantSelection"];
+            TempData["NumberOfMeals"] = TempData["NumberOfMeals"];
             #endregion
 
             return View();

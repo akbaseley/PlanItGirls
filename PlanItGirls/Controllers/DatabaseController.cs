@@ -154,15 +154,15 @@ namespace PlanItGirls.Controllers
 
             TempData["VehicleSelection"] = TempData["VehicleSelection"];
             TempData["currentTrip"] = TempData["currentTrip"];
+
             TempData["hotelPricePoint"] = TempData["hotelPricePoint"];
             TempData["HotelSelection"] = TempData["HotelSelection"];
             TempData["NumberOfNights"] = TempData["NumberOfNights"];
-            TempData["AdjustedTotalBudget"] = TempData["AdjustedTotalBudget"];
+
             TempData["restaurantPricePoint"] = TempData["restaurantPricePoint"];
             TempData["RestaurantSelection"] = TempData["RestaurantSelection"];
             TempData["NumberOfMeals"] = TempData["NumberOfMeals"];
-            TempData["AdjustedRestaurantTotalBudget"] = TempData["AdjustedRestaurantTotalBudget"];
-            return RedirectToAction("../Home/TripBudgetCalculator");
+            return RedirectToAction("../Home/TripSummary");
         }
         public ActionResult DeleteHotel(string Lodging)
         {
@@ -274,15 +274,16 @@ namespace PlanItGirls.Controllers
 
             TempData["VehicleSelection"] = TempData["VehicleSelection"];
             TempData["currentTrip"] = TempData["currentTrip"];
+
             TempData["hotelPricePoint"] = TempData["hotelPricePoint"];
             TempData["HotelSelection"] = TempData["HotelSelection"];
             TempData["NumberOfNights"] = TempData["NumberOfNights"];
-            TempData["AdjustedTotalBudget"] = TempData["AdjustedTotalBudget"];
+
             TempData["restaurantPricePoint"] = TempData["restaurantPricePoint"];
             TempData["RestaurantSelection"] = TempData["RestaurantSelection"];
             TempData["NumberOfMeals"] = TempData["NumberOfMeals"];
-            TempData["AdjustedRestaurantTotalBudget"] = TempData["AdjustedRestaurantTotalBudget"];
-            return RedirectToAction("../Home/TripBudgetCalculator");
+
+            return RedirectToAction("../Home/TripSummary");
         }
         public ActionResult DeleteRestaurant(string Restaurant)
         {
