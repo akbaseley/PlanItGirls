@@ -150,11 +150,8 @@ namespace PlanItGirls.Controllers
                     TempData["NumberOfNights"] = NumberOfNights;
                 }
                 ViewBag.NumberOfNights = int.Parse(NumberOfNights);
-                double TotalHotelBudget = double.Parse(hotelPricePoint) * double.Parse(NumberOfNights);
+                double hotelBudget = double.Parse(hotelPricePoint) * double.Parse(NumberOfNights);
 
-                ViewBag.TotalHotelBudget = TotalHotelBudget;
-                double AdjustedTotalBudget = currentTrip.Price - TotalHotelBudget;
-                TempData["AdjustedTotalBudget"] = AdjustedTotalBudget;
             }
             #endregion
 
@@ -164,6 +161,8 @@ namespace PlanItGirls.Controllers
                 ViewBag.Restaurants = null;
                 ViewBag.MealFact = "Select Price Point to get Restaurant Options";
             }
+            #endregion
+            #region restaurantPricePoint
             else
             {
                 if (TempData["restaurantPricePoint"] is null)
@@ -181,7 +180,8 @@ namespace PlanItGirls.Controllers
                 ViewBag.Restaurants = RestaurantsbyPricePoint(currentTrip.TripID, restaurantPricePoint);
                 ViewBag.PricePerMeal = double.Parse(restaurantPricePoint);
             }
-
+            #endregion
+            #region RestaurantSelection
             if (TempData["RestaurantSelection"] is null && RestaurantSelection is null)
             {
                 ViewBag.RestaurantSelection = null;
@@ -205,6 +205,8 @@ namespace PlanItGirls.Controllers
                 ViewBag.DayDiff = NumOfDays(currentTrip);
                 TempData["RestaurantSelection"] = RestaurantSelection;
             }
+            #endregion
+            #region NumberOfMeals
             if (TempData["NumberOfMeals"] is null && NumberOfMeals is null)
             {
                 ViewBag.NumberOfMeals = null;
@@ -226,34 +228,21 @@ namespace PlanItGirls.Controllers
 
                 ViewBag.NumberOfMeals = int.Parse(NumberOfMeals);
             }
-
             #endregion
 
             #region Budget Calculations
 
-            double TotalRestaurantBudget = RestaurantBudget(currentTrip);
-            ViewBag.TotalRestaurantBudget = TotalRestaurantBudget;
-
-            double totalDeductedBudget = TotalDeductedBudget(currentTrip);
-            ViewBag.totalDeductedBudget = totalDeductedBudget;
-
-            double remainingBudget = RemainingBudget(currentTrip);
-            ViewBag.remainingBudget = remainingBudget;
-
+            ViewBag.currentTrip = currentTrip;
+            ViewBag.HotelBudget = HotelBudget(currentTrip);
+            ViewBag.RestaurantBudget = RestaurantBudget(currentTrip);
+            ViewBag.totalDeductedBudget = TotalDeductedBudget(currentTrip);
+            ViewBag.remainingBudget = RemainingBudget(currentTrip);
 
             #endregion
 
             #region TempData
             TempData["VehicleSelection"] = TempData["VehicleSelection"];
             TempData["currentTrip"] = TempData["currentTrip"];
-            TempData["hotelPricePoint"] = TempData["hotelPricePoint"];
-            TempData["HotelSelection"] = TempData["HotelSelection"];
-            TempData["NumberOfNights"] = TempData["NumberOfNights"];
-            TempData["AdjustedTotalBudget"] = TempData["AdjustedTotalBudget"];
-            TempData["restaurantPricePoint"] = TempData["restaurantPricePoint"];
-            TempData["RestaurantSelection"] = TempData["RestaurantSelection"];
-            TempData["NumberOfMeals"] = TempData["NumberOfMeals"];
-            TempData["AdjustedRestaurantTotalBudget"] = TempData["AdjustedRestaurantTotalBudget"];
             #endregion
 
             return View();

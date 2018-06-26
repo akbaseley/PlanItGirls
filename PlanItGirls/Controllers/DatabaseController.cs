@@ -362,13 +362,14 @@ namespace PlanItGirls.Controllers
 
         public ActionResult EditCarOption()
         {
+            PlanItDBEntities ORM = new PlanItDBEntities();
             Trip Found = (Trip)TempData["currentTrip"];
 
             if (Found !=null)
             {
                 TempData["VehicleSelection"] = TempData["VehicleSelection"];
                 TempData["currentTrip"] = TempData["currentTrip"];
-                return RedirectToAction("../Database/SaveCarOption");
+                return RedirectToAction("SaveCarOption");
             }
             else
             {
@@ -382,20 +383,31 @@ namespace PlanItGirls.Controllers
             PlanItDBEntities ORM = new PlanItDBEntities();
             Trip Found = (Trip)TempData["currentTrip"];
 
-            string Car  = TempData["VehicleSelection"].ToString();
+            if (Found != null)
+            {
+                string Car = TempData["VehicleSelection"].ToString();
 
-            Found.Car = Double.Parse(Car);
+                Found.Car = Double.Parse(Car);
 
-            ORM.Entry(Found).State = System.Data.Entity.EntityState.Modified;
+                //ORM.Entry(Found).State = System.Data.Entity.EntityState.Modified;
 
-            ORM.SaveChanges();
+                ORM.SaveChanges();
 
-            TempData["currentTrip"] = Found;
+                TempData["currentTrip"] = Found;
 
-            TempData["currentTrip"] = TempData["currentTrip"];
-            TempData["VehicleSelection"] = TempData["VehicleSelection"];
-            return RedirectToAction("../Home/TripBudgetCalculator");
+                TempData["currentTrip"] = TempData["currentTrip"];
+                TempData["VehicleSelection"] = TempData["VehicleSelection"];
 
+                return RedirectToAction("../Home/TripBudgetCalculator");
+
+            }
+            else
+            {
+                TempData["currentTrip"] = TempData["currentTrip"];
+                TempData["VehicleSelection"] = TempData["VehicleSelection"];
+
+                return View("Error");
+            }
         }
     }
 }

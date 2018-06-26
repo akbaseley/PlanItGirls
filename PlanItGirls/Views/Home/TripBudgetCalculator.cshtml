@@ -22,6 +22,7 @@
                     <option value=".65">Minivan</option>
                     <option value=".72">Suv/Truck</option>
                 </select>
+                <input type="submit" value="See Cost" class="budget" />
             </form>
 
             @if (ViewBag.GasPrice != null)
@@ -74,7 +75,7 @@
                 </h6>
             }
 
-            <form action="../Database/EditCarOption">
+            <form action="../Database/SaveCarOption">
                 <input type="submit" value="Save This Car" />
             </form>
         </div>
@@ -124,7 +125,8 @@
                 </form>
                 if (ViewBag.HotelSelection != null)
                 {
-                    <img src="@ViewBag.HotelSelection["image_url"]" alt="Hotel Image" height="75" />
+                    <br /><br />
+                    <img src="@ViewBag.HotelSelection["image_url"]" alt="Hotel Image" height="75" align="middle"/>
 
                     <form action="../Home/TripBudgetCalculator" method="get">
                         <select name="NumberOfNights">
@@ -206,12 +208,13 @@
                         }
                     </select>
 
-                    <input type="submit" value="Select Restaurant" class="budget"/>
+                    <input type="submit" value="Select Restaurant" class="budget" />
 
                 </form>
                 if (ViewBag.RestaurantSelection != null)
                 {
-                    <img src="@ViewBag.RestaurantSelection["image_url"]" alt="Restaurant Image" height="75" />
+                    <br /><br />
+                    <img src="@ViewBag.RestaurantSelection["image_url"]" alt="Restaurant Image" height="75" align="middle" />
 
                     <form action="../Home/TripBudgetCalculator" method="get">
                         <select name="NumberOfMeals">
