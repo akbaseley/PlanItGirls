@@ -156,3 +156,7 @@ h5{
     color: #49C6D0;
     font-size:larger;
 }
+
+form {
+    display: inline;
+}

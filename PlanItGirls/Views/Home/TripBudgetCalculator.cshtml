@@ -174,23 +174,27 @@
             </form>
             @if (ViewBag.Restaurants is null)
             {
-                <h7>@ViewBag.MealFact</h7>
-                <h8>
+                <h6>@ViewBag.MealFact</h6>
+                <h5>
                     Approx. Meal Costs
-                </h8>
-                <h8>
+                </h5>
+                <h5>
                     $: $10 per meal
-                </h8>
-                <h8>
+                </h5>
+                <h5>
                     $$: $35 per night
-                </h8>
-                <h8>
+                </h5>
+                <h5>
                     $$$: $60 per night
-                </h8>
-                <h8>
+                </h5>
+                <h5>
                     $$$$: $100 per night
-                </h8>
+                </h5>
+                <h6>
+                    Remaining Budget: $@ViewBag.AdjustedTotalBudget
+                </h6>
             }
+
             else
             {
 
