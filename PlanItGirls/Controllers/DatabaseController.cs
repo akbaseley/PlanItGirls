@@ -10,13 +10,13 @@ using Newtonsoft.Json.Linq;
 
 namespace PlanItGirls.Controllers
 {
-    
+
+    [Authorize]
     public class DatabaseController : Controller
     {
         // Use this controller when using CRUD methods to Database
         // Primarily used when Logging trip information and when 
 
-        [Authorize]
         public ActionResult TripList()
         {
             PlanItDBEntities ORM = new PlanItDBEntities();
@@ -44,7 +44,7 @@ namespace PlanItGirls.Controllers
 
             ORM.SaveChanges();
 
-            return View("../Home/TripCreation");
+            return RedirectToAction("TripList");
         }
 
         public ActionResult DeleteTrip(string TripID)
