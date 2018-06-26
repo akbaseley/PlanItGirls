@@ -74,9 +74,6 @@
                 </h6>
             }
 
-            <h5>
-                Remaining Budget: $@ViewBag.currentTrip.Price
-            </h5>
             <form action="../Database/EditCarOption">
                 <input type="submit" value="Save This Car" />
             </form>
@@ -112,9 +109,6 @@
                 <h6>
                     $$$$: $350 per night
                 </h6>
-                <h5>
-                    Remaining Budget: $@ViewBag.currentTrip.Price
-                </h5>
             }
             else
             {
@@ -155,22 +149,10 @@
                     $@ViewBag.PricePerDay
                 </h6>
                 <h5>
-                    Length of Stay
-                </h5>
-                <h6>
-                    @ViewBag.NumberOfNights
-                </h6>
-                <h5>
                     Total Price of Stay
                 </h5>
                 <h6>
                     $@ViewBag.TotalHotelBudget
-                </h6>
-                <h5>
-                    Adjusted Budget
-                </h5>
-                <h6>
-                    $@ViewBag.AdjustedTotalBudget
                 </h6>
             }
             <form action="../Database/SaveHotelOption">
@@ -208,9 +190,6 @@
                 <h8>
                     $$$$: $100 per night
                 </h8>
-                <h5>
-                    Remaining Budget: $@ViewBag.AdjustedTotalBudget
-                </h5>
             }
             else
             {
@@ -239,11 +218,6 @@
                         </select>
                         <input type="submit" value="Number of Meals" class="budget" />
                     </form>
-
-                    <h5>Remaining Budget:</h5>
-                    <h6>
-                        @ViewBag.AdjustedTotalBudget
-                    </h6>
                 }
 
                 <h5>
@@ -253,22 +227,10 @@
                     $@ViewBag.PricePerMeal
                 </h6>
                 <h5>
-                    Length of Stay
-                </h5>
-                <h6>
-                    @ViewBag.NumberOfMeals
-                </h6>
-                <h5>
-                    Total Price of Stay
+                    Total at this Restaurant
                 </h5>
                 <h6>
                     $@ViewBag.TotalRestaurantBudget
-                </h6>
-                <h5>
-                    Adjusted Budget
-                </h5>
-                <h6>
-                    $@ViewBag.AdjustedRestaurantTotalBudget
                 </h6>
             }
             <form action="../Database/SaveRestaurantOption">
@@ -286,28 +248,28 @@
             <h5></h5>
         </div>
         <div class="col-sm-2" align="right">
-            <h5>Total Budget: </h5>
-            <h5>Total Spent on Hotels:</h5>
-            <h5>Hotel & Restaurant Total: </h5>
-            <h5>Budget Remaining: </h5>
+            <h6>Total Budget: </h6>
+            <h6>Total Spent on Hotels:</h6>
+            <h6>Hotel & Restaurant Total: </h6>
+            <h6>Budget Remaining: </h6>
         </div>
         <div class="col-sm-2">
-            <h5>$@ViewBag.currentTrip.Price</h5>
-            <h5>$@ViewBag.HotelBudget</h5>
-            <h5>$@ViewBag.totalDeductedBudget</h5>
-            <h5>$@ViewBag.remainingBudget</h5>
+            <h6>$@ViewBag.currentTrip.Price</h6>
+            <h6>$@ViewBag.TotalHotelBudget</h6>
+            <h6>$@ViewBag.totalDeductedBudget</h6>
+            <h6>$@ViewBag.remainingBudget</h6>
         </div>
         <div class="col-sm-2" align="right">
-            <h5>Total Budget: </h5>
-            <h5>Total Spent on Meals: </h5>
-            <h5>Hotel & Restaurant Total: </h5>
-            <h5>Budget Remaining: </h5>
+            <h6>Total Budget: </h6>
+            <h6>Total Spent on Meals: </h6>
+            <h6>Hotel & Restaurant Total: </h6>
+            <h6>Budget Remaining: </h6>
         </div>
         <div class="col-sm-2">
-            <h5>$@ViewBag.currentTrip.Price</h5>
-            <h5>$@ViewBag.RestaurantBudget</h5>
-            <h5>$@ViewBag.totalDeductedBudget</h5>
-            <h5>$@ViewBag.remainingBudget</h5>
+            <h6>$@ViewBag.currentTrip.Price</h6>
+            <h6>$@ViewBag.RestaurantBudget</h6>
+            <h6>$@ViewBag.totalDeductedBudget</h6>
+            <h6>$@ViewBag.remainingBudget</h6>
         </div>
     </div>
 </div>

@@ -154,7 +154,6 @@ namespace PlanItGirls.Controllers
 
                 ViewBag.TotalHotelBudget = TotalHotelBudget;
                 double AdjustedTotalBudget = currentTrip.Price - TotalHotelBudget;
-                ViewBag.AdjustedTotalBudget = AdjustedTotalBudget;
                 TempData["AdjustedTotalBudget"] = AdjustedTotalBudget;
             }
             #endregion
@@ -182,7 +181,7 @@ namespace PlanItGirls.Controllers
                 ViewBag.Restaurants = RestaurantsbyPricePoint(currentTrip.TripID, restaurantPricePoint);
                 ViewBag.PricePerMeal = double.Parse(restaurantPricePoint);
             }
-            
+
             if (TempData["RestaurantSelection"] is null && RestaurantSelection is null)
             {
                 ViewBag.RestaurantSelection = null;
@@ -216,22 +215,32 @@ namespace PlanItGirls.Controllers
                 {
                     TempData["NumberOfMeals"] = NumberOfMeals;
                 }
-                else if(NumberOfMeals is null)
+                else if (NumberOfMeals is null)
                 {
                     NumberOfMeals = (string)TempData["NumberOfMeals"];
                 }
-                else if((string)TempData["NumberOfMeals"] != NumberOfMeals)
+                else if ((string)TempData["NumberOfMeals"] != NumberOfMeals)
                 {
                     TempData["NumberOfMeals"] = NumberOfMeals;
                 }
 
                 ViewBag.NumberOfMeals = int.Parse(NumberOfMeals);
-                double TotalRestaurantBudget = double.Parse(restaurantPricePoint) * double.Parse(NumberOfMeals);
-                ViewBag.TotalRestaurantBudget = TotalRestaurantBudget;
-                double AdjustedRestaurantTotalBudget = travelBudget - TotalRestaurantBudget;
-                ViewBag.AdjustedRestaurantTotalBudget = AdjustedRestaurantTotalBudget;
-                TempData["AdjustedRestaurantTotalBudget"] = AdjustedRestaurantTotalBudget;
             }
+
+            #endregion
+
+            #region Budget Calculations
+
+            double TotalRestaurantBudget = RestaurantBudget(currentTrip);
+            ViewBag.TotalRestaurantBudget = TotalRestaurantBudget;
+
+            double totalDeductedBudget = TotalDeductedBudget(currentTrip);
+            ViewBag.totalDeductedBudget = totalDeductedBudget;
+
+            double remainingBudget = RemainingBudget(currentTrip);
+            ViewBag.remainingBudget = remainingBudget;
+
+
             #endregion
 
             #region TempData
@@ -267,11 +276,11 @@ namespace PlanItGirls.Controllers
             return View();
         }
 
-        public double HotelBudget (Trip thisTrip)
+        public double HotelBudget(Trip thisTrip)
         {
             double hotelBudget = 0;
 
-            foreach(var hotel in thisTrip.Lodges)
+            foreach (var hotel in thisTrip.Lodges)
             {
                 hotelBudget = ((hotelBudget + hotel.Price) * hotel.NumberOfNights);
             }
@@ -279,13 +288,13 @@ namespace PlanItGirls.Controllers
             return hotelBudget;
         }
 
-        public double RestaurantBudget (Trip thisTrip)
+        public double RestaurantBudget(Trip thisTrip)
         {
             double restaurantBudget = 0;
 
-            foreach(var restaurant in thisTrip.Foods)
+            foreach (var restaurant in thisTrip.Foods)
             {
-                restaurantBudget = ((restaurantBudget + restaurant.Price)* restaurant.NumberOfMeals);
+                restaurantBudget = ((restaurantBudget + restaurant.Price) * restaurant.NumberOfMeals);
             }
 
             return restaurantBudget;
