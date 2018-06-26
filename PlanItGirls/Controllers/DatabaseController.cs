@@ -153,8 +153,9 @@ namespace PlanItGirls.Controllers
             ORM.Lodges.Add(newHotel);
             ORM.SaveChanges();
 
-            TempData["currentTrip"] = ORM.Trips.Where(c => c.Lodging.Contains(newHotel.Lodging));
+             Trip thisTrip = ORM.Trips.Find(newHotel.TripID);
 
+            TempData["currentTrip"] = thisTrip;
             TempData["VehicleSelection"] = TempData["VehicleSelection"];
             TempData["currentTrip"] = TempData["currentTrip"];
 
@@ -276,7 +277,8 @@ namespace PlanItGirls.Controllers
             ORM.Foods.Add(newRestaurant);
             ORM.SaveChanges();
 
-            TempData["currentTrip"] = ORM.Trips.Where(c => c.Food.Contains(newRestaurant.Restaurant));
+            Trip thisTrip = ORM.Trips.Find(newRestaurant.TripID);
+            TempData["currentTrip"] = thisTrip;
 
             TempData["VehicleSelection"] = TempData["VehicleSelection"];
             TempData["currentTrip"] = TempData["currentTrip"];
