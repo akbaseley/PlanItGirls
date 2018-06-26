@@ -105,6 +105,7 @@ namespace PlanItGirls.Controllers
                 {
                     TempData["hotelPricePoint"] = hotelPricePoint;
                 }
+                ViewBag.hotelPricePoint = hotelPricePoint;
                 ViewBag.Hotels = HotelsbyPricePoint(currentTrip.TripID, hotelPricePoint);
                 ViewBag.PricePerDay = hotelPricePoint;
             }
@@ -178,6 +179,7 @@ namespace PlanItGirls.Controllers
                 {
                     TempData["restaurantPricePoint"] = restaurantPricePoint;
                 }
+                ViewBag.restaurantPricePoint = restaurantPricePoint;
                 ViewBag.Restaurants = RestaurantsbyPricePoint(currentTrip.TripID, restaurantPricePoint);
                 ViewBag.PricePerMeal = double.Parse(restaurantPricePoint);
             }

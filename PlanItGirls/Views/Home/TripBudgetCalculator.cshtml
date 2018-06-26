@@ -49,6 +49,10 @@
                 <h6>
                     @ViewBag.travelBudget
                 </h6>
+
+                <form action="../Database/SaveCarOption">
+                    <input type="submit" value="Save This Car" class="budget" />
+                </form>
             }
 
             else if (ViewBag.GasPrice is null)
@@ -73,24 +77,27 @@
                 </h6>
             }
 
-            <form action="../Database/SaveCarOption">
-                <input type="submit" value="Save This Car" class="budget"/>
-
-            </form>
         </div>
         <br /><br />
         <div class="col-sm-4">
             <h4>Hotel Options</h4>
-            <form action="../Home/TripBudgetCalculator" method="get">
-                Select Hotel Price: <select name="hotelPricePoint">
-                    <option value="0">---</option>
-                    <option value="80">$</option>
-                    <option value="150">$$</option>
-                    <option value="225">$$$</option>
-                    <option value="350">$$$$</option>
-                </select>
-                <input type="submit" value="See Options" class="budget" />
-            </form>
+            @if (ViewBag.hotelPricePoint is null)
+            {
+                <form action="../Home/TripBudgetCalculator" method="get">
+                    Select Hotel Price: <select name="hotelPricePoint">
+                        <option value="0">---</option>
+                        <option value="80">$</option>
+                        <option value="150">$$</option>
+                        <option value="225">$$$</option>
+                        <option value="350">$$$$</option>
+                    </select>
+                    <input type="submit" value="See Options" class="budget" />
+                </form>
+            }
+            else
+            {
+                <h5>These Hotels cost $@ViewBag.hotelPricePoint</h5>
+            }
             @if (ViewBag.Hotels is null)
             {
                 <h6>@ViewBag.Fact</h6>
@@ -112,67 +119,87 @@
             }
             else
             {
-
-                <form action="../Home/TripBudgetCalculator" method="get">
-                    <select name="HotelSelection">
-                        @for (int i = 0; i < ViewBag.Hotels["businesses"].Count; i++)
-                        {
-                            <option value="@ViewBag.Hotels["businesses"][i]">@ViewBag.Hotels["businesses"][i]["name"]</option>
-                        }
-                    </select>
-                    <input type="submit" value="Select Hotel" class="budget" /><br /><br />
-                </form>
-                if (ViewBag.HotelSelection != null)
+                if (ViewBag.HotelSelection is null)
                 {
-                    <br /><br />
-                    <img src="@ViewBag.HotelSelection["image_url"]" alt="Hotel Image" align="middle" class="img-thumbnail" />
-
                     <form action="../Home/TripBudgetCalculator" method="get">
-                        <select name="NumberOfNights">
-                            @for (int i = 1; i <= @ViewBag.DayDiff; i++)
+                        <select name="HotelSelection">
+                            @for (int i = 0; i < ViewBag.Hotels["businesses"].Count; i++)
                             {
-                                <option value="@i">@i</option>
+                                <option value="@ViewBag.Hotels["businesses"][i]">@ViewBag.Hotels["businesses"][i]["name"]</option>
                             }
                         </select>
-                        <input type="submit" value="Number of Nights" class="budget" />
+                        <input type="submit" value="Select Hotel" class="budget" /><br /><br />
                     </form>
-
-                    <h5>Remaining Budget:</h5>
-                    <h6>
-                        @ViewBag.travelBudget
-                    </h6>
                 }
+                else
+                {
+                    <br /><br />
+                    <h3>@ViewBag.HotelSelection["name"]</h3>
+                    <h5>@ViewBag.HotelSelection["location"]["address1"]</h5>
+                    <h5>@ViewBag.HotelSelection["location"]["city"], @ViewBag.HotelSelection["location"]["state"]</h5>
+                    <h5>@ViewBag.HotelSelection["location"]["zip_code"]</h5>
+                    <h5>
+                        <a href="@ViewBag.HotelSelection["url"]">See this Hotel's Yelp Page</a>
+                    </h5>
 
-                <h5>
-                    Price per Day
-                </h5>
-                <h6>
-                    $@ViewBag.PricePerDay
-                </h6>
-                <h5>
-                    Total Price of Stay
-                </h5>
-                <h6>
-                    $@ViewBag.TotalHotelBudget
-                </h6>
+                    if (ViewBag.NumberOfNights is null)
+                    {
+                        <form action="../Home/TripBudgetCalculator" method="get">
+                            <select name="NumberOfNights">
+                                @for (int i = 1; i <= @ViewBag.DayDiff; i++)
+                                {
+                                    <option value="@i">@i</option>
+                                }
+                            </select>
+                            <input type="submit" value="Number of Nights" class="budget" />
+                        </form>
+                    }
+                    else
+                    {
+                        <h5>Remaining Budget:</h5>
+                        <h6>
+                            @ViewBag.travelBudget
+                        </h6>
+                        <h5>
+                            Price per Day
+                        </h5>
+                        <h6>
+                            $@ViewBag.PricePerDay
+                        </h6>
+                        <h5>
+                            Total Price of Stay
+                        </h5>
+                        <h6>
+                            $@ViewBag.TotalHotelBudget
+                        </h6>
+
+                        <form action="../Database/SaveHotelOption">
+                            <input type="submit" value="Save This Hotel" class="budget" />
+                        </form>
+                    }
+                }
             }
-            <form action="../Database/SaveHotelOption">
-                <input type="submit" value="Save This Hotel" class="budget" />
-            </form>
         </div>
 
         <div class="col-sm-4">
             <h4>Restaurant Options</h4>
-            <form action="../Home/TripBudgetCalculator" method="get" class="">
-                Select Meal Price: <select name="RestaurantPricePoint">
-                    <option value="0">---</option>
-                    <option value="10">$</option>
-                    <option value="35">$$</option>
-                    <option value="60">$$$</option>
-                    <option value="100">$$$$</option>
-                </select>
-                <input type="submit" value="See Options" class="budget" />
-            </form>
+            @if (ViewBag.restaurantPricePoint is null)
+            {
+                <form action="../Home/TripBudgetCalculator" method="get" class="">
+                    Select Meal Price: <select name="RestaurantPricePoint">
+                        <option value="0">---</option>
+                        <option value="10">$</option>
+                        <option value="35">$$</option>
+                        <option value="60">$$$</option>
+                        <option value="100">$$$$</option>
+                    </select>
+                    <input type="submit" value="See Options" class="budget" />
+                </form>
+            }
+            else
+            {
+                <h5>These Restaurants cost approximately $@ViewBag.restaurantPricePoint per meal.</h5>
+            }
             @if (ViewBag.Restaurants is null)
             {
                 <h6>@ViewBag.MealFact</h6>
@@ -187,10 +214,6 @@
                 </h5>
                 <h5>
                     $$$: $60 per meal
-                    $$: $35 per night
-                </h5>
-                <h5>
-                    $$$: $60 per night
                 </h5>
                 <h5>
                     $$$$: $100 per meal
@@ -199,10 +222,8 @@
                     Remaining Budget: $@ViewBag.AdjustedTotalBudget
                 </h6>
             }
-
             else
             {
-
                 <form action="../Home/TripBudgetCalculator" method="get">
                     <select name="RestaurantSelection">
                         @for (int i = 0; i < ViewBag.Restaurants["businesses"].Count; i++)
@@ -210,42 +231,55 @@
                             <option value="@ViewBag.Restaurants["businesses"][i]">@ViewBag.Restaurants["businesses"][i]["name"]</option>
                         }
                     </select>
-
                     <input type="submit" value="Select Restaurant" class="budget" />
-
                 </form>
+
                 if (ViewBag.RestaurantSelection != null)
                 {
                     <br /><br />
-                    <img src="@ViewBag.RestaurantSelection["image_url"]" alt="Restaurant Image" height="75" align="middle" />
+                    <h3>@ViewBag.RestaurantSelection["name"]</h3>
+                    <h4>@ViewBag.RestaurantSelection["location"]["address1"]</h4>
+                    <h4>@ViewBag.RestaurantSelection["location"]["city"], @ViewBag.RestaurantSelection["location"]["state"]</h4>
+                    <h4>@ViewBag.RestaurantSelection["location"]["zip_code"]</h4>
+                    <h4>
+                        <a href="@ViewBag.RestaurantSelection["url"]">See this Restaurant's Yelp Page</a>
+                    </h4>
 
-                    <form action="../Home/TripBudgetCalculator" method="get">
-                        <select name="NumberOfMeals">
-                            @for (int i = 1; i <= @ViewBag.DayDiff * 3; i++)
-                            {
-                                <option value="@i">@i</option>
-                            }
-                        </select>
-                        <input type="submit" value="Number of Meals" class="budget" />
-                    </form>
                 }
-
-                <h5>
-                    Price per Meal
-                </h5>
-                <h6>
-                    $@ViewBag.PricePerMeal
-                </h6>
-                <h5>
-                    Total at this Restaurant
-                </h5>
-                <h6>
-                    $@ViewBag.TotalRestaurantBudget
-                </h6>
+                else
+                {
+                    if (ViewBag.NumberOfMeals is null)
+                    {
+                        <form action="../Home/TripBudgetCalculator" method="get">
+                            <select name="NumberOfMeals">
+                                @for (int i = 1; i <= @ViewBag.DayDiff * 3; i++)
+                                {
+                                    <option value="@i">@i</option>
+                                }
+                            </select>
+                            <input type="submit" value="Number of Meals" class="budget" />
+                        </form>
+                    }
+                    else
+                    {
+                        <h5>
+                            Price per Meal
+                        </h5>
+                        <h6>
+                            $@ViewBag.PricePerMeal
+                        </h6>
+                        <h5>
+                            Total at this Restaurant
+                        </h5>
+                        <h6>
+                            $@ViewBag.TotalRestaurantBudget
+                        </h6>
+                        <form action="../Database/SaveRestaurantOption">
+                            <input type="submit" value="Save Restaurant" class="budget" />
+                        </form>
+                    }
+                }
             }
-            <form action="../Database/SaveRestaurantOption">
-                <input type="submit" value="Save Restaurant" class="budget" />
-            </form>
         </div>
     </div>
     <div class="row">
