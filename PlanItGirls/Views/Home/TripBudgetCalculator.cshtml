@@ -11,8 +11,6 @@
 <div class="container" id="budget">
     <div class="row">
         <div class="col-sm-4">
-
-
             <h4>Vehicle Options</h4>
             <form action="/Home/TripBudgetCalculator" method="get">
                 Select Car Type: <select name="VehicleSelection">
@@ -76,7 +74,8 @@
             }
 
             <form action="../Database/SaveCarOption">
-                <input type="submit" value="Save This Car" />
+                <input type="submit" value="Save This Car" class="budget"/>
+
             </form>
         </div>
         <br /><br />
@@ -164,7 +163,7 @@
 
         <div class="col-sm-4">
             <h4>Restaurant Options</h4>
-            <form action="../Home/TripBudgetCalculator" method="get">
+            <form action="../Home/TripBudgetCalculator" method="get" class="">
                 Select Meal Price: <select name="RestaurantPricePoint">
                     <option value="0">---</option>
                     <option value="10">$</option>
