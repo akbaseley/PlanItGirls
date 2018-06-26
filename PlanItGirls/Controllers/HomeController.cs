@@ -70,11 +70,11 @@ namespace PlanItGirls.Controllers
                 {
                     TempData["VehicleSelection"] = VehicleSelection;
                 }
+
                 JObject GoogleData = TripDistance(currentTrip);
                 double DistanceinKM = (double.Parse(GoogleData["routes"][0]["legs"][0]["distance"]["value"].ToString())) / 1000;
                 double Distance = Math.Round(DistanceinKM * 0.621371, 0);
                 double travelCost = Distance / (double.Parse(VehicleSelection));
-                //double drivePrice = 0.608;  
                 double oneWayCost = double.Parse(VehicleSelection) * Distance;
                 travelBudget = Math.Round(currentTrip.Price - oneWayCost, 2);
                 ViewBag.GasPrice = (double.Parse(VehicleSelection));
@@ -216,18 +216,15 @@ namespace PlanItGirls.Controllers
                 {
                     TempData["NumberOfMeals"] = NumberOfMeals;
                 }
-
-               
                 else if(NumberOfMeals is null)
                 {
                     NumberOfMeals = (string)TempData["NumberOfMeals"];
                 }
-
                 else if((string)TempData["NumberOfMeals"] != NumberOfMeals)
                 {
                     TempData["NumberOfMeals"] = NumberOfMeals;
                 }
-                
+
                 ViewBag.NumberOfMeals = int.Parse(NumberOfMeals);
                 double TotalRestaurantBudget = double.Parse(restaurantPricePoint) * double.Parse(NumberOfMeals);
                 ViewBag.TotalRestaurantBudget = TotalRestaurantBudget;
@@ -253,6 +250,7 @@ namespace PlanItGirls.Controllers
             return View();
         }
 
+        [Authorize]
         public ActionResult TripSummary()
         {
             PlanItDBEntities ORM = new PlanItDBEntities();

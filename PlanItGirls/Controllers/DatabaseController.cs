@@ -15,15 +15,22 @@ namespace PlanItGirls.Controllers
         // Use this controller when using CRUD methods to Database
         // Primarily used when Logging trip information and when 
 
+        [Authorize]
         public ActionResult TripList()
         {
             PlanItDBEntities ORM = new PlanItDBEntities();
 
-            string userID = User.Identity.GetUserId();
-
-            ViewBag.userTrips = ORM.AspNetUsers.Find(userID).Trips.ToList();
-
-            return View("../Home/TripList");
+            if (User.Identity.GetUserId() != null)
+            {
+                string userID = User.Identity.GetUserId();
+                ViewBag.userTrips = ORM.AspNetUsers.Find(userID).Trips.ToList();
+                return View("../Home/TripList");
+            }
+            else
+            {
+                ViewBag.ErrorMessage = "Please log in to see your trips.";
+                return View("Error");
+            }
         }
 
         public ActionResult CreateNewTrip(Trip newTrip)
@@ -48,6 +55,19 @@ namespace PlanItGirls.Controllers
 
             if (Found != null)
             {
+                List<Food> foundFoods = ORM.Foods.Where(c=>c.TripID.Contains(TripID)).ToList();
+                List<Lodge> foundLodges = ORM.Lodges.Where(c => c.TripID.Contains(TripID)).ToList();
+
+                foreach(var restauarant in foundFoods)
+                {
+                    ORM.Foods.Remove(restauarant);
+                }
+
+                foreach (var hotel in foundLodges)
+                {
+                    ORM.Lodges.Remove(hotel);
+                }
+
                 ORM.Trips.Remove(Found);
                 ORM.SaveChanges();
                 return RedirectToAction("TripList");
@@ -225,7 +245,7 @@ namespace PlanItGirls.Controllers
     }
 }
 
-        public ActionResult SaveRestaurantOption(string TripID)
+        public ActionResult SaveRestaurantOption()
         {
             PlanItDBEntities ORM = new PlanItDBEntities();
 
@@ -340,5 +360,42 @@ namespace PlanItGirls.Controllers
 
         }
 
+        public ActionResult EditCarOption()
+        {
+            Trip Found = (Trip)TempData["currentTrip"];
+
+            if (Found !=null)
+            {
+                TempData["VehicleSelection"] = TempData["VehicleSelection"];
+                TempData["currentTrip"] = TempData["currentTrip"];
+                return RedirectToAction("../Database/SaveCarOption");
+            }
+            else
+            {
+                ViewBag.Message = "Select a trip to add a car to.";
+                return View("Error");
+            }
+
+        }
+        public ActionResult SaveCarOption()
+        {
+            PlanItDBEntities ORM = new PlanItDBEntities();
+            Trip Found = (Trip)TempData["currentTrip"];
+
+            string Car  = TempData["VehicleSelection"].ToString();
+
+            Found.Car = Double.Parse(Car);
+
+            ORM.Entry(Found).State = System.Data.Entity.EntityState.Modified;
+
+            ORM.SaveChanges();
+
+            TempData["currentTrip"] = Found;
+
+            TempData["currentTrip"] = TempData["currentTrip"];
+            TempData["VehicleSelection"] = TempData["VehicleSelection"];
+            return RedirectToAction("../Home/TripBudgetCalculator");
+
+        }
     }
 }

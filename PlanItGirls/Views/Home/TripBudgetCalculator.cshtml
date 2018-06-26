@@ -11,75 +11,76 @@
 <div class="container" id="budget">
     <div class="row">
         <div class="col-sm-4">
-           
-            
-                <h4>Vehicle Options</h4>
-                <form action="/Home/TripBudgetCalculator" method="get">
-                        Select Car Type: <select name="VehicleSelection">
-                            <option value="0">---</option>
-                            <option value=".46">Car</option>
-                            <option value=".59">Crossover</option>
-                            <option value=".65">Minivan</option>
-                            <option value=".72">Suv/Truck</option>
-                        </select>                
-                </form>
 
-                @if (ViewBag.GasPrice != null)
-    {
-            <h5>
-                Price Per Mile:
-            </h5>
-            <h6>
-                $@ViewBag.GasPrice
-            </h6>
-            <h5>
-                Miles between Cities:
-            </h5>
-            <h6>
-                @ViewBag.DistanceBetweenCities
-            </h6>
-            <h5>
-                Cost each way:
-            </h5>
-            <h6>
-                @ViewBag.oneWayCost
-            </h6>
-            <h5>
-                AdjustedBudget:
-            </h5>
-            <h6>
-                @ViewBag.travelBudget
-            </h6>
-}
 
-else if (ViewBag.GasPrice is null)
-{
-            <h6>
-                @ViewBag.SelectVehicle
-            </h6>
-            <h5>
-                Approx. Gas Mileage
-            </h5>
-            <h6>
-                Car: 29MPG($.46 per mile)
-            </h6>
-            <h6>
-                Crossover: 23MPG($.59 per mile)
-            </h6>
-            <h6>
-                Minivan: 19MPG($.65 per mile)
-            </h6>
-            <h6>
-                Suv / Truck: 16MPG($.72 per mile)
-            </h6>
-}
+            <h4>Vehicle Options</h4>
+            <form action="/Home/TripBudgetCalculator" method="get">
+                Select Car Type: <select name="VehicleSelection">
+                    <option value="0">---</option>
+                    <option value=".46">Car</option>
+                    <option value=".59">Crossover</option>
+                    <option value=".65">Minivan</option>
+                    <option value=".72">Suv/Truck</option>
+                </select>
+            </form>
+
+            @if (ViewBag.GasPrice != null)
+            {
                 <h5>
-                    Remaining Budget: $@ViewBag.currentTrip.Price
+                    Price Per Mile:
                 </h5>
-                <form action="../Database/SaveCarOption">
-                    <input type="submit" value="Save Car" class="budget"/>
-                </form>
-</div>
+                <h6>
+                    $@ViewBag.GasPrice
+                </h6>
+                <h5>
+                    Miles between Cities:
+                </h5>
+                <h6>
+                    @ViewBag.DistanceBetweenCities
+                </h6>
+                <h5>
+                    Cost each way:
+                </h5>
+                <h6>
+                    @ViewBag.oneWayCost
+                </h6>
+                <h5>
+                    AdjustedBudget:
+                </h5>
+                <h6>
+                    @ViewBag.travelBudget
+                </h6>
+            }
+
+            else if (ViewBag.GasPrice is null)
+            {
+                <h6>
+                    @ViewBag.SelectVehicle
+                </h6>
+                <h5>
+                    Approx. Gas Mileage
+                </h5>
+                <h6>
+                    Car: 29MPG($.46 per mile)
+                </h6>
+                <h6>
+                    Crossover: 23MPG($.59 per mile)
+                </h6>
+                <h6>
+                    Minivan: 19MPG($.65 per mile)
+                </h6>
+                <h6>
+                    Suv / Truck: 16MPG($.72 per mile)
+                </h6>
+            }
+
+            <h5>
+                Remaining Budget: $@ViewBag.currentTrip.Price
+            </h5>
+            <form action="../Database/EditCarOption">
+                <input type="submit" value="Save This Car" />
+            </form>
+        </div>
         <br /><br />
         <div class="col-sm-4">
             <h4>Hotel Options</h4>
@@ -91,7 +92,7 @@ else if (ViewBag.GasPrice is null)
                     <option value="225">$$$</option>
                     <option value="350">$$$$</option>
                 </select>
-                <input type="submit" value="See Options"  class="budget"/>
+                <input type="submit" value="See Options" class="budget" />
             </form>
             @if (ViewBag.Hotels is null)
             {
@@ -125,7 +126,7 @@ else if (ViewBag.GasPrice is null)
                             <option value="@ViewBag.Hotels["businesses"][i]">@ViewBag.Hotels["businesses"][i]["name"]</option>
                         }
                     </select>
-                    <input type="submit" value="Select Hotel"  class="budget"/>
+                    <input type="submit" value="Select Hotel" class="budget" />
                 </form>
                 if (ViewBag.HotelSelection != null)
                 {
@@ -138,7 +139,7 @@ else if (ViewBag.GasPrice is null)
                                 <option value="@i">@i</option>
                             }
                         </select>
-                        <input type="submit" value="Number of Nights"  class="budget"/>
+                        <input type="submit" value="Number of Nights" class="budget" />
                     </form>
 
                     <h5>Remaining Budget:</h5>
@@ -173,7 +174,7 @@ else if (ViewBag.GasPrice is null)
                 </h6>
             }
             <form action="../Database/SaveHotelOption">
-                <input type="submit" value="Save This Hotel" class="budget"/>
+                <input type="submit" value="Save This Hotel" class="budget" />
             </form>
         </div>
 
@@ -221,7 +222,7 @@ else if (ViewBag.GasPrice is null)
                             <option value="@ViewBag.Restaurants["businesses"][i]">@ViewBag.Restaurants["businesses"][i]["name"]</option>
                         }
                     </select>
-                    <input type="submit" value="Select Restaurant"/>
+                    <input type="submit" value="Select Restaurant" />
                 </form>
                 if (ViewBag.RestaurantSelection != null)
                 {
@@ -269,14 +270,47 @@ else if (ViewBag.GasPrice is null)
                 </h6>
             }
             <form action="../Database/SaveRestaurantOption">
-                <input type="submit" value="Save Restaurant" class="budget"/>
+                <input type="submit" value="Save Restaurant" class="budget" />
             </form>
         </div>
     </div>
-</div>
-<br /><br />
-<form action="../Home/TripSummary" align="center">
-    <input type="submit" value="Trip Summary" class="budget"/>
-</form>
+    <div class="row">
+        <div class="col-sm-2">
+            <h5></h5>
+            <h5></h5>
+        </div>
+        <div class="col-sm-2">
+            <h5></h5>
+            <h5></h5>
+        </div>
+        <div class="col-sm-2" align="right">
+            <h5>Total Budget: </h5>
+            <h5>Total Spent on Hotels:</h5>
+            <h5>Hotel & Restaurant Total: </h5>
+            <h5>Budget Remaining: </h5>
+        </div>
+        <div class="col-sm-2">
+            <h5>$@ViewBag.currentTrip.Price</h5>
+            <h5>$@ViewBag.HotelBudget</h5>
+            <h5>$@ViewBag.totalDeductedBudget</h5>
+            <h5>$@ViewBag.remainingBudget</h5>
+        </div>
+        <div class="col-sm-2" align="right">
+            <h5>Total Budget: </h5>
+            <h5>Total Spent on Meals: </h5>
+            <h5>Hotel & Restaurant Total: </h5>
+            <h5>Budget Remaining: </h5>
+        </div>
+        <div class="col-sm-2">
+            <h5>$@ViewBag.currentTrip.Price</h5>
+            <h5>$@ViewBag.RestaurantBudget</h5>
+            <h5>$@ViewBag.totalDeductedBudget</h5>
+            <h5>$@ViewBag.remainingBudget</h5>
+        </div>
+    </div>
+    <br /><br />
+    <form action="../Home/TripSummary" align="center">
+        <input type="submit" value="Trip Summary" class="budget" />
+    </form>
 
 
