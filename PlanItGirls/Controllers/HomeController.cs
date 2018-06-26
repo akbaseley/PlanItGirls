@@ -216,10 +216,18 @@ namespace PlanItGirls.Controllers
                 {
                     TempData["NumberOfMeals"] = NumberOfMeals;
                 }
-                else
+
+               
+                else if(NumberOfMeals is null)
                 {
                     NumberOfMeals = (string)TempData["NumberOfMeals"];
                 }
+
+                else if((string)TempData["NumberOfMeals"] != NumberOfMeals)
+                {
+                    TempData["NumberOfMeals"] = NumberOfMeals;
+                }
+                
                 ViewBag.NumberOfMeals = int.Parse(NumberOfMeals);
                 double TotalRestaurantBudget = double.Parse(restaurantPricePoint) * double.Parse(NumberOfMeals);
                 ViewBag.TotalRestaurantBudget = TotalRestaurantBudget;

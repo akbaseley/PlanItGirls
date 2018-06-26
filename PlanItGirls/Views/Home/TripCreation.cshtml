@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "TripCreation";
 }
 
@@ -8,24 +7,26 @@
 
 <h2>Trip Creation</h2>
 <form action="/Database/CreateNewTrip" method="post">
-    Trip Name: <input type="text" name="TripID" required/>
-    <br /><br />
-    Start Date: <input type="date" name="StartDate" id="StartDate" required/>
-    End Date: <input type="date" name="EndDate" required id="EndDate"/>
-    <br /><br />
-    Start City: <input type="text" name="StartCity" required/>
-    @Html.DropDownList("StartState", new SelectList(Enum.GetValues(typeof(States))), "Start State")
-    <br /><br />
-    End City: <input type="text" name="EndCity"  required/>
-    @Html.DropDownList("EndState", new SelectList(Enum.GetValues(typeof(States))), "End State")
-    <br /><br />
-    Budget: <input type="number" min ="1" name="Price" required />
-    <input type="submit" value="New Trip" />
+    <div class="form-control-sm">
+        <p>Trip Name: <input type="text" name="TripID" class="form-control" /></p>
+        <br /><br />
+        <p>Start Date: <input type="date" name="StartDate" class="form-control" /></p>
+        <p>End Date: <input type="date" name="EndDate" class="form-control" /></p>
+        <br /><br />
+        <p>Start City: <input type="text" name="StartCity" class="form-control" /></p>
+        @Html.DropDownList("StartState", new SelectList(Enum.GetValues(typeof(States))),
+             "Start State", new { @class = "form-control" })
+       
+        <br /><br />
+        <p>End City: <input type="text" name="EndCity" class="form-control" /></p>
+        @Html.DropDownList("EndState", new SelectList(Enum.GetValues(typeof(States))),
+             "End State", new { @class = "form-control" })
+        <br /><br />
+              <p>Budget: <input type="number" name="Price" class="form-control" /></p><br />
+        <input type="submit" class="budget" value="New Trip" />
+    </div>
 </form>
 
-
-<form action="/Database/TripList" method="get">
-    <input type="submit" value="See your trips" />
-</form>
-
-<script src="~/Scripts/validation.js"></script>
+    <form action="/Database/TripList" method="get">
+        <input type="submit" value="See your trips" />
+    </form>

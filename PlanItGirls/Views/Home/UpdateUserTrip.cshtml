@@ -6,45 +6,34 @@
 @model PlanItGirls.Models.Trip
 <h2>Update your Trip</h2>
 
-<form action="/Database/SaveUpdateUserTrip" method="post">
-    Trip Name: <input type="text" value="@Model.TripID" name="TripID" />
-    <br /><br />
-    Start Date: <input type="date" value="@Model.StartDate" name="StartDate" />
-    Current Start Date = @Model.StartDate
-    <br /><br />
-    End Date: <input type="date" value="@Model.EndDate" name="EndDate" />
-    Current End Date = @Model.EndDate
-    <br /><br />
-    Start City: <input type="text" value="@Model.StartCity" name="StartCity" />
-    @Html.DropDownList("StartState", new SelectList(Enum.GetValues(typeof(States))), Model.StartState)
-    <br /><br />
-    End City: <input type="text" value="@Model.EndCity" name="EndCity" />
-    @Html.DropDownList("EndState", new SelectList(Enum.GetValues(typeof(States))), Model.EndState)
-    <br /><br />
 
+<div class="form-control-sm">
+    <form action="/Database/SaveUpdateUserTrip" method="post">
+        Trip Name: <input type="text" value="@Model.TripID" name="TripID"  class="form-control" />
+        <br /><br />
+        Start Date: <input type="date" value="@Model.StartDate" name="StartDate"  class="form-control" />
+        Current Start Date = @Model.StartDate
+        <br /><br />
+        End Date: <input type="date" value="@Model.EndDate" name="EndDate"  class="form-control" />
+        Current End Date = @Model.EndDate
+        <br /><br />
+        Start City: <input type="text" value="@Model.StartCity" name="StartCity"  class="form-control" />
+        @Html.DropDownList("StartState", new SelectList(Enum.GetValues(typeof(States))), Model.StartState)
+        <br /><br />
+        End City: <input type="text" value="@Model.EndCity" name="EndCity"  class="form-control" />
+        @Html.DropDownList("EndState", new SelectList(Enum.GetValues(typeof(States))), Model.EndState)
+        <br /><br />
 
-    Select Vehicle Type:<select name="VehicleSelection">
-                            <option value="0">---</option>
-                            <option value="1">Car</option>
-                            <option value="2">Crossover</option>
-                            <option value="3">Minivan</option>
-                            <option value="4">Suv/Truck</option>
-                        </select>
-    <input type="submit" value="MPG" />
+        Budget:
+        <input type="number" value="@Model.Price" name="Price"  class="form-control"/>
 
-    Budget:
-    <input type="number" value="@Model.Price" name="Price" />
-    Vehicle Type: <input type="text" value="@Model.EndCity" name="EndCity" />
-    @Html.DropDownList("VehicleType", new SelectList(Enum.GetValues(typeof(States))), Model.EndState)
-    <br /><br />
+        <input type="submit" value="New Trip" class="budget" />
+        </form>
+    </div>
 
-    Budget: <input type="number" value="@Model.Price" name="Price" />
-    <input type="submit" value="New Trip" />
-</form>
-<br /><br />
-<form action="/Database/TripList" method="get">
-    <input type="submit" value="See your trips" />
-</form>
+    <form action="/Database/TripList" method="get">
+        <input type="submit" value="See Trips" class="budget"/>
+    </form>
 
 
 
