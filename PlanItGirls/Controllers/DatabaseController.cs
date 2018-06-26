@@ -152,6 +152,8 @@ namespace PlanItGirls.Controllers
             ORM.Lodges.Add(newHotel);
             ORM.SaveChanges();
 
+            TempData["currentTrip"] = ORM.Trips.Where(c => c.Lodging.Contains(newHotel.Lodging));
+
             TempData["VehicleSelection"] = TempData["VehicleSelection"];
             TempData["currentTrip"] = TempData["currentTrip"];
 
@@ -162,20 +164,21 @@ namespace PlanItGirls.Controllers
             TempData["restaurantPricePoint"] = TempData["restaurantPricePoint"];
             TempData["RestaurantSelection"] = TempData["RestaurantSelection"];
             TempData["NumberOfMeals"] = TempData["NumberOfMeals"];
+
             return RedirectToAction("../Home/TripSummary");
         }
         public ActionResult DeleteHotel(string Lodging)
         {
             PlanItDBEntities ORM = new PlanItDBEntities();
             Lodge Found = ORM.Lodges.Find(Lodging);
-
+            Trip currentTrip = ORM.Trips.Find(Found.TripID);
 
             if (Found != null)
             {
                 ORM.Lodges.Remove(Found);
                 ORM.SaveChanges();
 
-                TempData["currentTrip"] = ORM.Trips.Find(Found.Trip);
+                TempData["currentTrip"] = currentTrip;
                 TempData["currentTrip"] = TempData["currentTrip"];
 
                 return RedirectToAction("../Home/TripSummary");
@@ -272,6 +275,8 @@ namespace PlanItGirls.Controllers
             ORM.Foods.Add(newRestaurant);
             ORM.SaveChanges();
 
+            TempData["currentTrip"] = ORM.Trips.Where(c => c.Food.Contains(newRestaurant.Restaurant));
+
             TempData["VehicleSelection"] = TempData["VehicleSelection"];
             TempData["currentTrip"] = TempData["currentTrip"];
 
@@ -289,14 +294,14 @@ namespace PlanItGirls.Controllers
         {
             PlanItDBEntities ORM = new PlanItDBEntities();
             Food Found = ORM.Foods.Find(Restaurant);
-
+            Trip currentTrip = ORM.Trips.Find(Found.TripID);
 
             if (Found != null)
             {
                 ORM.Foods.Remove(Found);
                 ORM.SaveChanges();
 
-                TempData["currentTrip"] = ORM.Trips.Find(Found.Trip);
+                TempData["currentTrip"] = currentTrip;
                 TempData["currentTrip"] = TempData["currentTrip"];
 
                 return RedirectToAction("../Home/TripSummary");
@@ -313,12 +318,14 @@ namespace PlanItGirls.Controllers
         {
             PlanItDBEntities ORM = new PlanItDBEntities();
             Food Found = ORM.Foods.Find(Restaurant);
+            Trip currentTrip = (Trip)TempData["currentTrip"];
+
+            ViewBag.DayDiff = HomeController.NumOfDays(currentTrip);
 
             TempData["currentTrip"] = TempData["currentTrip"];
-
             if (Found != null)
             {
-                return View("../Home/UpdateRestaurant", Found);
+                return View("EditRestaurantDetails", Found);
             }
             else
             {

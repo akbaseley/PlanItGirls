@@ -73,13 +73,13 @@
                 <a href="@restaurant.URL">See this Restaurant's Yelp Page</a>
             </h6>
             <h6>
-                $@restaurant.Price per Meal
+                $@(restaurant.Price / restaurant.NumberOfMeals) per Meal
             </h6>
             <h6>
                 @restaurant.NumberOfMeals meals
             </h6>
             <h6>
-                $@(restaurant.Price * restaurant.NumberOfMeals) for this Restaurant
+                $@restaurant.Price for this Restaurant
             </h6>
             <h6>
                 $@(ViewBag.currentTrip.Price - (restaurant.Price * restaurant.NumberOfMeals)) remaining
