@@ -120,12 +120,12 @@
                             <option value="@ViewBag.Hotels["businesses"][i]">@ViewBag.Hotels["businesses"][i]["name"]</option>
                         }
                     </select>
-                    <input type="submit" value="Select Hotel" class="budget" />
+                    <input type="submit" value="Select Hotel" class="budget" /><br /><br />
                 </form>
                 if (ViewBag.HotelSelection != null)
                 {
                     <br /><br />
-                    <img src="@ViewBag.HotelSelection["image_url"]" alt="Hotel Image" height="75" align="middle"/>
+                    <img src="@ViewBag.HotelSelection["image_url"]" alt="Hotel Image" align="middle" class="img-thumbnail" />
 
                     <form action="../Home/TripBudgetCalculator" method="get">
                         <select name="NumberOfNights">

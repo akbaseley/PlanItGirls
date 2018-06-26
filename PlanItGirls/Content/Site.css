@@ -107,15 +107,16 @@ p {
 
 
 .budget {
-    -webkit-border-radius: 12px;
-    -moz-border-radius: 28px;
-    border-radius: 28px;
+    -webkit-border-radius: 25px;
+    -moz-border-radius: 25px;
+    border-radius: 25px;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     color: #ffffff;
     font-size: 14px;
     background: #F7A55D;
-    padding: 7px 12px 7px 12px;
+    padding: 7px 10px 7px 10px;
     text-decoration: none;
+    text-transform: uppercase;
 }
 
     .budget:hover {
