@@ -251,6 +251,8 @@
     </Content>
     <Content Include="images\Anna.png" />
     <Content Include="images\Jasmine.jpg" />
+    <Content Include="images\FriendsPlanIt.jpg" />
+    <Content Include="images\momAndBoysPlanItGirls341378.jpg" />
     <Content Include="images\PlanIt.png" />
     <Content Include="images\RoadTrip.jpg" />
     <Content Include="images\RoadTrip.png" />
@@ -318,6 +320,7 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
+    <Content Include="Scripts\validation.js" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />

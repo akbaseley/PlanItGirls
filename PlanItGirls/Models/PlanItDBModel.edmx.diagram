@@ -8,10 +8,17 @@
         <EntityTypeShape EntityType="planitdbModel.AspNetUser" Width="1.5" PointX="0.75" PointY="2.875" IsExpanded="true" />
         <EntityTypeShape EntityType="planitdbModel.Trip" Width="1.5" PointX="3" PointY="2.75" IsExpanded="true" />
         <AssociationConnector Association="planitdbModel.FK_Trip_AspNetUsers" ManuallyRouted="false" />
+<<<<<<< HEAD
         <EntityTypeShape EntityType="planitdbModel.Food" Width="1.5" PointX="5.25" PointY="1.125" />
         <AssociationConnector Association="planitdbModel.FK_Food_Trip" />
         <EntityTypeShape EntityType="planitdbModel.Lodge" Width="1.5" PointX="5.25" PointY="5.125" />
         <AssociationConnector Association="planitdbModel.FK_Lodge_Trip" />
+=======
+        
+        
+        
+        
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; validation, about page
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

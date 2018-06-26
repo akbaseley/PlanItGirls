@@ -11,21 +11,21 @@ namespace PlanItGirls.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class Trip
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Trip()
         {
+
             this.Foods = new HashSet<Food>();
             this.Lodges = new HashSet<Lodge>();
+
         }
     
         public string TripID { get; set; }
         public string UserID { get; set; }
         public int Price { get; set; }
-
         public string StartCity { get; set; }
         public string StartState { get; set; }
         public string EndCity { get; set; }
@@ -38,8 +38,10 @@ namespace PlanItGirls.Models
     
         public virtual AspNetUser AspNetUser { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+
         public virtual ICollection<Food> Foods { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Lodge> Lodges { get; set; }
+
     }
 }
