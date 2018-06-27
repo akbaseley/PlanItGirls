@@ -37,20 +37,13 @@
                     @ViewBag.DistanceBetweenCities
                 </h6>
                 <h5>
-                    Cost each way:
+                    Round-Trip Cost:
                 </h5>
                 <h6>
-                    @ViewBag.oneWayCost
+                    $@ViewBag.carBudget
                 </h6>
-                <h5>
-                    AdjustedBudget:
-                </h5>
-                <h6>
-                    @ViewBag.carBudget
-                </h6>
-
                 <form action="../Database/SaveCarOption">
-                    <input type="submit" value="Save This Car" class="budget" />
+                    <input type="submit" value="Apply Car" class="budget" />
                 </form>
             }
 
@@ -63,16 +56,16 @@
                     Approx. Gas Mileage
                 </h5>
                 <h6>
-                    Car: 29MPG($.46 per mile)
+                    Car: 29MPG ($.46 per mile)
                 </h6>
                 <h6>
-                    Crossover: 23MPG($.59 per mile)
+                    Crossover: 23MPG ($.59 per mile)
                 </h6>
                 <h6>
-                    Minivan: 19MPG($.65 per mile)
+                    Minivan: 19MPG ($.65 per mile)
                 </h6>
                 <h6>
-                    Suv / Truck: 16MPG($.72 per mile)
+                    Suv/Truck: 16MPG ($.72 per mile)
                 </h6>
             }
 
@@ -104,16 +97,16 @@
                     Approx.Hotel Costs
                 </h5>
                 <h6>
-                    $ $80 per night
+                    $: $80 per night
                 </h6>
                 <h6>
-                    $$ $150 per night
+                    $$: $150 per night
                 </h6>
                 <h6>
-                    $$$ $225 per night
+                    $$$: $225 per night
                 </h6>
                 <h6>
-                    $$$$ $350 per night
+                    $$$$: $350 per night
                 </h6>
             }
             else
@@ -163,13 +156,13 @@
                             Price per Day
                         </h5>
                         <h6>
-                            $@ViewBag.PricePerDay
+                            $@ViewBag.hotelPricePoint
                         </h6>
                         <h5>
                             Total Price of Stay
                         </h5>
                         <h6>
-                            $@(int.Parse(ViewBag.hotelPricePoint) * int.Parse(ViewBag.PricePerDay))
+                            $@(ViewBag.NumberOfNights * ViewBag.hotelPricePoint)
                         </h6>
 
                         <form action="../Database/SaveHotelOption">
@@ -205,21 +198,19 @@
                 <h5>
                     Approx. Meal Costs
                 </h5>
-                <h5>
-                    $: $10 per meal
-                </h5>
-                <h5>
-                    $$: $35 per meal
-                </h5>
-                <h5>
-                    $$$: $60 per meal
-                </h5>
-                <h5>
-                    $$$$: $100 per meal
-                </h5>
                 <h6>
-                    Remaining Budget: $@ViewBag.AdjustedTotalBudget
+                    $: $10 per meal
                 </h6>
+                <h6>
+                    $$: $35 per meal
+                </h6>
+                <h6>
+                    $$$: $60 per meal
+                </h6>
+                <h6>
+                    $$$$: $100 per meal
+                </h6>
+
             }
             else
             {
@@ -265,13 +256,13 @@
                             Price per Meal
                         </h5>
                         <h6>
-                            $@ViewBag.PricePerMeal
+                            $@ViewBag.restaurantPricePoint
                         </h6>
                         <h5>
                             Total at this Restaurant
                         </h5>
                         <h6>
-                            $@(int.Parse(ViewBag.PricePerMeal) * int.Parse(ViewBag.NumberOfMeals))
+                            $@(ViewBag.restaurantPricePoint * ViewBag.NumberOfMeals)
                         </h6>
                         <form action="../Database/SaveRestaurantOption">
                             <input type="submit" value="Save Restaurant Info" class="budget" />
@@ -279,9 +270,6 @@
                     }
                 }
             }
-
-            <h4>@ViewBag.ErrorMessage</h4>
-
         </div>
     </div>
     <div class="row">
@@ -294,15 +282,15 @@
             <h5></h5>
         </div>
         <div class="col-sm-2" align="right">
-            <h6>Total Spent on Hotels:</h6>
+            <h6>Hotel Total:</h6>
             <h6>Budget Remaining: </h6>
         </div>
         <div class="col-sm-2">
-            <h6>$@ViewBag.TotalHotelBudget</h6>
+            <h6>$@ViewBag.HotelBudget</h6>
             <h6>$@ViewBag.remainingBudget</h6>
         </div>
         <div class="col-sm-2" align="right">
-            <h6>Total Spent on Meals: </h6>
+            <h6>Restaurant Total: </h6>
             <h6>Budget Remaining: </h6>
         </div>
         <div class="col-sm-2">
