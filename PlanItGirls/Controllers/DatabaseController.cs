@@ -85,8 +85,18 @@ namespace PlanItGirls.Controllers
         public ActionResult EditTripDetails(string TripID)
         {
             PlanItDBEntities ORM = new PlanItDBEntities();
+
+            Trip Found;
+
+            if (TripID is null)
+            {
+                Found = (Trip)TempData["currentTrip"];
+            }
+            else
+            {
+                Found = ORM.Trips.Find(TripID);
+            }
             //string userID = User.Identity.GetUserId();
-            Trip Found = ORM.Trips.Find(TripID);
             //ViewBag.userTrips = ORM.AspNetUsers.Find(userID).Trips.ToList();
 
             if (Found != null)
@@ -122,8 +132,10 @@ namespace PlanItGirls.Controllers
             }
             else
             {
-                ViewBag.ErrorMessage = "Task not Found";
-                return View("Error");
+                TempData["currentTrip"] = EditTripDetails;
+                TempData["currentTrip"] = TempData["currentTrip"];
+                ViewBag.ErrorMessage = "It looks as though something was entered incorrectly.";
+                return RedirectToAction("EditTripDetails");
             }
 
         }

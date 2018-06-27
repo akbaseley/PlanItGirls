@@ -28,7 +28,7 @@ namespace PlanItGirls.Controllers
         }
 
 
-        [Authorize]
+        [Authorize]                     
         public ActionResult TripCreation()
         {
             return View();
