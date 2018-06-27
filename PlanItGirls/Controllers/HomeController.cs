@@ -37,7 +37,6 @@ namespace PlanItGirls.Controllers
         [Authorize]
         public ActionResult TripBudgetCalculator(string VehicleSelection, string TripID, string hotelPricePoint, string HotelSelection, string NumberOfNights, string restaurantPricePoint, string RestaurantSelection, string NumberOfMeals)
         {
-            double travelBudget = 0;
 
             #region This Trip
             PlanItDBEntities ORM = new PlanItDBEntities();
@@ -74,14 +73,15 @@ namespace PlanItGirls.Controllers
                 JObject GoogleData = TripDistance(currentTrip);
                 double DistanceinKM = (double.Parse(GoogleData["routes"][0]["legs"][0]["distance"]["value"].ToString())) / 1000;
                 double Distance = Math.Round(DistanceinKM * 0.621371, 0);
-                double travelCost = Distance / (double.Parse(VehicleSelection));
                 double oneWayCost = double.Parse(VehicleSelection) * Distance;
-                travelBudget = Math.Round(currentTrip.Price - oneWayCost, 2);
+                double carBudget = Math.Round(currentTrip.Price - oneWayCost, 2);
+
                 ViewBag.GasPrice = (double.Parse(VehicleSelection));
                 ViewBag.DistanceBetweenCities = Distance;
                 ViewBag.oneWayCost = Math.Round((oneWayCost * (double.Parse(VehicleSelection))), 2);
-                ViewBag.travelBudget = travelBudget;
-                TempData["travelBudget"] = travelBudget;
+                ViewBag.carBudget = carBudget;
+
+                TempData["carBudget"] = carBudget;
             }
             #endregion
 
@@ -235,18 +235,18 @@ namespace PlanItGirls.Controllers
 
             #region Budget Calculations
 
-            ViewBag.currentTrip = currentTrip;
-            ViewBag.HotelBudget = HotelBudget(currentTrip);
-            ViewBag.RestaurantBudget = RestaurantBudget(currentTrip);
-            ViewBag.totalDeductedBudget = TotalDeductedBudget(currentTrip);
-            ViewBag.remainingBudget = RemainingBudget(currentTrip);
-
+            ViewBag.currentTrip = currentTrip; //Trip currentTrip
+            ViewBag.HotelBudget = HotelBudget(currentTrip); //calculates the total amount for all selected hotels
+            ViewBag.RestaurantBudget = RestaurantBudget(currentTrip); //calculates the total amount for all selected restaurants
+            ViewBag.totalDeductedBudget = TotalDeductedBudget(currentTrip); //combined hotel budgets & restaurant budgets
+            ViewBag.remainingBudget = RemainingBudget(currentTrip); //total budget minus hotels, restaurants, and cars
+            //ViewBag.carBudget is found above under Travel Costs - total cost of driving
             #endregion
 
             #region TempData
             TempData["VehicleSelection"] = TempData["VehicleSelection"];
+            TempData["carBudget"] = TempData["carBudget"];
             TempData["currentTrip"] = TempData["currentTrip"];
-
 
             TempData["hotelPricePoint"] = TempData["hotelPricePoint"];
             TempData["HotelSelection"] = TempData["HotelSelection"];
@@ -261,10 +261,17 @@ namespace PlanItGirls.Controllers
         }
 
         [Authorize]
-        public ActionResult TripSummary()
+        public ActionResult TripSummary(string TripID)
         {
             PlanItDBEntities ORM = new PlanItDBEntities();
-            Trip currentTrip = (Trip)TempData["currentTrip"];
+            Trip currentTrip = ORM.Trips.Find(TripID);
+
+            if (TripID is null)
+            {
+                currentTrip = (Trip)TempData["currentTrip"];
+            }
+
+
             ViewBag.currentTrip = currentTrip;
             ViewBag.HotelBudget = HotelBudget(currentTrip);
             ViewBag.RestaurantBudget = RestaurantBudget(currentTrip);
@@ -312,7 +319,12 @@ namespace PlanItGirls.Controllers
 
         public double RemainingBudget(Trip thisTrip)
         {
-            double remainingBudget = thisTrip.Price - TotalDeductedBudget(thisTrip);
+            if (thisTrip.Car is null)
+            {
+                thisTrip.Car = 0;
+            }
+
+            double remainingBudget = thisTrip.Price - (TotalDeductedBudget(thisTrip) + (double)thisTrip.Car);
 
             return remainingBudget;
         }

@@ -47,7 +47,7 @@
                     AdjustedBudget:
                 </h5>
                 <h6>
-                    @ViewBag.travelBudget
+                    @ViewBag.carBudget
                 </h6>
 
                 <form action="../Database/SaveCarOption">
@@ -158,7 +158,7 @@
                     {
                         <h5>Remaining Budget:</h5>
                         <h6>
-                            @ViewBag.travelBudget
+                            @ViewBag.remainingBudget
                         </h6>
                         <h5>
                             Price per Day
@@ -170,7 +170,7 @@
                             Total Price of Stay
                         </h5>
                         <h6>
-                            $@ViewBag.TotalHotelBudget
+                            $@(ViewBag.hotelPricePoint * ViewBag.PricePerDay)
                         </h6>
 
                         <form action="../Database/SaveHotelOption">
@@ -272,7 +272,7 @@
                             Total at this Restaurant
                         </h5>
                         <h6>
-                            $@ViewBag.TotalRestaurantBudget
+                            $@(ViewBag.PricePerMeal * ViewBag.NumberOfMeals)
                         </h6>
                         <form action="../Database/SaveRestaurantOption">
                             <input type="submit" value="Save Restaurant" class="budget" />

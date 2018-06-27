@@ -309,10 +309,11 @@ namespace PlanItGirls.Controllers
         {
             PlanItDBEntities ORM = new PlanItDBEntities();
             Food Found = ORM.Foods.Find(Restaurant);
-            Trip currentTrip = ORM.Trips.Find(Found.TripID);
 
             if (Found != null)
             {
+                Trip currentTrip = ORM.Trips.Find(Found.TripID);
+
                 ORM.Foods.Remove(Found);
                 ORM.SaveChanges();
 

@@ -8,44 +8,51 @@
 <h4>Hotel Selections</h4>
 <div class="container">
     <div class="row">
-        @foreach (var Lodge in ViewBag.currentTrip.Lodges)
+        @if (ViewBag.currentTrip.Lodges != null)
         {
-        <div class="col-sm-4">
-            <h5>
-                @Lodge.Lodging
-            </h5>
-            <h6>
-                @Lodge.Address
-            </h6>
-            <h6>
-                @Lodge.City, @Lodge.State @Lodge.PostalCode
-            </h6>
-            <h6>
-                @Lodge.PhoneNumber
-            </h6>
-            <h6>
-                <a href="@Lodge.URL">See this Hotel's Yelp Page</a>
-            </h6>
-            <h6>
-                $@Lodge.Price per Night
-            </h6>
-            <h6>
-                @Lodge.NumberOfNights nights
-            </h6>
-            <h6>
-                $@(Lodge.Price * Lodge.NumberOfNights) for this Hotel
-            </h6>
-            <h6>
-                $@(ViewBag.currentTrip.Price - (Lodge.Price * Lodge.NumberOfNights)) remaining
-            </h6>
-            <h6>
-                <a href="/Database/DeleteHotel?Lodging=@Lodge.Lodging">Delete this hotel</a>
-            </h6>
-            <h6>
-                <a href="/Database/EditHotelDetails?Lodging=@Lodge.Lodging">Edit the days spent at this hotel</a>
-            </h6>
-            <h6></h6>
-        </div>
+            foreach (var Lodge in ViewBag.currentTrip.Lodges)
+            {
+                <div class="col-sm-4">
+                    <h5>
+                        @Lodge.Lodging
+                    </h5>
+                    <h6>
+                        @Lodge.Address
+                    </h6>
+                    <h6>
+                        @Lodge.City, @Lodge.State @Lodge.PostalCode
+                    </h6>
+                    <h6>
+                        @Lodge.PhoneNumber
+                    </h6>
+                    <h6>
+                        <a href="@Lodge.URL">See this Hotel's Yelp Page</a>
+                    </h6>
+                    <h6>
+                        $@Lodge.Price per Night
+                    </h6>
+                    <h6>
+                        @Lodge.NumberOfNights nights
+                    </h6>
+                    <h6>
+                        $@(Lodge.Price * Lodge.NumberOfNights) for this Hotel
+                    </h6>
+                    <h6>
+                        $@(ViewBag.currentTrip.Price - (Lodge.Price * Lodge.NumberOfNights)) remaining
+                    </h6>
+                    <h6>
+                        <a href="/Database/DeleteHotel?Lodging=@Lodge.Lodging">Delete this hotel</a>
+                    </h6>
+                    <h6>
+                        <a href="/Database/EditHotelDetails?Lodging=@Lodge.Lodging">Edit the days spent at this hotel</a>
+                    </h6>
+                    <h6></h6>
+                </div>
+            }
+        }
+        else
+        {
+            <h3>You have not selected any hotels!</h3>
         }
     </div>
 </div>
@@ -54,49 +61,60 @@
 <h4>Restaurant Selections</h4>
 <div class="container">
     <div class="row">
-        @foreach (var restaurant in ViewBag.currentTrip.Foods)
+        @if (ViewBag.currentTrip.Foods != null)
         {
-        <div class="col-sm-4">
-            <h5>
-                @restaurant.Restaurant
-            </h5>
-            <h6>
-                @restaurant.Address
-            </h6>
-            <h6>
-                @restaurant.City, @restaurant.State @restaurant.PostalCode
-            </h6>
-            <h6>
-                @restaurant.PhoneNumber
-            </h6>
-            <h6>
-                <a href="@restaurant.URL">See this Restaurant's Yelp Page</a>
-            </h6>
-            <h6>
-                $@(restaurant.Price / restaurant.NumberOfMeals) per Meal
-            </h6>
-            <h6>
-                @restaurant.NumberOfMeals meals
-            </h6>
-            <h6>
-                $@restaurant.Price for this Restaurant
-            </h6>
-            <h6>
-                $@(ViewBag.currentTrip.Price - (restaurant.Price * restaurant.NumberOfMeals)) remaining
-            </h6>
+            foreach (var restaurant in ViewBag.currentTrip.Foods)
+            {
+                <div class="col-sm-4">
+                    <h5>
+                        @restaurant.Restaurant
+                    </h5>
+                    <h6>
+                        @restaurant.Address
+                    </h6>
+                    <h6>
+                        @restaurant.City, @restaurant.State @restaurant.PostalCode
+                    </h6>
+                    <h6>
+                        @restaurant.PhoneNumber
+                    </h6>
+                    <h6>
+                        <a href="@restaurant.URL">See this Restaurant's Yelp Page</a>
+                    </h6>
+                    <h6>
+                        $@(restaurant.Price / restaurant.NumberOfMeals) per Meal
+                    </h6>
+                    <h6>
+                        @restaurant.NumberOfMeals meals
+                    </h6>
+                    <h6>
+                        $@restaurant.Price for this Restaurant
+                    </h6>
+                    <h6>
+                        $@(ViewBag.currentTrip.Price - (restaurant.Price * restaurant.NumberOfMeals)) remaining
+                    </h6>
 
-            <h6>
-                <a href="/Database/DeleteRestaurant?Restaurant=@restaurant.Restaurant">Delete this restaurant </a>
-            </h6>
-            <h6>
-                <a href="/Database/EditRestaurantDetails?Restaurant=@restaurant.Restaurant">Edit the meals eaten at this restaurant</a>
-            </h6>
-        </div>
+                    <h6>
+                        <a href="/Database/DeleteRestaurant?Restaurant=@restaurant.Restaurant">Delete this restaurant </a>
+                    </h6>
+                    <h6>
+                        <a href="/Database/EditRestaurantDetails?Restaurant=@restaurant.Restaurant">Edit the meals eaten at this restaurant</a>
+                    </h6>
+                </div>
+            }
         }
+        else
+        {
+            <h3>You have not selected any restaurants!</h3>
+        }
+
     </div>
 </div>
-
-<div class="container">Budget Summary
+<h4 align="center">
+    <a href="/Home/TripBudgetCalculator"><input type="submit" class="budget" value="Add additional restaurants or hotels" /></a>
+</h4>
+<div class="container">
+    Budget Summary
     <div class="row">
         <div class="col-sm-4">
             <h3>Total Budget: $@ViewBag.currentTrip.Price</h3>
@@ -108,11 +126,11 @@
     </div>
 </div>
 
-    <h4 align="center">Events Happening while you're in town</h4>
-    <div class="container">
-        <div class="row">
-            @for (int i = 0; i < ViewBag.EventOptions.Count; i++)
-            {
+<h4 align="center">Events Happening while you're in town</h4>
+<div class="container">
+    <div class="row">
+        @for (int i = 0; i < ViewBag.EventOptions.Count; i++)
+        {
             <div class="col-sm-12">
                 <h5>
                     @ViewBag.EventOptions[i]["name"]
@@ -135,9 +153,9 @@
                     <a href="@ViewBag.EventOptions[i]["event_site_url"]">See this Event's Yelp Page</a>
                 </h6>
                 <h6>
-                <a href="@ViewBag.EventOptions[i]["tickets_url"]">Book tickets here</a>
+                    <a href="@ViewBag.EventOptions[i]["tickets_url"]">Book tickets here</a>
                 </h6>
             </div>
-            }
-        </div>
+        }
     </div>
+</div>
