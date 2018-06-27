@@ -169,7 +169,7 @@
                             Total Price of Stay
                         </h5>
                         <h6>
-                            $@(ViewBag.hotelPricePoint * ViewBag.PricePerDay)
+                            $@(int.Parse(ViewBag.hotelPricePoint) * int.Parse(ViewBag.PricePerDay))
                         </h6>
 
                         <form action="../Database/SaveHotelOption">
@@ -223,30 +223,30 @@
             }
             else
             {
-                <form action="../Home/TripBudgetCalculator" method="get">
-                    <select name="RestaurantSelection">
-                        @for (int i = 0; i < ViewBag.Restaurants["businesses"].Count; i++)
-                        {
-                            <option value="@ViewBag.Restaurants["businesses"][i]">@ViewBag.Restaurants["businesses"][i]["name"]</option>
-                        }
-                    </select>
-                    <input type="submit" value="Select Restaurant" class="budget" />
-                </form>
-
-                if (ViewBag.RestaurantSelection != null)
+                if (ViewBag.RestaurantSelection is null)
                 {
-                    <br /><br />
-                    <h3>@ViewBag.RestaurantSelection["name"]</h3>
-                    <h4>@ViewBag.RestaurantSelection["location"]["address1"]</h4>
-                    <h4>@ViewBag.RestaurantSelection["location"]["city"], @ViewBag.RestaurantSelection["location"]["state"]</h4>
-                    <h4>@ViewBag.RestaurantSelection["location"]["zip_code"]</h4>
-                    <h4>
-                        <a href="@ViewBag.RestaurantSelection["url"]">See this Restaurant's Yelp Page</a>
-                    </h4>
-
+                    <form action="../Home/TripBudgetCalculator" method="get">
+                        <select name="RestaurantSelection">
+                            @for (int i = 0; i < ViewBag.Restaurants["businesses"].Count; i++)
+                            {
+                                <option value="@ViewBag.Restaurants["businesses"][i]">@ViewBag.Restaurants["businesses"][i]["name"]</option>
+                            }
+                        </select>
+                        <input type="submit" value="Select Restaurant" class="budget" />
+                    </form>
                 }
                 else
                 {
+                    <br /><br />
+                    <h3>@ViewBag.RestaurantSelection["name"]</h3>
+                    <h5>@ViewBag.RestaurantSelection["location"]["address1"]</h5>
+                    <h5>@ViewBag.RestaurantSelection["location"]["city"], @ViewBag.RestaurantSelection["location"]["state"]</h5>
+                    <h5>@ViewBag.RestaurantSelection["location"]["zip_code"]</h5>
+                    <h5>
+                        <a href="@ViewBag.RestaurantSelection["url"]">See this Restaurant's Yelp Page</a>
+                    </h5>
+
+
                     if (ViewBag.NumberOfMeals is null)
                     {
                         <form action="../Home/TripBudgetCalculator" method="get">
@@ -271,7 +271,7 @@
                             Total at this Restaurant
                         </h5>
                         <h6>
-                            $@(ViewBag.PricePerMeal * ViewBag.NumberOfMeals)
+                            $@(int.Parse(ViewBag.PricePerMeal) * int.Parse(ViewBag.NumberOfMeals))
                         </h6>
                         <form action="../Database/SaveRestaurantOption">
                             <input type="submit" value="Save Restaurant Info" class="budget" />
@@ -279,6 +279,9 @@
                     }
                 }
             }
+
+            <h4>@ViewBag.ErrorMessage</h4>
+
         </div>
     </div>
     <div class="row">

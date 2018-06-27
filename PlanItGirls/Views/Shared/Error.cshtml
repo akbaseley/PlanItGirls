@@ -1,9 +1,38 @@
 ﻿@model System.Web.Mvc.HandleErrorInfo
 
 @{
+    /**/
+
     ViewBag.Title = "Error";
 }
 
 <h1 class="text-danger">Error.</h1>
 <h2 class="text-danger">@ViewBag.ErrorMessage</h2>
+
+
+@if (ViewBag.DuplicateRestaurant != null)
+{
+    <h4>@ViewBag.DuplicateRestaurant</h4>
+
+    <h4 align="center">
+        <a href="/Home/TripBudgetCalculator"><input type="submit" class="budget" value="Click here to add a different restaurnt." /></a>
+    </h4>
+
+    <form action="../Home/TripSummary" align="center">
+        <input type="submit" value="Click here to see your trip Summary." class="budget" />
+    </form>
+}
+
+@if (ViewBag.DuplicateHotel != null)
+{
+    <h4>@ViewBag.DuplicateHotel</h4>
+
+    <h4 align="center">
+        <a href="/Home/TripBudgetCalculator"><input type="submit" class="budget" value="Click here to add a different hotel." /></a>
+    </h4>
+
+    <form action="../Home/TripSummary" align="center">
+        <input type="submit" value="Click here to see your trip Summary." class="budget" />
+    </form>
+}
 

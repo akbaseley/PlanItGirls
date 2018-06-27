@@ -240,7 +240,7 @@ namespace PlanItGirls.Controllers
             ViewBag.RestaurantBudget = RestaurantBudget(currentTrip); //calculates the total amount for all selected restaurants
             ViewBag.totalDeductedBudget = TotalDeductedBudget(currentTrip); //combined hotel budgets & restaurant budgets
             ViewBag.remainingBudget = RemainingBudget(currentTrip); //total budget minus hotels, restaurants, and cars
-            //ViewBag.carBudget is found above under Travel Costs - total cost of driving
+                                                                    //ViewBag.carBudget is found above under Travel Costs - total cost of driving
             #endregion
 
             #region TempData
@@ -271,7 +271,6 @@ namespace PlanItGirls.Controllers
                 currentTrip = (Trip)TempData["currentTrip"];
             }
 
-
             ViewBag.currentTrip = currentTrip;
             ViewBag.HotelBudget = HotelBudget(currentTrip);
             ViewBag.RestaurantBudget = RestaurantBudget(currentTrip);
@@ -280,8 +279,28 @@ namespace PlanItGirls.Controllers
 
             JObject EventOptions = Events(currentTrip.TripID);
             ViewBag.EventOptions = EventOptions["events"];
+
+            TempData["currentTrip"] = currentTrip;
             TempData["currentTrip"] = TempData["currentTrip"];
+
+            TempData["VehicleSelection"] = null;
+            TempData["carBudget"] = null;
+
+            TempData["hotelPricePoint"] = null;
+            TempData["HotelSelection"] = null;
+            TempData["NumberOfNights"] = null;
+
+            TempData["restaurantPricePoint"] = null;
+            TempData["RestaurantSelection"] = null;
+            TempData["NumberOfMeals"] = null;
+
             return View();
+        }
+
+        public ActionResult ContinueBudgetPlanning()
+        {
+            TempData["currentTrip"] = TempData["currentTrip"];
+            return RedirectToAction("TripBudgetCalculator");
         }
 
         public double HotelBudget(Trip thisTrip)

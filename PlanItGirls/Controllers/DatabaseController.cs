@@ -149,37 +149,45 @@ namespace PlanItGirls.Controllers
             string NumberOfNights = (string)TempData["NumberOfNights"];
             string hotelPricePoint = (string)TempData["hotelPricePoint"];
             JObject currentHotel = JObject.Parse(thisHotel);
+            string hotelName = currentHotel["name"].ToString();
             Lodge newHotel = new Lodge();
 
-            newHotel.Lodging = (string)currentHotel["name"];
-            newHotel.Price = int.Parse(hotelPricePoint) * int.Parse(NumberOfNights);
-            newHotel.NumberOfNights = int.Parse(NumberOfNights);
-            newHotel.Address = (string)currentHotel["location"]["address1"];
-            newHotel.City = (string)currentHotel["location"]["city"];
-            newHotel.State = (string)currentHotel["location"]["state"];
-            newHotel.PostalCode = (string)currentHotel["location"]["zip_code"];
-            newHotel.PhoneNumber = (string)currentHotel["display_phone"];
-            newHotel.URL = (string)currentHotel["url"];
-            newHotel.TripID = currentTrip.TripID;
+            Lodge Found = ORM.Lodges.Find(hotelName);
 
-            ORM.Lodges.Add(newHotel);
-            ORM.SaveChanges();
+            if (Found !=null)
+            {
+                TempData["hotelPricePoint"] = null;
+                TempData["HotelSelection"] = null;
+                TempData["NumberOfNights"] = null;
 
-             Trip thisTrip = ORM.Trips.Find(newHotel.TripID);
+                ViewBag.DuplicateRestaurant = "The hotel you chose is already on your list";
 
-            TempData["currentTrip"] = thisTrip;
-            TempData["VehicleSelection"] = TempData["VehicleSelection"];
-            TempData["currentTrip"] = TempData["currentTrip"];
+                TempData["currentTrip"] = TempData["currentTrip"];
+                return RedirectToAction("../Home/TripBudgetCalculator");
+            }
+            else
+            {
+                newHotel.Lodging = (string)currentHotel["name"];
+                newHotel.Price = int.Parse(hotelPricePoint) * int.Parse(NumberOfNights);
+                newHotel.NumberOfNights = int.Parse(NumberOfNights);
+                newHotel.Address = (string)currentHotel["location"]["address1"];
+                newHotel.City = (string)currentHotel["location"]["city"];
+                newHotel.State = (string)currentHotel["location"]["state"];
+                newHotel.PostalCode = (string)currentHotel["location"]["zip_code"];
+                newHotel.PhoneNumber = (string)currentHotel["display_phone"];
+                newHotel.URL = (string)currentHotel["url"];
+                newHotel.TripID = currentTrip.TripID;
 
-            TempData["hotelPricePoint"] = TempData["hotelPricePoint"];
-            TempData["HotelSelection"] = TempData["HotelSelection"];
-            TempData["NumberOfNights"] = TempData["NumberOfNights"];
+                ORM.Lodges.Add(newHotel);
+                ORM.SaveChanges();
 
-            TempData["restaurantPricePoint"] = TempData["restaurantPricePoint"];
-            TempData["RestaurantSelection"] = TempData["RestaurantSelection"];
-            TempData["NumberOfMeals"] = TempData["NumberOfMeals"];
+                Trip editedTrip = ORM.Trips.Find(newHotel.TripID);
 
-            return RedirectToAction("../Home/TripSummary");
+                TempData["currentTrip"] = editedTrip;
+                TempData["currentTrip"] = TempData["currentTrip"];
+
+                return RedirectToAction("../Home/TripSummary");
+            }
         }
         public ActionResult DeleteHotel(string Lodging)
         {
@@ -268,42 +276,49 @@ namespace PlanItGirls.Controllers
 
             Trip currentTrip = (Trip)TempData["currentTrip"];
             string thisRestaurant = (string)TempData["RestaurantSelection"];
-            string stringNumberOfMeals = (string)TempData["NumberOfMeals"];
-            int NumberOfMeals = int.Parse(stringNumberOfMeals);
-            string stringrestaurantPricePoint = (string)TempData["restaurantPricePoint"];
-            int restaurantPricePoint = int.Parse(stringrestaurantPricePoint);
+            string numberOfMeals = (string)TempData["NumberOfMeals"];
+            string restaurantPricePoint = (string)TempData["restaurantPricePoint"];
             JObject currentRestaurant = JObject.Parse(thisRestaurant);
+            string restaurantName = currentRestaurant["name"].ToString();
             Food newRestaurant = new Food();
 
-            newRestaurant.Restaurant = (string)currentRestaurant["name"];
-            newRestaurant.Price = restaurantPricePoint * NumberOfMeals;
-            newRestaurant.NumberOfMeals = NumberOfMeals;
-            newRestaurant.Address = (string)currentRestaurant["location"]["address1"];
-            newRestaurant.City = (string)currentRestaurant["location"]["city"];
-            newRestaurant.State = (string)currentRestaurant["location"]["state"];
-            newRestaurant.PostalCode = (string)currentRestaurant["location"]["zip_code"];
-            newRestaurant.PhoneNumber = (string)currentRestaurant["display_phone"];
-            newRestaurant.URL = (string)currentRestaurant["url"];
-            newRestaurant.TripID = currentTrip.TripID;
+            Food Found = ORM.Foods.Find(restaurantName);
 
-            ORM.Foods.Add(newRestaurant);
-            ORM.SaveChanges();
+            if (Found != null)
+            {
+                TempData["restaurantPricePoint"] = null;
+                TempData["restaurantSelection"] = null;
+                TempData["NumberOfMeals"] = null;
 
-            Trip thisTrip = ORM.Trips.Find(newRestaurant.TripID);
-            TempData["currentTrip"] = thisTrip;
+                ViewBag.DuplicateRestaurant = "The restaurant you chose is already on your list";
 
-            TempData["VehicleSelection"] = TempData["VehicleSelection"];
-            TempData["currentTrip"] = TempData["currentTrip"];
+                TempData["currentTrip"] = TempData["currentTrip"];
+                return View("Error");
+            }
+            else
+            {
+                newRestaurant.Restaurant = (string)currentRestaurant["name"];
+                newRestaurant.Price = int.Parse(restaurantPricePoint) * int.Parse(numberOfMeals);
+                newRestaurant.NumberOfMeals = int.Parse(numberOfMeals);
+                newRestaurant.Address = (string)currentRestaurant["location"]["address1"];
+                newRestaurant.City = (string)currentRestaurant["location"]["city"];
+                newRestaurant.State = (string)currentRestaurant["location"]["state"];
+                newRestaurant.PostalCode = (string)currentRestaurant["location"]["zip_code"];
+                newRestaurant.PhoneNumber = (string)currentRestaurant["display_phone"];
+                newRestaurant.URL = (string)currentRestaurant["url"];
+                newRestaurant.TripID = currentTrip.TripID;
 
-            TempData["hotelPricePoint"] = TempData["hotelPricePoint"];
-            TempData["HotelSelection"] = TempData["HotelSelection"];
-            TempData["NumberOfNights"] = TempData["NumberOfNights"];
+                ORM.Foods.Add(newRestaurant);
+                ORM.SaveChanges();
 
-            TempData["restaurantPricePoint"] = TempData["restaurantPricePoint"];
-            TempData["RestaurantSelection"] = TempData["RestaurantSelection"];
-            TempData["NumberOfMeals"] = TempData["NumberOfMeals"];
+                Trip thisTrip = ORM.Trips.Find(newRestaurant.TripID);
 
-            return RedirectToAction("../Home/TripSummary");
+                TempData["currentTrip"] = thisTrip;
+
+                TempData["currentTrip"] = TempData["currentTrip"];
+
+                return RedirectToAction("../Home/TripSummary");
+            }
         }
         public ActionResult DeleteRestaurant(string Restaurant)
         {
