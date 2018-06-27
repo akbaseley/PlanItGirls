@@ -12,8 +12,7 @@
 
 <div class="form-control-sm">
     <form action="/Database/SaveUpdateUserTrip" method="post">
-        Trip Name: <input type="text" value="@Model.TripID" name="TripID" class="form-control" />
-        <br /><br />
+       
         Start Date: <input type="date" value="@Model.StartDate" name="StartDate" class="form-control" />
         Current Start Date = @Model.StartDate.ToShortDateString()
         <br /><br />
@@ -26,14 +25,13 @@
         End City: <input type="text" value="@Model.EndCity" name="EndCity" class="form-control" />
         @Html.DropDownList("EndState", new SelectList(Enum.GetValues(typeof(States))), Model.EndState)
         <br /><br />
+        Budget:<input type="number" value="@Model.Price" name="Price" class="form-control" /><br />
+        <input type="submit" value="Save Trip" class="budget" />
 
-        Budget:
-        <input type="number" value="@Model.Price" name="Price" class="form-control" /><br />
-        <input type="submit" value="Save Trip Edits" class="budget" />
 
     </form>
     <form action="/Database/TripList" method="get" class="form-check-inline">
-        <input type="submit" value="See Trips" class="btn-info" />
+        <input type="submit" value="See your Trips" class="btn-info" />
     </form>
 </div>
 

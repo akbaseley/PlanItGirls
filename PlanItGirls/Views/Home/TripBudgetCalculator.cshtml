@@ -91,7 +91,7 @@
                         <option value="225">$$$</option>
                         <option value="350">$$$$</option>
                     </select>
-                    <input type="submit" value="See Options" class="budget" />
+                    <input type="submit" value="See Hotel Options" class="budget" />
                 </form>
             }
             else
@@ -151,7 +151,7 @@
                                     <option value="@i">@i</option>
                                 }
                             </select>
-                            <input type="submit" value="Number of Nights" class="budget" />
+                            <input type="submit" value="Select Number of Nights" class="budget" />
                         </form>
                     }
                     else
@@ -174,7 +174,7 @@
                         </h6>
 
                         <form action="../Database/SaveHotelOption">
-                            <input type="submit" value="Save This Hotel" class="budget" />
+                            <input type="submit" value="Save Hotel Info" class="budget" />
                         </form>
                     }
                 }
@@ -193,7 +193,7 @@
                         <option value="60">$$$</option>
                         <option value="100">$$$$</option>
                     </select>
-                    <input type="submit" value="See Options" class="budget" />
+                    <input type="submit" value="See Restaurant Options" class="budget" />
                 </form>
             }
             else
@@ -275,7 +275,7 @@
                             $@(ViewBag.PricePerMeal * ViewBag.NumberOfMeals)
                         </h6>
                         <form action="../Database/SaveRestaurantOption">
-                            <input type="submit" value="Save Restaurant" class="budget" />
+                            <input type="submit" value="Save Restaurant Info" class="budget" />
                         </form>
                     }
                 }
@@ -293,22 +293,18 @@
         </div>
         <div class="col-sm-2" align="right">
             <h6>Total Spent on Hotels:</h6>
-            <h6>Hotel & Restaurant Total: </h6>
             <h6>Budget Remaining: </h6>
         </div>
         <div class="col-sm-2">
             <h6>$@ViewBag.TotalHotelBudget</h6>
-            <h6>$@ViewBag.totalDeductedBudget</h6>
             <h6>$@ViewBag.remainingBudget</h6>
         </div>
         <div class="col-sm-2" align="right">
             <h6>Total Spent on Meals: </h6>
-            <h6>Hotel & Restaurant Total: </h6>
             <h6>Budget Remaining: </h6>
         </div>
         <div class="col-sm-2">
             <h6>$@ViewBag.RestaurantBudget</h6>
-            <h6>$@ViewBag.totalDeductedBudget</h6>
             <h6>$@ViewBag.remainingBudget</h6>
         </div>
     </div>
