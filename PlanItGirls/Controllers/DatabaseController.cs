@@ -35,6 +35,14 @@ namespace PlanItGirls.Controllers
         }
         public ActionResult CreateNewTrip(Trip newTrip)
         {
+
+            if (newTrip.StartDate > newTrip.EndDate)
+            {
+
+                ViewBag.Error = "End date should be greater than Start date";
+                return View("../Home/TripCreation");
+            }
+
             PlanItDBEntities ORM = new PlanItDBEntities();
 
             newTrip.UserID = User.Identity.GetUserId();
@@ -83,9 +91,12 @@ namespace PlanItGirls.Controllers
         }
         public ActionResult EditTripDetails(string TripID)
         {
+          
+
             PlanItDBEntities ORM = new PlanItDBEntities();
 
             Trip Found;
+
 
             if (TripID is null)
             {
@@ -100,8 +111,14 @@ namespace PlanItGirls.Controllers
 
             if (Found != null)
             {
-                Found = (Trip)TempData["currentTrip"];
+                if (Found.StartDate > Found.EndDate)
+                {
+                    ViewBag.Error = "End date should be greater than Start date";
+                    return View("../Home/UpdateUserTrip", Found);
+                }
+
                 TempData["currentTrip"] = TempData["currentTrip"];
+
                 return View ("../Home/UpdateUserTrip", Found);
             }
             else
