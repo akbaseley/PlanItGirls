@@ -18,6 +18,7 @@
             string today = date.ToString("yyyy-MM-dd");
             date = date.AddDays(1);
             string tomorrow = date.ToString("yyyy-MM-dd");
+          
         }
         <p>Start Date: <input type="date" name="StartDate" class="form-control" min="@today" required/></p>
         <p>End Date: <input type="date" name="EndDate" class="form-control" min="@tomorrow" required/></p>
