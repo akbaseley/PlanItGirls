@@ -38,6 +38,7 @@ h2 {
 td {
     background-color: #49C6D0;
     color: white;
+    font-size: 15px;
 }
 
     td a {
@@ -50,12 +51,10 @@ td {
 .navbar-nav li {
     margin-left: 100px;
     margin-right: 100px;
-    font-size: medium;
+    font-size: small;
 }
 
-.navbar.transparent.navbar-inverse .navbar-inner {
-    background: rgba(0,0,0,0.4);
-}
+
 
 ul p {
     text-decoration: none;
@@ -112,24 +111,29 @@ p {
     border-radius: 25px;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     color: #ffffff;
-    font-size: 14px;
+    font-size: 13px;
     background: #F7A55D;
     padding: 7px 10px 7px 10px;
     text-decoration: none;
     text-transform: uppercase;
+
 }
 
     .budget:hover {
         background: #49C6D0;
         text-decoration: none;
+        color: white;
     }
 
 .ListHeadings {
     color: white;
     text-transform: uppercase;
     background-color: #F7A55D;
-    text-align:unset;
+    text-align:center;
+    font-size: 19px;
 }
+
+
 
 
 .profilePics{
@@ -156,6 +160,7 @@ h5{
 .Price {
     color: #49C6D0;
     font-size:larger;
+    background-color:ghostwhite;
 }
 
 form {
@@ -196,5 +201,16 @@ form {
     text-align: center;
 }
 
+/*DropDown Options*/
+.Selections {
+    color: #34c1cb;
+}
 
+h5 {
+    color: #34c1cb;
+}
+
+h9{
+    color: rgba(0,0,0,0.4);
+}
 

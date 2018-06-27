@@ -13,16 +13,17 @@
         <th>End Date</th>
         <th>Start Location</th>
         <th>End Location</th>
-        <th>Budget</th>
+        <th>Trip Budget</th>
         <th></th>
-        <th>Additional Options</th>
+        <th></th>
+        <th></th>
         <th></th>
     </tr>
 
     @foreach (var trip in ViewBag.userTrips)
     {
 
-    <tr>
+    <tr class="table-bordered">
         <td>@trip.TripID</td>
         <td>@trip.StartDate.ToShortDateString()</td>
         <td>@trip.EndDate.ToShortDateString()</td>
