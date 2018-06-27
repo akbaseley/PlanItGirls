@@ -41,7 +41,7 @@
                         $@(ViewBag.currentTrip.Price - (Lodge.Price * Lodge.NumberOfNights)) remaining
                     </h6>
                     <h6>
-                        <a href="/Database/DeleteHotel?Lodging=@Lodge.Lodging" class="budget">Delete</a>
+                        <a href="/Database/DeleteHotel?Lodging=@Lodge.Lodging" class="budget">Delete</a><br /><br />
                     </h6>
                     <h6>
                         <a href="/Database/EditHotelDetails?Lodging=@Lodge.Lodging" class="budget">Edit</a>
@@ -111,11 +111,12 @@
     </div>
         }
     </div>
-    </div>
+    </div><br /><br />
 
-    <h4 align="center">
+
+    <h4 align="left">
         <a href="/Home/TripBudgetCalculator"><input type="submit" class="budget" value="Add restaurants or hotels" /></a>
-    </h4>
+    </h4><br /><br />
 
     <div class="container">
         <h4 align="center">Budget Summary</h4>
