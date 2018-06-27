@@ -44,7 +44,7 @@ namespace PlanItGirls.Controllers
 
             ORM.SaveChanges();
 
-            return View("../Home/TripCreation");
+            return RedirectToAction("TripList");
         }
 
         public ActionResult DeleteTrip(string TripID)

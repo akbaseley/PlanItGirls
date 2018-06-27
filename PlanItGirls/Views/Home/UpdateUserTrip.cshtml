@@ -12,11 +12,17 @@
 
 <div class="form-control-sm">
     <form action="/Database/SaveUpdateUserTrip" method="post">
-       
-        Start Date: <input type="date" value="@Model.StartDate" name="StartDate" class="form-control" />
+
+        @{
+        DateTime date = DateTime.Now;
+        string today = date.ToString("yyyy-MM-dd");
+        date = date.AddDays(1);
+        string tomorrow = date.ToString("yyyy-MM-dd");
+        }
+        Start Date: <input type="date" value="@Model.StartDate" name="StartDate" min="@today" class="form-control" />
         Current Start Date = @Model.StartDate.ToShortDateString()
         <br /><br />
-        End Date: <input type="date" value="@Model.EndDate" name="EndDate" class="form-control" />
+        End Date: <input type="date" value="@Model.EndDate" name="EndDate" min="@tomorrow" class="form-control" />
         Current End Date = @Model.EndDate.ToShortDateString()
         <br /><br />
         Start City: <input type="text" value="@Model.StartCity" name="StartCity" class="form-control" />
