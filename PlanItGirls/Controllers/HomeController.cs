@@ -263,6 +263,7 @@ namespace PlanItGirls.Controllers
             ViewBag.currentTrip = currentTrip;
             ViewBag.HotelBudget = HotelBudget(currentTrip);
             ViewBag.RestaurantBudget = RestaurantBudget(currentTrip);
+            ViewBag.CarBudget = CarBudget(currentTrip);
             ViewBag.totalDeductedBudget = TotalDeductedBudget(currentTrip);
             ViewBag.remainingBudget = RemainingBudget(currentTrip);
 
@@ -335,10 +336,17 @@ namespace PlanItGirls.Controllers
 
         public double CarBudget(Trip thisTrip)
         {
-            double Distance = TripDistance(thisTrip);
-            double carBudget = (((double)thisTrip.Car * Distance) * 2);
-
-            return carBudget;
+            double carBudget;
+            if (thisTrip.Car != null)
+            {
+                double Distance = TripDistance(thisTrip);
+                carBudget = (((double)thisTrip.Car * Distance) * 2);
+            }
+            else
+            {
+                carBudget = 0;
+            }
+               return carBudget;
         }
 
         public double RemainingBudget(Trip thisTrip)

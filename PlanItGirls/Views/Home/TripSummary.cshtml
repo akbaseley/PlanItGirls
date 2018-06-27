@@ -38,9 +38,6 @@
                         $@(Lodge.Price * Lodge.NumberOfNights) for this Hotel
                     </h6>
                     <h6>
-                        $@(ViewBag.currentTrip.Price - (Lodge.Price * Lodge.NumberOfNights)) remaining
-                    </h6>
-                    <h6>
                         <a href="/Database/DeleteHotel?Lodging=@Lodge.Lodging" class="budget">Delete</a><br /><br />
                     </h6>
                     <h6>
@@ -93,9 +90,6 @@
                         $@restaurant.Price for this Restaurant
                     </h6>
                     <h6>
-                        $@(ViewBag.currentTrip.Price - (restaurant.Price * restaurant.NumberOfMeals)) remaining
-                    </h6>
-                    <h6>
                         <a href="/Database/DeleteRestaurant?Restaurant=@restaurant.Restaurant" class="budget">Delete</a><br /><br />
                     </h6>
                     <h6>
@@ -125,6 +119,7 @@
                 <h3>Total Budget: $@ViewBag.currentTrip.Price</h3>
                 <h3>Total Spent on Hotels: $@ViewBag.HotelBudget</h3>
                 <h3>Total Spent on Meals: $@ViewBag.RestaurantBudget</h3>
+                <h3>Total Spent on Travel: $@ViewBag.CarBudget</h3>
                 <h3>Combined Total: $@ViewBag.totalDeductedBudget</h3>
                 <h3>Budget Remaining: $@ViewBag.remainingBudget</h3>
             </div>

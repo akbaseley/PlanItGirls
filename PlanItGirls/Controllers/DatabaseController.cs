@@ -101,6 +101,8 @@ namespace PlanItGirls.Controllers
 
             if (Found != null)
             {
+                Found = (Trip)TempData["currentTrip"];
+                TempData["currentTrip"] = TempData["currentTrip"];
                 return View ("../Home/UpdateUserTrip", Found);
             }
             else
@@ -128,6 +130,7 @@ namespace PlanItGirls.Controllers
                 ORM.Entry(OldTripRecord).State = System.Data.Entity.EntityState.Modified;
                 
                 ORM.SaveChanges();
+
                 return RedirectToAction("TripList");
             }
             else
@@ -154,16 +157,16 @@ namespace PlanItGirls.Controllers
 
             Lodge Found = ORM.Lodges.Find(hotelName);
 
-            if (Found !=null)
+            if (Found != null)
             {
                 TempData["hotelPricePoint"] = null;
                 TempData["HotelSelection"] = null;
                 TempData["NumberOfNights"] = null;
 
-                ViewBag.DuplicateRestaurant = "The hotel you chose is already on your list";
+                ViewBag.DuplicateHotel = "The hotel you chose is already on your list";
 
                 TempData["currentTrip"] = TempData["currentTrip"];
-                return RedirectToAction("../Home/TripBudgetCalculator");
+                return View("Error");
             }
             else
             {
