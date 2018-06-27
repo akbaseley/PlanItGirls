@@ -47,11 +47,11 @@ td {
     }
 
 
-
-.navbar-nav li {
+.space {
     margin-left: 100px;
     margin-right: 100px;
     font-size: small;
+    display: inline;
 }
 
 
@@ -63,9 +63,6 @@ ul p {
 
 
 
-#navbar {
-    background-color: white;
-}
 
 a {
     font-family: 'Gill Sans Bold', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
@@ -213,4 +210,6 @@ h5 {
 h9{
     color: rgba(0,0,0,0.4);
 }
+
+
 

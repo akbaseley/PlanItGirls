@@ -11,19 +11,24 @@
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 
-
+    <style>
+        li {
+            margin-left: 20px;
+            font-weight:normal;
+        }
+    </style>
 
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
-            <div class="navbar-header">
+            <div>
                 <a class="navbar-brand" href="../Home/Index"><img alt="Logo" src="~/images/PlanIt.png" width="235" height="138"></a>
                 @*@Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
             </div>
-            <div class="navbar-text" id="navBar">
+            <div class="navbar-text" >
                 @if (Request.IsAuthenticated) { 
-            <ul class="navbar sticky-top navbar">
+            <ul class="navbar navbar-expand-lg navbar-light bg-light" >
                 <li>@Html.ActionLink("Home", "Index", "Home")</li>
                 <li>@Html.ActionLink("About", "About", "Home")</li>
                 <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
