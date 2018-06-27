@@ -33,7 +33,6 @@ namespace PlanItGirls.Controllers
                 return View("Error");
             }
         }
-
         public ActionResult CreateNewTrip(Trip newTrip)
         {
             PlanItDBEntities ORM = new PlanItDBEntities();
@@ -259,7 +258,7 @@ namespace PlanItGirls.Controllers
                 ORM.Entry(OldHotelRecord).State = System.Data.Entity.EntityState.Modified;
                 ORM.SaveChanges();
 
-                TempData["currentTrip"] = ORM.Trips.Find(OldHotelRecord.TripID);
+                TempData["currentTrip"] = ORM.Trips.Find(EditHotelDetails.TripID);
                 TempData["currentTrip"] = TempData["currentTrip"];
 
                 return RedirectToAction("../Home/TripSummary");

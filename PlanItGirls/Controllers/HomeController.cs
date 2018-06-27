@@ -230,7 +230,12 @@ namespace PlanItGirls.Controllers
             ViewBag.HotelBudget = HotelBudget(currentTrip); //calculates the total amount for all selected hotels
             ViewBag.RestaurantBudget = RestaurantBudget(currentTrip); //calculates the total amount for all selected restaurants
             ViewBag.totalDeductedBudget = TotalDeductedBudget(currentTrip); //combined hotel budgets & restaurant budgets
-            ViewBag.remainingBudget = RemainingBudget(currentTrip); //total budget minus hotels, restaurants, and cars                                                                   //ViewBag.carBudget is found above under Travel Costs - total cost of driving
+            ViewBag.remainingBudget = RemainingBudget(currentTrip); //total budget minus hotels, restaurants, and cars 
+                                                                    //ViewBag.carBudget is found above under Travel Costs - total cost of driving
+
+            ViewBag.reservedMeals = ReservedMeals(currentTrip);
+            ViewBag.reservedNights = ReservedNights(currentTrip);
+            ViewBag.numberOfDays = NumOfDays(currentTrip);
             #endregion
 
             #region TempData
@@ -253,11 +258,15 @@ namespace PlanItGirls.Controllers
         public ActionResult TripSummary(string TripID)
         {
             PlanItDBEntities ORM = new PlanItDBEntities();
-            Trip currentTrip = ORM.Trips.Find(TripID);
+            Trip currentTrip;
 
             if (TripID is null)
             {
                 currentTrip = (Trip)TempData["currentTrip"];
+            }
+            else
+            {
+                currentTrip = ORM.Trips.Find(TripID);
             }
 
             ViewBag.currentTrip = currentTrip;
@@ -266,6 +275,10 @@ namespace PlanItGirls.Controllers
             ViewBag.CarBudget = CarBudget(currentTrip);
             ViewBag.totalDeductedBudget = TotalDeductedBudget(currentTrip);
             ViewBag.remainingBudget = RemainingBudget(currentTrip);
+
+            ViewBag.reservedMeals = ReservedMeals(currentTrip);
+            ViewBag.reservedNights = ReservedNights(currentTrip);
+            ViewBag.numberOfDays = NumOfDays(currentTrip);
 
             JObject EventOptions = Events(currentTrip.TripID);
             ViewBag.EventOptions = EventOptions["events"];
@@ -299,7 +312,7 @@ namespace PlanItGirls.Controllers
 
             foreach (var hotel in thisTrip.Lodges)
             {
-                hotelBudget = ((hotelBudget + hotel.Price) * hotel.NumberOfNights);
+                hotelBudget = hotelBudget + hotel.Price;
             }
 
             return hotelBudget;
@@ -473,6 +486,27 @@ namespace PlanItGirls.Controllers
         {
             DateTime sTime = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
             return ((currentTime - sTime).TotalSeconds).ToString();
+        }
+
+        public int ReservedNights (Trip thisTrip)
+        {
+            int reservedNights = 0;
+            foreach (Lodge hotel in thisTrip.Lodges)
+            {
+                reservedNights = reservedNights = hotel.NumberOfNights;
+            }
+
+            return reservedNights;
+        }
+
+        public int ReservedMeals (Trip thisTrip)
+        {
+            int reservedMeals = 0;
+            foreach (Food restaurant in thisTrip.Foods)
+            {
+                reservedMeals = reservedMeals + restaurant.NumberOfMeals;
+            }
+            return reservedMeals;
         }
     }
 }

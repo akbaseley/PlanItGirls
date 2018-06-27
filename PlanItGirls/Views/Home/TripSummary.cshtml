@@ -29,13 +29,13 @@
                         <a href="@Lodge.URL">See this Hotel's Yelp Page</a>
                     </h6>
                     <h6>
-                        $@Lodge.Price per Night
+                        $@(Lodge.Price / Lodge.NumberOfNights) per Night
                     </h6>
                     <h6>
                         @Lodge.NumberOfNights nights
                     </h6>
                     <h6>
-                        $@(Lodge.Price * Lodge.NumberOfNights) for this Hotel
+                        $@Lodge.Price for this Hotel
                     </h6>
                     <h6>
                         <a href="/Database/DeleteHotel?Lodging=@Lodge.Lodging" class="budget">Delete</a><br /><br />
@@ -45,6 +45,8 @@
                     </h6>
                 </div>
             }
+            <h5>You have reserved @ViewBag.reservedHotels nights.</h5>
+
         }
         else
         {
@@ -95,67 +97,69 @@
                     <h6>
                         <a href="/Database/EditRestaurantDetails?Restaurant=@restaurant.Restaurant" class="budget">Edit</a>
                     </h6>
-            </div>
-             }
+                </div>
+            }
+            <h5>You have signed up for @ViewBag.reservedMeals meals.</h5>
+
         }
         else
         {
-    <div class="col-sm-12">
-        <h3>You have not selected any restaurants!</h3>
-    </div>
+            <div class="col-sm-12">
+                <h3>You have not selected any restaurants!</h3>
+            </div>
         }
     </div>
-    </div><br /><br />
+</div><br /><br />
 
 
-    <h4 align="left">
-        <a href="/Home/TripBudgetCalculator"><input type="submit" class="budget" value="Add restaurants or hotels" /></a>
-    </h4><br /><br />
+<h4 align="left">
+    <a href="/Home/TripBudgetCalculator"><input type="submit" class="budget" value="Add restaurants or hotels" /></a>
+</h4><br /><br />
 
-    <div class="container">
-        <h4 align="center">Budget Summary</h4>
-        <div class="row">
-            <div class="col-sm-4">
-                <h3>Total Budget: $@ViewBag.currentTrip.Price</h3>
-                <h3>Total Spent on Hotels: $@ViewBag.HotelBudget</h3>
-                <h3>Total Spent on Meals: $@ViewBag.RestaurantBudget</h3>
-                <h3>Total Spent on Travel: $@ViewBag.CarBudget</h3>
-                <h3>Combined Total: $@ViewBag.totalDeductedBudget</h3>
-                <h3>Budget Remaining: $@ViewBag.remainingBudget</h3>
+<div class="container">
+    <h4 align="center">Budget Summary</h4>
+    <div class="row">
+        <div class="col-sm-4">
+            <h3>Total Budget: $@ViewBag.currentTrip.Price</h3>
+            <h3>Total Spent on Hotels: $@ViewBag.HotelBudget</h3>
+            <h3>Total Spent on Meals: $@ViewBag.RestaurantBudget</h3>
+            <h3>Total Spent on Travel: $@ViewBag.CarBudget</h3>
+            <h3>Combined Total: $@ViewBag.totalDeductedBudget</h3>
+            <h3>Budget Remaining: $@ViewBag.remainingBudget</h3>
+        </div>
+    </div>
+</div>
+
+<h4 align="center">Events Happening while you're in town</h4>
+<div class="container">
+    <div class="row">
+        @for (int i = 0; i < ViewBag.EventOptions.Count; i++)
+        {
+            <div class="col-sm-12">
+                <h6>
+                    @ViewBag.EventOptions[i]["name"]
+                </h6>
+                <h7>
+                    @ViewBag.EventOptions[i]["description"]
+
+                </h7>
+                <h7>
+                    @ViewBag.EventOptions[i]["time_start"]
+                </h7>
+                <h7>
+                    @ViewBag.EventOptions[i]["time_end"]
+                </h7>
+                <h7>
+                    @ViewBag.EventOptions[i]["location"]["address1"],  @ViewBag.EventOptions[i]["location"]["state"]  @ViewBag.EventOptions[i]["location"]["zip_code"]
+                </h7>
+
+                <h7>
+                    <a href="@ViewBag.EventOptions[i]["event_site_url"]">See this Event's Yelp Page</a>
+                </h7>
+                <h7>
+                    <a href="@ViewBag.EventOptions[i]["tickets_url"]">Book tickets here</a>
+                </h7>
             </div>
-        </div>
+        }
     </div>
-
-    <h4 align="center">Events Happening while you're in town</h4>
-    <div class="container">
-        <div class="row">
-            @for (int i = 0; i < ViewBag.EventOptions.Count; i++)
-            {
-                <div class="col-sm-12">
-                    <h6>
-                        @ViewBag.EventOptions[i]["name"]
-                    </h6>
-                    <h7>
-                        @ViewBag.EventOptions[i]["description"]
-
-                    </h7>
-                    <h7>
-                        @ViewBag.EventOptions[i]["time_start"]
-                    </h7>
-                    <h7>
-                        @ViewBag.EventOptions[i]["time_end"]
-                    </h7>
-                    <h7>
-                        @ViewBag.EventOptions[i]["location"]["address1"],  @ViewBag.EventOptions[i]["location"]["state"]  @ViewBag.EventOptions[i]["location"]["zip_code"]
-                    </h7>
-
-                    <h7>
-                        <a href="@ViewBag.EventOptions[i]["event_site_url"]">See this Event's Yelp Page</a>
-                    </h7>
-                    <h7>
-                        <a href="@ViewBag.EventOptions[i]["tickets_url"]">Book tickets here</a>
-                    </h7>
-                </div>
-            }
-        </div>
-    </div>
+</div>
