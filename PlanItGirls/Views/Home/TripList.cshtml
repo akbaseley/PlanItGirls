@@ -1,40 +1,43 @@
-﻿ 
+﻿
+<link href="~/Content/TripList.css" rel="stylesheet" />
+
 @{
     ViewBag.Title = "TripList";
 }
 
 <h2>Your Trip List</h2>
 
+<div class="table-responsive">
+    <table class="table">
+        <tr class="ListHeadings">
+            <th>Trip Name</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Start Location</th>
+            <th>End Location</th>
+            <th>Trip Budget</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
 
-<table class="table" >
-    <tr class="ListHeadings">
-        <th >Trip Name</th>
-        <th>Start Date</th>
-        <th>End Date</th>
-        <th>Start Location</th>
-        <th>End Location</th>
-        <th>Trip Budget</th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-    </tr>
+        @foreach (var trip in ViewBag.userTrips)
+        {
 
-    @foreach (var trip in ViewBag.userTrips)
-    {
+            <tr class="table-bordered">
+                <td>@trip.TripID</td>
+                <td>@trip.StartDate.ToShortDateString()</td>
+                <td>@trip.EndDate.ToShortDateString()</td>
+                <td>@trip.StartCity, @trip.StartState</td>
+                <td>@trip.EndCity, @trip.EndState</td>
+                <th class="Price">$@trip.Price</th>
+                <th><a href="/Home/TripBudgetCalculator?TripID=@trip.TripID"><input type="submit" class="budget" value="Trip Options" /></a></th>
+                <th><a href="/Database/DeleteTrip?TripID=@trip.TripID"><input type="submit" class="budget" value="Delete Trip" /></a></th>
+                <th><a href="/Database/EditTripDetails?TripID=@trip.TripID"><input type="submit" class="budget" value="Edit Trip" /></a></th>
+                <th><a href="/Home/TripSummary?TripID=@trip.TripID"><input type="submit" class="budget" value="Summary" /></a></th>
+            </tr>
 
-    <tr class="table-bordered">
-        <td>@trip.TripID</td>
-        <td>@trip.StartDate.ToShortDateString()</td>
-        <td>@trip.EndDate.ToShortDateString()</td>
-        <td>@trip.StartCity, @trip.StartState</td>
-        <td>@trip.EndCity, @trip.EndState</td>
-        <th class="Price">$@trip.Price</th>
-        <th><a href="/Home/TripBudgetCalculator?TripID=@trip.TripID"><input type="submit" class="budget" value="Trip Options" /></a></th>
-        <th><a href="/Database/DeleteTrip?TripID=@trip.TripID"><input type="submit" class="budget" value="Delete Trip" /></a></th>
-        <th><a href="/Database/EditTripDetails?TripID=@trip.TripID"><input type="submit"  class="budget" value="Edit Trip" /></a></th>
-        <th><a href="/Home/TripSummary?TripID=@trip.TripID"><input type="submit"class="budget" value="Summary" /></a></th>
-    </tr>   
-
-    }
-</table>
+        }
+    </table>
+</div>
