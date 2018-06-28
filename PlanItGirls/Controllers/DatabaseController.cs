@@ -187,7 +187,7 @@ namespace PlanItGirls.Controllers
             else
             {
                 newHotel.Lodging = (string)currentHotel["name"];
-                newHotel.Price = int.Parse(hotelPricePoint) * int.Parse(NumberOfNights);
+                newHotel.Price = int.Parse(hotelPricePoint);
                 newHotel.NumberOfNights = int.Parse(NumberOfNights);
                 newHotel.Address = (string)currentHotel["location"]["address1"];
                 newHotel.City = (string)currentHotel["location"]["city"];
@@ -317,7 +317,7 @@ namespace PlanItGirls.Controllers
             else
             {
                 newRestaurant.Restaurant = (string)currentRestaurant["name"];
-                newRestaurant.Price = int.Parse(restaurantPricePoint) * int.Parse(numberOfMeals);
+                newRestaurant.Price = int.Parse(restaurantPricePoint);
                 newRestaurant.NumberOfMeals = int.Parse(numberOfMeals);
                 newRestaurant.Address = (string)currentRestaurant["location"]["address1"];
                 newRestaurant.City = (string)currentRestaurant["location"]["city"];

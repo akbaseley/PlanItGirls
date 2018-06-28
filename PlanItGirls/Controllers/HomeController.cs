@@ -312,7 +312,7 @@ namespace PlanItGirls.Controllers
 
             foreach (var hotel in thisTrip.Lodges)
             {
-                hotelBudget = hotelBudget + hotel.Price;
+                hotelBudget = hotelBudget + (hotel.Price * hotel.NumberOfNights);
             }
 
             return hotelBudget;
@@ -324,7 +324,7 @@ namespace PlanItGirls.Controllers
 
             foreach (var restaurant in thisTrip.Foods)
             {
-                restaurantBudget = ((restaurantBudget + restaurant.Price) * restaurant.NumberOfMeals);
+                restaurantBudget = restaurantBudget + (restaurant.Price * restaurant.NumberOfMeals);
             }
 
             return restaurantBudget;

@@ -141,7 +141,7 @@
                     {
                         <form action="../Home/TripBudgetCalculator" method="get">
                             <select name="NumberOfNights">
-                                @for (int i = 1; i <= @ViewBag.DayDiff; i++)
+                                @for (int i = 1; i <= ViewBag.DayDiff - ViewBag.reservedNights; i++)
                                 {
                                     <option value="@i">@i</option>
                                 }
@@ -246,7 +246,7 @@
                     {
                         <form action="../Home/TripBudgetCalculator" method="get">
                             <select name="NumberOfMeals">
-                                @for (int i = 1; i <= @ViewBag.DayDiff * 3; i++)
+                                @for (int i = 1; i <= (ViewBag.DayDiff - ViewBag.reservedMeals) * 3; i++)
                                 {
                                     <option value="@i">@i</option>
                                 }

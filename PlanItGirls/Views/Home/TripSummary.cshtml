@@ -29,13 +29,13 @@
                         <a href="@Lodge.URL">See this Hotel's Yelp Page</a>
                     </h6>
                     <h6>
-                        $@(Lodge.Price / Lodge.NumberOfNights) per Night
+                        $@Lodge.Price per Night
                     </h6>
                     <h6>
                         @Lodge.NumberOfNights nights
                     </h6>
                     <h6>
-                        $@Lodge.Price for this Hotel
+                        $@(Lodge.Price * Lodge.NumberOfNights) for this Hotel
                     </h6>
                     <h6>
                         <a href="/Database/DeleteHotel?Lodging=@Lodge.Lodging" class="budget">Delete</a><br /><br />
@@ -45,7 +45,7 @@
                     </h6>
                 </div>
             }
-            <h5>You have reserved @ViewBag.reservedHotels nights.</h5>
+            <h5>You have reserved @ViewBag.reservedNights nights.</h5>
 
         }
         else
@@ -83,13 +83,13 @@
                         <a href="@restaurant.URL" button="budget">See this Restaurant's Yelp Page</a>
                     </h6>
                     <h6>
-                        $@(restaurant.Price / restaurant.NumberOfMeals) per Meal
+                        $@restaurant.Price per Meal
                     </h6>
                     <h6>
                         @restaurant.NumberOfMeals meals
                     </h6>
                     <h6>
-                        $@restaurant.Price for this Restaurant
+                        $@(restaurant.Price * restaurant.NumberOfMeals) for this Restaurant
                     </h6>
                     <h6>
                         <a href="/Database/DeleteRestaurant?Restaurant=@restaurant.Restaurant" class="budget">Delete</a><br /><br />
