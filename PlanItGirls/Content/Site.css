@@ -91,7 +91,7 @@ a {
 }
 
 /*PlanIt Logo*/
-img {
+.navbar-brand {
     margin-top: -60px;
     margin-left: -40px;
 }
@@ -253,26 +253,31 @@ h9{
     font-family:'Freestyle Script','Mistral','Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     font-size: 50pt;
     color: #F7A55D;
+    text-align:center;
 }
 .testimony {
     color: #49C6D0;
 }
 
 .testPic {
-    float: left;
     margin-left: 80px;
     margin-right: 20px;
-    margin-bottom: 300px;
-}
-
-
-.testPic2 {
     float: left;
-    margin-left:100px;
-    margin-right: 20px;
-    margin-top: 150px;
-    
 }
+
+.float-img {
+    width: 40%;
+    padding-left: 20px;
+}
+
+.float-text {
+    width: 60%;
+}
+
+
+
+
+
 
 
 
