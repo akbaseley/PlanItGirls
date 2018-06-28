@@ -10,17 +10,20 @@
 <div class="container" id="budget">
     <div class="row">
         <div class="col-sm-4">
+            
             <h4>Vehicle Options</h4>
-            <form action="/Home/TripBudgetCalculator" method="get">
-                Select Car Type: <select name="VehicleSelection">
-                    <option value="0">---</option>
-                    <option value=".46">Car</option>
-                    <option value=".59">Crossover</option>
-                    <option value=".65">Minivan</option>
-                    <option value=".72">Suv/Truck</option>
-                </select>
-                <input type="submit" value="See Cost" class="budget" />
-            </form>
+            
+                <form action="/Home/TripBudgetCalculator" method="get">
+                    Select Car Type: <select name="VehicleSelection">
+                        <option value="0">---</option>
+                        <option value=".46">Car</option>
+                        <option value=".59">Crossover</option>
+                        <option value=".65">Minivan</option>
+                        <option value=".72">Suv/Truck</option>
+                    </select>
+                    <input type="submit" value="See Cost" class="budget" /><br /><br />
+                </form>
+       
 
             @if (ViewBag.GasPrice != null)
             {
@@ -75,16 +78,16 @@
             <h4>Hotel Options</h4>
             @if (ViewBag.hotelPricePoint is null)
             {
-                <form action="../Home/TripBudgetCalculator" method="get">
-                    Select Hotel Price: <select name="hotelPricePoint">
-                        <option value="0">---</option>
-                        <option value="80">$</option>
-                        <option value="150">$$</option>
-                        <option value="225">$$$</option>
-                        <option value="350">$$$$</option>
-                    </select>
-                    <input type="submit" value="See Hotel Options" class="budget" />
-                </form>
+            <form action="../Home/TripBudgetCalculator" method="get">
+                Select Hotel Price: <select name="hotelPricePoint">
+                    <option value="0">---</option>
+                    <option value="80">$</option>
+                    <option value="150">$$</option>
+                    <option value="225">$$$</option>
+                    <option value="350">$$$$</option>
+                </select>
+                <input type="submit" value="See Options" class="budget" /><br /><br />
+            </form>
             }
             else
             {
@@ -186,7 +189,7 @@
                         <option value="60">$$$</option>
                         <option value="100">$$$$</option>
                     </select>
-                    <input type="submit" value="See Restaurant Options" class="budget" />
+                    <input type="submit" value="See Options" class="budget" /><br /><br />
                 </form>
             }
             else
