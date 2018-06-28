@@ -251,6 +251,7 @@
     </Content>
     <Content Include="images\Anna.png" />
     <Content Include="images\FriendsTrip.jpg" />
+    <Content Include="images\github.png" />
     <Content Include="images\Jasmine.jpg" />
     <Content Include="images\Linkedin.png" />
     <Content Include="images\MomKids.jpg" />
@@ -298,6 +299,7 @@
     <Content Include="Models\PlanItDBModel.edmx.diagram">
       <DependentUpon>PlanItDBModel.edmx</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\PlanItGirls2018 - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
