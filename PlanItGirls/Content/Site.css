@@ -232,3 +232,45 @@ h9{
     background-color: #49C6D0;
 }
 
+.form-group{
+    color: #34c1cb;
+    font-size: larger;
+}
+
+.form-control {
+    color: #F7A55D;
+}
+
+.paragraphs{
+    font-family: Arial, Helvetica, sans-serif;
+    color: #34c1cb;
+    font-size: 15pt;
+}
+
+
+/*Testimonial Page - About*/
+.testTitle {
+    font-family:'Freestyle Script','Mistral','Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 50pt;
+    color: #F7A55D;
+}
+.testimony {
+    color: #49C6D0;
+}
+
+.testPic{
+    float: left;
+    margin-left:40px;
+    margin-right: 20px;
+}
+
+
+.testPic2 {
+    float: left;
+    margin-right: 20px;
+    margin-top: 150px;
+    
+}
+
+
+

@@ -250,10 +250,10 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="images\Anna.png" />
+    <Content Include="images\FriendsTrip.jpg" />
     <Content Include="images\Jasmine.jpg" />
-    <Content Include="images\FriendsPlanIt.jpg" />
     <Content Include="images\Linkedin.png" />
-    <Content Include="images\momAndBoysPlanItGirls341378.jpg" />
+    <Content Include="images\MomKids.jpg" />
     <Content Include="images\PlanIt.png" />
     <Content Include="images\RoadTrip.jpg" />
     <Content Include="images\RoadTrip.png" />

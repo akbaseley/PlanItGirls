@@ -11,24 +11,22 @@
 
     <div class="form-control-sm">
         <p>Trip Name: <input type="text" name="TripID" class="form-control" required/></p>
-        <br /><br />
+        <br />
         @{
             DateTime date = DateTime.Now;
             string today = date.ToString("yyyy-MM-dd");
             date = date.AddDays(1);
             string tomorrow = date.ToString("yyyy-MM-dd");
 
-
-
         }
         <p>Start Date: <input type="date" name="StartDate" class="form-control" min="@today" id="StartDate" required/></p>
         <p>End Date: <input type="date" name="EndDate" class="form-control" min="@tomorrow" id="EndDate" required/></p>
-        <br /><br />
+        <br />
         <p>Start City: <input type="text" name="StartCity" class="form-control" required/></p>
         @Html.DropDownList("StartState", new SelectList(Enum.GetValues(typeof(States))),
              "Start State", new { @class = "form-control" })
 
-        <br /><br />
+        <br />
         <p>End City: <input type="text" name="EndCity" class="form-control" required/></p>
         @Html.DropDownList("EndState", new SelectList(Enum.GetValues(typeof(States))),
              "End State", new { @class = "form-control" })
