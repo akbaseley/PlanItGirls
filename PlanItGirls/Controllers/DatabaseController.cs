@@ -117,8 +117,8 @@ namespace PlanItGirls.Controllers
                     return View("../Home/UpdateUserTrip", Found);
                 }
 
+                TempData["currentTrip"] = Found;
                 TempData["currentTrip"] = TempData["currentTrip"];
-
                 return View ("../Home/UpdateUserTrip", Found);
             }
             else
@@ -151,9 +151,9 @@ namespace PlanItGirls.Controllers
             }
             else
             {
-                TempData["currentTrip"] = EditTripDetails;
+                TempData["currentTrip"] = OldTripRecord;
                 TempData["currentTrip"] = TempData["currentTrip"];
-                ViewBag.ErrorMessage = "It looks as though something was entered incorrectly.";
+                
                 return RedirectToAction("EditTripDetails");
             }
 

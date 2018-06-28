@@ -20,8 +20,10 @@
         string tomorrow = date.ToString("yyyy-MM-dd");
         }
         
+        <input type="hidden" value="@Model.TripID" name="TripID"/>
+
         Start Date:<input type="date" value="@Model.StartDate" name="StartDate" min="@today" class="form-control" />
-        Current Start Date< = @Model.StartDate.ToShortDateString()
+        Current Start Date = @Model.StartDate.ToShortDateString()
         
         <br /><br />
         End Date: <input type="date" value="@Model.EndDate" name="EndDate" min="@tomorrow" class="form-control" />
@@ -35,8 +37,6 @@
         <br /><br />
         Budget:<input type="number" value="@Model.Price" name="Price" class="form-control" /><br />
         <input type="submit" value="Save Trip" class="budget" />
-
-
     </form>
     <form action="/Database/TripList" method="get" class="form-check-inline">
         <input type="submit" value="See your Trips" class="btn-info" />
