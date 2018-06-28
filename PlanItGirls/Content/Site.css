@@ -258,17 +258,18 @@ h9{
     color: #49C6D0;
 }
 
-.testPic{
+.testPic {
     float: left;
-    margin-left:40px;
+    margin-left: 40px;
     margin-right: 20px;
+    margin-bottom: 300px;
 }
 
 
 .testPic2 {
     float: left;
+    margin-left:100px;
     margin-right: 20px;
-    margin-top: 150px;
     
 }
 
