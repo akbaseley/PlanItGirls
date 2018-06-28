@@ -212,4 +212,23 @@ h9{
 }
 
 
+.item1 {
+    margin-left: 200px;
+    float: left;
+    
+}
+
+.item2 {
+    margin-left: 30px;
+    float: left;
+}
+.item3 {
+    margin-left: 30px;
+    float: left;
+}
+.picText{
+    margin-top: 15px;
+    align-content:center;
+    background-color: #49C6D0;
+}
 

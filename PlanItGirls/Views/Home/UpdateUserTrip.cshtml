@@ -19,17 +19,19 @@
         date = date.AddDays(1);
         string tomorrow = date.ToString("yyyy-MM-dd");
         }
-        Start Date: <input type="date" value="@Model.StartDate" name="StartDate" min="@today" class="form-control" />
-        Current Start Date = @Model.StartDate.ToShortDateString()
+        
+        Start Date:<input type="date" value="@Model.StartDate" name="StartDate" min="@today" class="form-control" />
+        Current Start Date< = @Model.StartDate.ToShortDateString()
+        
         <br /><br />
         End Date: <input type="date" value="@Model.EndDate" name="EndDate" min="@tomorrow" class="form-control" />
         Current End Date = @Model.EndDate.ToShortDateString()
         <br /><br />
         Start City: <input type="text" value="@Model.StartCity" name="StartCity" class="form-control" />
-        @Html.DropDownList("StartState", new SelectList(Enum.GetValues(typeof(States))), Model.StartState)
+        @Html.DropDownList("StartState", new SelectList(Enum.GetValues(typeof(States))), Model.StartState, new { @class = "form-control" })
         <br /><br />
         End City: <input type="text" value="@Model.EndCity" name="EndCity" class="form-control" />
-        @Html.DropDownList("EndState", new SelectList(Enum.GetValues(typeof(States))), Model.EndState)
+        @Html.DropDownList("EndState", new SelectList(Enum.GetValues(typeof(States))), Model.EndState, new { @class = "form-control" })
         <br /><br />
         Budget:<input type="number" value="@Model.Price" name="Price" class="form-control" /><br />
         <input type="submit" value="Save Trip" class="budget" />
