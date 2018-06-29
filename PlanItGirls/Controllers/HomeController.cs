@@ -40,6 +40,7 @@ namespace PlanItGirls.Controllers
             #region This Trip
             PlanItDBEntities ORM = new PlanItDBEntities();
 
+
             Trip currentTrip = ORM.Trips.Find(TripID);
 
             if (currentTrip is null && TempData["currentTrip"] is null)
