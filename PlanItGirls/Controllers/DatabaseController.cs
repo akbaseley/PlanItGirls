@@ -14,11 +14,12 @@ namespace PlanItGirls.Controllers
     public class DatabaseController : Controller
     {
         // Use this controller when using CRUD methods to Database
-        // Primarily used when Logging trip information and when 
+        // Primarily used when Logging trip information
 
         [Authorize]
         public ActionResult TripList()
         {
+
             PlanItDBEntities ORM = new PlanItDBEntities();
 
             if (User.Identity.GetUserId() != null)

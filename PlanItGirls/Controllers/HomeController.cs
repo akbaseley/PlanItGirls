@@ -40,10 +40,11 @@ namespace PlanItGirls.Controllers
             #region This Trip
             PlanItDBEntities ORM = new PlanItDBEntities();
 
-            if (TempData["currentTrip"] is null)
+            if (TempData["currentTrip"] is null || (TempData["currentTrip"] != ORM.Trips.Find(TripID)))
             {
                 TempData["currentTrip"] = ORM.Trips.Find(TripID);
             }
+
             Trip currentTrip = (Trip)TempData["currentTrip"];
             ViewBag.currentTrip = currentTrip;
             #endregion
