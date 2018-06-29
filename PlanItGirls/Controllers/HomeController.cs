@@ -40,13 +40,31 @@ namespace PlanItGirls.Controllers
             #region This Trip
             PlanItDBEntities ORM = new PlanItDBEntities();
 
-            if (TempData["currentTrip"] is null || (TempData["currentTrip"] != ORM.Trips.Find(TripID)))
+            Trip currentTrip = ORM.Trips.Find(TripID);
+
+            if (currentTrip is null && TempData["currentTrip"] is null)
             {
-                TempData["currentTrip"] = ORM.Trips.Find(TripID);
+                ViewBag.error = "Please go back and select  trip";
+                return View("Error");
+            }
+            else
+            {
+                if (TempData["currentTrip"] is null)
+                {
+                    TempData["currentTrip"] = currentTrip;
+                }
+                else if (currentTrip is null)
+                {
+                    currentTrip = (Trip)TempData["currentTrip"];
+                }
+                else if ((Trip)TempData["currentTrip"] != currentTrip)
+                {
+                    TempData["currentTrip"] = currentTrip;
+                }
             }
 
-            Trip currentTrip = (Trip)TempData["currentTrip"];
             ViewBag.currentTrip = currentTrip;
+
             #endregion
 
             #region Travel Costs
@@ -99,10 +117,12 @@ namespace PlanItGirls.Controllers
                 {
                     TempData["hotelPricePoint"] = hotelPricePoint;
                 }
+
                 ViewBag.Hotels = HotelsbyPricePoint(currentTrip.TripID, hotelPricePoint);
                 ViewBag.hotelPricePoint = double.Parse(hotelPricePoint);
             }
             #endregion
+
             #region HotelSelection
             if (TempData["HotelSelection"] is null && HotelSelection is null)
             {
